@@ -17,6 +17,7 @@
  * Focus on *what* your product does, and avoid discussing *how* you're going to implement it.      
    For example: This is not the time or the place to talk about which programming language and/or framework you are planning to use.
  * **Feel free (and very much encouraged) to include useful diagrams, mock-ups and/or links**.
+ 
    We are planning to build a website aimed at small businesses and individuals who are looking for workers/work that allows users to post job opportunities or apply to job postings. During this time of Covid-19 and quarantine, many businesses are losing revenue and individuals are losing their jobs. What Biz-Wiz aims to solve is to assist those vulnerable businesses and individuals by providing them with a platform in the form of a website, to search for job opportunities or create job listings to ensure they are able to survive through this tough time of economic contraction. Even after this situation, Biz-Wiz will still be a useful tool for businesses and individuals to search for work opportunities as a means of living. The project partner gave us an example of what the project should be similar to: https://app.gigitmarketplace.com/. 
 
    A common use-case would be a business looking to create a company website for their business, would like to hire an individual with the skills and experience to create a visually appealing and functional website. The business would post a listing on the Biz-Wiz website searching for such individuals and can also specify details and needs of the job (e.g. an experienced website developer with 4+ years of skills in python). Then a website developer could be looking for work within 5km of where they live, would be able to view this posting on the website, and respond to it. Additionally, a business would be able to have a profile, showcasing their products, services and goals to the public, along with individuals being able to showcase their talents and skills to potential employers.
@@ -106,11 +107,13 @@ Describe the different roles on the team and the responsibilities associated wit
 List each team member and:
  * A description of their role(s) and responsibilities including the components they'll work on and non-software related work
  * 3 technical strengths and weaknesses each (e.g. languages, frameworks, libraries, development methodologies, etc.)
+ 
 Tian Yue Liu: 
 setting up and organizing meetings 
 front end developer
 Strength: familiar with Java, familiar with Python, knows basics of web development from 309 (html, css, react)
 Weaknesses: no industry experience, haven’t learnt database, not very interested in running time complexity analysis
+
 Artur Kuramshin: 
 Roles: Represent the team and communicate with the partner to exchange ideas.
 Database
