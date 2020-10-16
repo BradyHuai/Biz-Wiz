@@ -119,6 +119,7 @@ List each team member and:
  * 3 technical strengths and weaknesses each (e.g. languages, frameworks, libraries, development methodologies, etc.)
  
 Tian Yue Liu: 
+
 setting up and organizing meetings 
 
 front end developer
@@ -274,7 +275,7 @@ When a new user first signs up for an account, they can either choose to create 
 
 Different levels of access for employer accounts.
 
-	Different levels of access could allow the sharing of responsibilities for managing an account for a business without requiring every employee who works on the account to have full access to the entire account. This would prevent an intern who was recently hired to manage certain aspects of the company’s Biz-Wiz account without giving them the only password and full control of the entire account. This would however make managing the account more difficult for a small business as it would require tracking who in the company has which level of access.
+Different levels of access could allow the sharing of responsibilities for managing an account for a business without requiring every employee who works on the account to have full access to the entire account. This would prevent an intern who was recently hired to manage certain aspects of the company’s Biz-Wiz account without giving them the only password and full control of the entire account. This would however make managing the account more difficult for a small business as it would require tracking who in the company has which level of access.
  
 Addition of a business profile (Facebook + LinkedIn like):
 
