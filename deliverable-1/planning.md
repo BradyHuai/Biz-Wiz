@@ -59,8 +59,11 @@
     * How does this align with your partner's organization's values/mission/mandate?
 
 -Since our product is mainly aimed at small businesses and individuals that have been affected by Covid-19, users will be able to discover niche job requests that they wouldn’t be able to find easily on similar websites.
+
 -The website’s target users are in the GTA, so there will be more information available to those that live in the GTA than similar websites 
--The website will be able to provide users with accurate information and
+
+-The website will be able to provide users with accurate information
+
 -The government provides support for small businesses impacted by covid. However, there are strict limitations, one of which being making over 20k in revenues. Our product aims to act as a bridge to connect those in need to available resources, including a financial support currently being developed by a marketing team working with Biz-Wiz.
 
 #### Q4: How will you build it?
@@ -117,35 +120,60 @@ List each team member and:
  
 Tian Yue Liu: 
 setting up and organizing meetings 
+
 front end developer
+
 Strength: familiar with Java, familiar with Python, knows basics of web development from 309 (html, css, react)
+
 Weaknesses: no industry experience, haven’t learnt database, not very interested in running time complexity analysis
 
+
 Artur Kuramshin: 
+
 Roles: Represent the team and communicate with the partner to exchange ideas.
+
 Database
+
 Strengths: proficient in Python, Java, basic SQL. Has worked with Python based back-end frameworks like Flaska and Django.
+
 Weaknesses: Not good at front-end design. Knows only basic html and css. No experience with current web development technologies.
 
+
 Scott Price: 
+
 Roles: Backend developer, timetable manager.
+
 Strengths: Familiar with Java and Python, can write tests, has well formatted code
+
 Weaknesses: Not familiar with databases, not familiar with Javascript, has little to no experience in web development before this project
 
+
 Guo Qing Huai:
+
 Roles: Front-end development, database, Team-whip, make announcements regarding project process and team meeting.
+
 Strengths: familiar with Java and Python, knows basic Javascript knowledge: front end development (frameworks: React) and back end (NodeJS), Knows basic database knowledge (SQL).
+
 Weakness: Not good at client server interaction. Not much coding experience, I need to practice using all things mentioned above.
 
+
 Ethan Ku: 
+
 Roles: Note taker for meetings (secretary); front end developer 
+
 Strengths: proficient in programming with Java, Python and C; writes clear and well documented code; has some knowledge about front end development for websites
+
 Weaknesses: limited experience in software development; unfamiliar with tech stacks and frameworks; no industry work experiences
+
  
 Jun Yan Ren: 
+
 Roles: Database, team time management
+
 Strengths: familiar with languages such as Python and Java, willing to learn new frameworks and languages, decent work ethic
+
 Weaknesses: not familiar with frontend frameworks such as React, not familiar with database languages, limited work experience
+
 
 #### Q7: What operational events will you have as a team?
 
