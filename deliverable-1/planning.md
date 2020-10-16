@@ -31,12 +31,19 @@
    You can create your personas as part of this Markdown file, or add a link to an external site (for example, [Xtensio](https://xtensio.com/user-persona/)).**
    
 -Targeting small businesses in the Greater Toronto Area looking for new hires, those especially vulnerable to effects of COVID-19 . (1 - 4 employees)
+
 -Targeting small businesses in the Greater Toronto Area looking for collaboration with other small businesses. e.g.  Joe the company event manager hosting a public meet and greet event is looking for catering services that can offer special deals for big scale consumers like him.
+
 -Investors interested in local opportunities from startup and small businesses.
+
 -People who want to start a small business and don’t know how (ex. interested in starting a business to supplement income due to COVID impacts regarding job losses)
+
 -A startup entrepreneur looking for business partners.
+
 -Full-time students who are searching for a part time job to cover living expenses amidst covid. e.g  Bob the third year social science student is looking for an event organisation part-time job locally.
+
 -Recent graduates looking for local employment opportunities to enrich their experiences in the industry and build up a solid resume.
+
 -High School senior students looking to fulfill volunteer hour requirements before graduation, and also to gain experience who feels lost searching for such opportunities. e.g Mary the high school senior who needs 30 more volunteer hours urgently, but all opportunities she knows require extensive registration and profiling.
 
 
