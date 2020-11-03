@@ -19,16 +19,16 @@ const useStyles = makeStyles((theme) => ({
   },
   mainList: {
     margin: 20,
+    maxWidth: 190,
   },
   drawerPaper: {
     backgroundColor: "#e3f2fd"
   },
   content: {
-    
+    position: "static",
   },
   paper: {
     padding: theme.spacing(2),
-    display: 'flex',
     overflow: 'auto',
     flexDirection: 'column',
     backgroundColor: "#bbdefb"
@@ -38,9 +38,10 @@ const useStyles = makeStyles((theme) => ({
   },
   container: {
     marginTop: "5%",
-    marginLeft: "5%",
+    marginLeft: 200,
     marginRight: "5%",
-    backgroundColor: "#e3f2fd"
+    backgroundColor: "#e3f2fd",
+    width: 1200,
   },
 }));
 
