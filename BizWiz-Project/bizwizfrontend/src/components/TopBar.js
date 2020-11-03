@@ -1,18 +1,23 @@
-import React from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
-import HomeIcon from "@material-ui/icons/Home";
 import Typography from "@material-ui/core/Typography";
 import InputBase from "@material-ui/core/InputBase";
 import { fade, makeStyles } from "@material-ui/core/styles";
-import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
+import React, { useState, useEffect } from "react";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    display: "inline",
   },
+  barColored: {
+    background: "linear-gradient(45deg, #2979ff 30%, #2196f3 90%)",
+  },
+
+  transparent: {},
+
   menuButton: {
     marginRight: theme.spacing(2),
   },
@@ -22,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("sm")]: {
       display: "block",
     },
+    color: "white",
   },
   search: {
     position: "relative",
@@ -62,14 +68,42 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
+
+  icon: {
+    height: "70%",
+    width: "70%",
+  },
 }));
 
 export default function SearchAppBar() {
   const classes = useStyles();
+  const [appBarBg, setappBarBg] = useState("transparent");
+  const barRef = React.useRef();
+  barRef.current = appBarBg;
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const show = barRef.current == "transparent" ? true : false;
+      if (show) {
+        setappBarBg("barColored");
+      } else {
+        setappBarBg("transparent");
+      }
+    };
+    document.addEventListener("click", handleScroll);
+    return () => {
+      document.removeEventListener("click", handleScroll);
+    };
+  }, []);
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar
+        color={barRef.current}
+        elevation={0}
+        className={classes[barRef.current]}
+        position="fixed"
+      >
         <Toolbar>
           <IconButton
             edge="start"
@@ -77,10 +111,10 @@ export default function SearchAppBar() {
             color="inherit"
             aria-label="open drawer"
           >
-            <HomeIcon />
+            <img className={classes.icon} src="images/bwlogo.png" alt="pic" />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            Biz-Wiz
+            Biz-Wiz Markekplace
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
