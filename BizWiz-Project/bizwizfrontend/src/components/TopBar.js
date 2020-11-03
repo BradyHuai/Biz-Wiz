@@ -6,17 +6,22 @@ import InputBase from "@material-ui/core/InputBase";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    display: "inline",
   },
   barColored: {
     background: "linear-gradient(45deg, #2979ff 30%, #2196f3 90%)",
+    height: 80,
+    position: "absolute",
   },
 
-  transparent: {},
+  transparent: {
+    height: 80,
+    position: "absolute",
+  },
 
   menuButton: {
     marginRight: theme.spacing(2),
@@ -75,16 +80,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SearchAppBar() {
+export default function TopBar() {
   const classes = useStyles();
-  const [appBarBg, setappBarBg] = useState("transparent");
+  const [appBarBg, setappBarBg] = useState(
+    window.location.href == "http://localhost:3000/"
+      ? "transparent"
+      : "barColored"
+  );
   const barRef = React.useRef();
   barRef.current = appBarBg;
 
   useEffect(() => {
     const handleScroll = () => {
-      const show = barRef.current == "transparent" ? true : false;
-      if (show) {
+      if (barRef.current == "transparent") {
+        setappBarBg("barColored");
+      } else if (window.location.href != "http://localhost:3000/") {
         setappBarBg("barColored");
       } else {
         setappBarBg("transparent");
@@ -95,6 +105,11 @@ export default function SearchAppBar() {
       document.removeEventListener("click", handleScroll);
     };
   }, []);
+
+  const history = useHistory();
+  const handleClickLogo = () => {
+    history.push("/");
+  };
 
   return (
     <div className={classes.root}>
@@ -109,12 +124,13 @@ export default function SearchAppBar() {
             edge="start"
             className={classes.menuButton}
             color="inherit"
-            aria-label="open drawer"
+            onClick={handleClickLogo}
           >
-            <img className={classes.icon} src="images/bwlogo.png" alt="pic" />
+            <img className={classes.icon} src="/images/bwlogo.png" />
           </IconButton>
+
           <Typography className={classes.title} variant="h6" noWrap>
-            Biz-Wiz Markekplace
+            Markekplace (Slogan)
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>

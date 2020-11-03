@@ -52,7 +52,7 @@ function MainPage() {
     history.push("/login");
   };
   const handleClickVisit = () => {
-    history.push("/home");
+    history.push("pages/home");
   };
   return (
     <div>
