@@ -3,7 +3,7 @@ import List from '@material-ui/core/List';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { mainListItems } from './sidebar';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -24,21 +24,29 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#e3f2fd"
   },
   content: {
-
+    
   },
   paper: {
     padding: theme.spacing(2),
     display: 'flex',
     overflow: 'auto',
     flexDirection: 'column',
+    backgroundColor: "#bbdefb"
   },
   fixedHeight: {
     height: 240,
   },
+  container: {
+    marginTop: "5%",
+    marginLeft: "5%",
+    marginRight: "5%",
+    backgroundColor: "#e3f2fd"
+  },
 }));
 
 export default function Home() {
-  const classes = useStyles();
+  const theme = useTheme();
+  const classes = useStyles(theme);
 
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
     return (
@@ -52,25 +60,26 @@ export default function Home() {
           >
             <List className={classes.mainList}>{mainListItems}</List>
           </Drawer>
+
           <main className={classes.content}>
-            <Container maxWidth="lg" className={classes.container}>
-              <Grid container spacing={3}>
-                {/* Chart */}
-                <Grid item xs={12} md={8} lg={9}>
-                  <Paper className={fixedHeightPaper}>
-                    <Profiles />
+            <Container maxWidth="lg">
+              
+              <Grid container spacing={3} className={classes.container}>
+                <Grid item xs={12} md={4} lg={3}>
+                  <Paper className={classes.paper}>
+                    <Announcements />
                   </Paper>
                 </Grid>
-                {/* Recent Deposits */}
-                <Grid item xs={12} md={4} lg={3}>
+
+                <Grid item xs={12} md={8} lg={9}>
                   <Paper className={fixedHeightPaper}>
                     <Posts />
                   </Paper>
                 </Grid>
-                {/* Recent Orders */}
-                <Grid item xs={12}>
-                  <Paper className={classes.paper}>
-                    <Announcements />
+
+                <Grid item xs={12} md={4} lg={3}>
+                  <Paper className={fixedHeightPaper}>
+                    <Profiles />
                   </Paper>
                 </Grid>
               </Grid>
