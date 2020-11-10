@@ -22,7 +22,7 @@ const myStyles = makeStyles((theme) => ({
     margin: "4px",
   },
   buttons: {
-    background: "linear-gradient(45deg, #2979ff 30%, #2196f3 90%)",
+    background: "rgba(67, 129, 168,0.5)",
     border: 0,
     borderRadius: 10,
     color: "white",
@@ -52,7 +52,7 @@ function MainPage() {
     history.push("/login");
   };
   const handleClickVisit = () => {
-    history.push("pages/home");
+    history.push("/pages/home");
   };
   return (
     <div>

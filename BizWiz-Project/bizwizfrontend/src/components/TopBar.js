@@ -114,7 +114,7 @@ export default function TopBar() {
   return (
     <div className={classes.root}>
       <AppBar
-        color={barRef.current}
+        color={barRef.current == "barColored" ? "primary" : "transparent"}
         elevation={0}
         className={classes[barRef.current]}
         position="fixed"
@@ -130,7 +130,7 @@ export default function TopBar() {
           </IconButton>
 
           <Typography className={classes.title} variant="h6" noWrap>
-            Markekplace (Slogan)
+            The Slogan
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>

@@ -7,12 +7,12 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Paper from "@material-ui/core/Paper";
+import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router";
-import { useState, useEffect } from "react";
 
 function Copyright() {
   return (
@@ -66,26 +66,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function LoginPage() {
+export default function SignUpPage() {
   const classes = useStyles();
   const history = useHistory();
-
   const handleSignIn = () => {
-    if (values.username == "bizwiz" && values.password == "bizwiz") {
-      history.push("/pages/home");
-    }
-  };
-  const handleSignUp = () => {
-    history.push("/sign-up");
-  };
-
-  const [values, setValues] = React.useState({
-    username: "",
-    password: "",
-  });
-
-  const handleChangeForm = (name) => (event) => {
-    setValues({ ...values, [name]: event.target.value });
+    history.push("/login");
   };
 
   return (
@@ -98,7 +83,7 @@ export default function LoginPage() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Sign Up
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
@@ -111,7 +96,24 @@ export default function LoginPage() {
               name="username"
               autoComplete="email"
               autoFocus
-              onChange={handleChangeForm("username")}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              style={{ width: "50%" }}
+              id="firstname"
+              label="firstname"
+              name="firstname"
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              style={{ width: "50%" }}
+              id="lastname"
+              label="lastname"
+              name="lastname"
             />
             <TextField
               variant="outlined"
@@ -123,34 +125,35 @@ export default function LoginPage() {
               type="password"
               id="password"
               autoComplete="current-password"
-              onChange={handleChangeForm("password")}
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="Confirm Password"
+              label="Confirm Password"
+              type="password"
+              id="confirm_password"
+              autoComplete="current-password"
             />
             <Button
               type="submit"
               fullWidth
               variant="contained"
               color="primary"
-              onClick={handleSignIn}
               className={classes.submit}
               style={{
                 background: "linear-gradient(45deg, #2979ff 30%, #2196f3 90%)",
               }}
             >
-              Sign In
+              Create Your Account
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
+            <Grid container className={classes.back}>
               <Grid item>
-                <Link href="#" variant="body2" onClick={handleSignUp}>
-                  {"Don't have an account? Sign Up"}
+                <Link href="#" variant="body2" onClick={handleSignIn}>
+                  {"Already have an account? Sign in"}
                 </Link>
               </Grid>
             </Grid>

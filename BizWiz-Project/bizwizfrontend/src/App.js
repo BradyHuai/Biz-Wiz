@@ -6,6 +6,7 @@ import { Switch, Route } from "react-router-dom";
 import LoginPage from "./components/LoginPage";
 import Home from "./features/HomePage/home";
 import SideMenu from "./components/SideMenu";
+import SignUpPage from "./components/SignUp";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route exact path="/" component={MainPage} />
         <Route exact path="/login" component={LoginPage} />
         <Route exact path="/pages/home" component={Home} />
+        <Route exact path="/sign-up" component={SignUpPage} />
       </Switch>
     </div>
   );
