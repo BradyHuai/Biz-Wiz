@@ -9,30 +9,26 @@ export default function SideMenu() {
   const useStyles = makeStyles((theme) => ({
     root: {
       marginTop: 200,
+      position: "fixed",
+      maxWidth: 220,
     },
     mainList: {
       margin: 20,
-      maxWidth: 190,
+      maxWidth: 220,
     },
     drawerPaper: {
       backgroundColor: "#e3f2fd",
       marginTop: 80,
-    },
-    paper: {
-      padding: theme.spacing(2),
-      overflow: "auto",
-      flexDirection: "column",
-      backgroundColor: "#bbdefb",
+      maxWidth: 220,
     },
   }));
 
   const theme = useTheme();
   const classes = useStyles(theme);
   return (
-    <div>
+    <div className={classes.root}>
       <CssBaseline />
       <Drawer
-        className={classes.root}
         variant="permanent"
         classes={{
           paper: classes.drawerPaper,

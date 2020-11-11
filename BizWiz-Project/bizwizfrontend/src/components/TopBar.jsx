@@ -3,7 +3,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import InputBase from "@material-ui/core/InputBase";
-import { fade, makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router";
@@ -16,12 +16,10 @@ const useStyles = makeStyles((theme) => ({
   barColored: {
     background: "linear-gradient(45deg, #2979ff 30%, #2196f3 90%)",
     height: 80,
-    position: "absolute",
   },
 
   transparent: {
     height: 80,
-    position: "absolute",
   },
 
   menuButton: {
@@ -38,10 +36,7 @@ const useStyles = makeStyles((theme) => ({
   search: {
     position: "relative",
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    "&:hover": {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
-    },
+    background: "rgba(67, 129, 168,0.5)",
     marginLeft: 0,
     width: "100%",
     [theme.breakpoints.up("sm")]: {
@@ -62,8 +57,6 @@ const useStyles = makeStyles((theme) => ({
     color: "inherit",
   },
   inputInput: {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create("width"),
     width: "100%",
@@ -84,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
     border: 0,
     borderRadius: 10,
     color: "white",
-    margin: 36,
+    marginLeft: 20,
   },
 }));
 
@@ -99,18 +92,12 @@ export default function TopBar() {
   barRef.current = appBarBg;
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (barRef.current === "transparent") {
-        setappBarBg("barColored");
-      } else if (window.location.href !== "http://localhost:3000/") {
-        setappBarBg("barColored");
-      } else {
-        setappBarBg("transparent");
-      }
+    const handleClick = () => {
+      setappBarBg("barColored");
     };
-    document.addEventListener("click", handleScroll);
+    document.addEventListener("click", handleClick);
     return () => {
-      document.removeEventListener("click", handleScroll);
+      document.removeEventListener("click", handleClick);
     };
   }, []);
 
@@ -118,7 +105,12 @@ export default function TopBar() {
   const handleClickLogo = () => {
     history.push("/");
   };
-
+  const handleClickSignin = () => {
+    history.push("/login");
+  };
+  const handleClickVisit = () => {
+    history.push("/portal");
+  };
   return (
     <div className={classes.root}>
       <AppBar
@@ -138,7 +130,7 @@ export default function TopBar() {
           </IconButton>
 
           <Typography className={classes.title} variant="h6" noWrap>
-            The Slogan
+            Biz-Wiz Community Board
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
@@ -153,7 +145,12 @@ export default function TopBar() {
               inputProps={{ "aria-label": "search" }}
             />
           </div>
-          <Button className={classes.buttons}> sign in</Button>
+          <Button className={classes.buttons} onClick={handleClickSignin}>
+            sign in
+          </Button>
+          <Button className={classes.buttons} onClick={handleClickVisit}>
+            get started
+          </Button>
         </Toolbar>
       </AppBar>
     </div>
