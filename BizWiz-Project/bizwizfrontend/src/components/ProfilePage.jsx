@@ -13,26 +13,26 @@ import Container from "@material-ui/core/Container";
 const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: 90,
-    marginLeft: 230,
-    marginRight: 10,
+    marginLeft: 220,
     marginBottom: 10,
     height: "100%",
+    textAlign: "left",
   },
-  icon: {
-    marginRight: theme.spacing(2),
+  paper: {
+    margin: 10,
   },
-  heroContent: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 6),
-    marginTop: 50,
+  postingtitle: {
+    textAlign: "left",
+    padding: 20,
   },
-  heroButtons: {
-    marginTop: theme.spacing(4),
-  },
+
   cardGrid: {
-    paddingTop: theme.spacing(8),
-    paddingBottom: theme.spacing(8),
+    alignItems: "center",
   },
+  item: {
+    margin: 20,
+  },
+
   card: {
     height: "100%",
     display: "flex",
@@ -40,13 +40,6 @@ const useStyles = makeStyles((theme) => ({
   },
   cardMedia: {
     paddingTop: "56.25%", // 16:9
-  },
-  cardContent: {
-    flexGrow: 1,
-  },
-  footer: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(6),
   },
 }));
 
@@ -60,14 +53,41 @@ export default function ProfilePage() {
   const classes = useStyles();
 
   return (
-    <Paper className={classes.root}>
+    <div className={classes.root}>
       <CssBaseline />
+      <Paper className={classes.paper}>
+        <Paper variant="outlined">
+          <img src="/images/bwlogo.png" style={{ margin: 10 }}></img>
+        </Paper>
 
-      <Container className={classes.cardGrid} maxWidth="md">
-        {/* End hero unit */}
-        <Grid container spacing={4}>
+        <Paper variant="outlined">
+          <Typography variant="subtitle1" className={classes.postingtitle}>
+            Website: biz-wiz.ca
+          </Typography>
+        </Paper>
+        <Paper variant="outlined">
+          <Typography variant="subtitle1" className={classes.postingtitle}>
+            Email: bizwiz@bizwiz.ca
+          </Typography>
+        </Paper>
+        <Paper variant="outlined">
+          <Typography variant="subtitle1" className={classes.postingtitle}>
+            Address: 123 Bizwiz Street
+          </Typography>
+        </Paper>
+        <Paper variant="outlined">
+          <Typography variant="subtitle1" className={classes.postingtitle}>
+            Contact: Michelle
+          </Typography>
+        </Paper>
+      </Paper>
+      <Paper className={classes.paper}>
+        <Typography variant="h4" className={classes.postingtitle}>
+          Postings
+        </Typography>
+        <Grid container className={classes.cardGrid} maxWidth="md">
           {cards.map((card) => (
-            <Grid item key={card} xs={12} sm={6} md={4}>
+            <Grid className={classes.item} xs={2} sm={2} md={2}>
               <Card className={classes.card}>
                 <CardMedia
                   className={classes.cardMedia}
@@ -92,7 +112,7 @@ export default function ProfilePage() {
             </Grid>
           ))}
         </Grid>
-      </Container>
-    </Paper>
+      </Paper>
+    </div>
   );
 }
