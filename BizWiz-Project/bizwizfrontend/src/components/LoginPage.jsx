@@ -7,25 +7,12 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Paper from "@material-ui/core/Paper";
-import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router";
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import { useState } from "react";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,10 +29,10 @@ const useStyles = makeStyles((theme) => ({
     backgroundPosition: "center",
   },
   paper: {
-    margin: theme.spacing(8, 4),
+    margin: "120px 32px",
     display: "flex",
-    flexDirection: "column",
     alignItems: "center",
+    flexDirection: "column",
   },
   avatar: {
     margin: theme.spacing(1),
@@ -58,19 +45,28 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-  paper: {
-    margin: "120px 32px",
-    display: "flex",
-    alignItems: "center",
-    flexDirection: "column",
-  },
 }));
 
-export default function SignUpPage() {
+export default function LoginPage() {
   const classes = useStyles();
   const history = useHistory();
+
   const handleSignIn = () => {
-    history.push("/login");
+    if (values.username === "bizwiz" && values.password === "bizwiz") {
+      history.push("/pages/home");
+    }
+  };
+  const handleSignUp = () => {
+    history.push("/sign-up");
+  };
+
+  const [values, setValues] = useState({
+    username: "",
+    password: "",
+  });
+
+  const handleChangeForm = (name) => (event) => {
+    setValues({ ...values, [name]: event.target.value });
   };
 
   return (
@@ -83,7 +79,7 @@ export default function SignUpPage() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign Up
+            Sign in
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
@@ -96,24 +92,7 @@ export default function SignUpPage() {
               name="username"
               autoComplete="email"
               autoFocus
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              style={{ width: "50%" }}
-              id="firstname"
-              label="firstname"
-              name="firstname"
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              style={{ width: "50%" }}
-              id="lastname"
-              label="lastname"
-              name="lastname"
+              onChange={handleChangeForm("username")}
             />
             <TextField
               variant="outlined"
@@ -125,35 +104,34 @@ export default function SignUpPage() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={handleChangeForm("password")}
             />
-
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="Confirm Password"
-              label="Confirm Password"
-              type="password"
-              id="confirm_password"
-              autoComplete="current-password"
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
             />
             <Button
               type="submit"
               fullWidth
               variant="contained"
               color="primary"
+              onClick={handleSignIn}
               className={classes.submit}
               style={{
                 background: "linear-gradient(45deg, #2979ff 30%, #2196f3 90%)",
               }}
             >
-              Create Your Account
+              Sign In
             </Button>
-            <Grid container className={classes.back}>
+            <Grid container>
+              <Grid item xs>
+                <Link href="#" variant="body2">
+                  Forgot password?
+                </Link>
+              </Grid>
               <Grid item>
-                <Link href="#" variant="body2" onClick={handleSignIn}>
-                  {"Already have an account? Sign in"}
+                <Link href="#" variant="body2" onClick={handleSignUp}>
+                  {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
             </Grid>

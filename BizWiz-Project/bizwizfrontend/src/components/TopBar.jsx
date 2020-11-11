@@ -7,6 +7,7 @@ import { fade, makeStyles } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router";
+import { Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -78,12 +79,19 @@ const useStyles = makeStyles((theme) => ({
     height: "70%",
     width: "70%",
   },
+  buttons: {
+    background: "rgba(67, 129, 168,0.5)",
+    border: 0,
+    borderRadius: 10,
+    color: "white",
+    margin: 36,
+  },
 }));
 
 export default function TopBar() {
   const classes = useStyles();
   const [appBarBg, setappBarBg] = useState(
-    window.location.href == "http://localhost:3000/"
+    window.location.href === "http://localhost:3000/"
       ? "transparent"
       : "barColored"
   );
@@ -92,9 +100,9 @@ export default function TopBar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (barRef.current == "transparent") {
+      if (barRef.current === "transparent") {
         setappBarBg("barColored");
-      } else if (window.location.href != "http://localhost:3000/") {
+      } else if (window.location.href !== "http://localhost:3000/") {
         setappBarBg("barColored");
       } else {
         setappBarBg("transparent");
@@ -114,7 +122,7 @@ export default function TopBar() {
   return (
     <div className={classes.root}>
       <AppBar
-        color={barRef.current == "barColored" ? "primary" : "transparent"}
+        color={barRef.current === "barColored" ? "primary" : "transparent"}
         elevation={0}
         className={classes[barRef.current]}
         position="fixed"
@@ -126,7 +134,7 @@ export default function TopBar() {
             color="inherit"
             onClick={handleClickLogo}
           >
-            <img className={classes.icon} src="/images/bwlogo.png" />
+            <img className={classes.icon} src="/images/bwlogo.png" alt="" />
           </IconButton>
 
           <Typography className={classes.title} variant="h6" noWrap>
@@ -145,6 +153,7 @@ export default function TopBar() {
               inputProps={{ "aria-label": "search" }}
             />
           </div>
+          <Button className={classes.buttons}> sign in</Button>
         </Toolbar>
       </AppBar>
     </div>
