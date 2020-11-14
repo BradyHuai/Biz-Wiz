@@ -1,17 +1,20 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
+
 
 # Create your models here.
-class UserProfile(models.Model):
-    user = models.OneToOneField(User,on_delete=models.CASCADE)
+class UserProfile(AbstractUser):
     industry = models.CharField(max_length=80)
     location = models.CharField(max_length=80)
+    is_Business = models.BooleanField(default=False)
+    is_Individual = models.BooleanField(default=False)
 
-class Business(models.Model):
-    profile = models.ForeignKey(UserProfile, related_name='Business',on_delete=models.CASCADE)
+
+class Business(UserProfile):
     business_name = models.CharField(max_length=80)
     short_paragraph = models.TextField()
     image = models.ImageField(upload_to="profileImages",blank=True,null=True) 
 
-class Individual(models.Model):
-    profile = models.ForeignKey(UserProfile, related_name='Individual',on_delete=models.CASCADE)
+
+class Individual(UserProfile):
+    pass
