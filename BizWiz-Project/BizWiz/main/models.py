@@ -11,10 +11,11 @@ class UserProfile(AbstractUser):
 
 
 class Business(UserProfile):
+    user_profile = models.OneToOneField(UserProfile, on_delete=models.CASCADE, primary_key=True)
     business_name = models.CharField(max_length=80)
     short_paragraph = models.TextField()
     image = models.ImageField(upload_to="profileImages",blank=True,null=True) 
 
 
 class Individual(UserProfile):
-    pass
+    user_profile = models.OneToOneField(UserProfile, on_delete=models.CASCADE, primary_key=True)
