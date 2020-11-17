@@ -22,9 +22,9 @@ class BusinessSignUpView(CreateView):
 
 
 def display_business(request, business_name):
-    business = Business.objects.get(business_name=business_name)
-    if business.is_Business:
-        context = {'business': business}
-        return render(request, 'main/business_display.html')
-    else:
+    try:
+        business = Business.objects.get(business_name=business_name)
+    except Business.DoesNotExist:
         return redirect('home')
+    context = {'business': business}
+    return render(request, 'main/business_display.html')
