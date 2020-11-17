@@ -25,4 +25,5 @@ urlpatterns = [
     path('accounts/signup/', main.SignUpView.as_view(), name='signup'),
     path('accounts/signup/business/', business.BusinessSignUpView.as_view(), name='business_signup'),
     path('accounts/signup/individual/', individual.IndividualSignUpView.as_view(), name='individual_signup'),
+    path('view_business/<str:business_name>', business.display_business, name='display_business'),
 ]

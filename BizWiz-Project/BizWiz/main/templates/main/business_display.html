@@ -1,0 +1,13 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+    <h1>Business Info</h1>
+{% endblock %}
+
+{% if business. %}
+    <ul>
+        <li> {{business.industry}} </li>
+    </ul>
+{% else %}
+    <p> No such business is registered</p>
+{% endif %}
