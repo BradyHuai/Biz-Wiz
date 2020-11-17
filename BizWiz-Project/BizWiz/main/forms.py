@@ -5,6 +5,12 @@ from django.db import transaction
 from main.models import Business, UserProfile, Industry
 
 class UserProfileSignUpForm(UserCreationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['email'].required = True
+        self.fields['first_name'].required = True
+        self.fields['last_name'].required = True
+
     class Meta():
         model = UserProfile
         fields = ("email", "first_name", "last_name", "industry", "location",)
@@ -12,12 +18,9 @@ class UserProfileSignUpForm(UserCreationForm):
 
 class BusinessSignUpForm(UserProfileSignUpForm):
     business_name = forms.CharField(max_length=80, required=True)
-    #email = forms.EmailField(required=True)
     short_paragraph = forms.CharField(widget=forms.Textarea,required=False)
     image = forms.ImageField(required=False) 
 
-    # class Meta(UserCreationForm.Meta):
-    #     model = UserProfile
 
     @transaction.atomic
     def save(self):

@@ -107,6 +107,9 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTH_USER_MODEL = "main.UserProfile" 
+AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend',
+                            'main.backends.EmailBackend',
+                          ]
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
@@ -127,8 +130,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# CURRENT_PATH = os.path.abspath(os.path.dirname(__file__).decode('utf-8'))
+LOGOUT_REDIRECT_URL = '/accounts/signup/' # new
 
-# MEDIA_ROOT = os.path.join(CURRENT_PATH, 'media').replace('\\','/')
-
-# MEDIA_URL = '/media/'
