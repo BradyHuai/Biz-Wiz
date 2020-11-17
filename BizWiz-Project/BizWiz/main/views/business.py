@@ -27,4 +27,4 @@ def display_business(request, business_name):
     except Business.DoesNotExist:
         return redirect('home')
     context = {'business': business}
-    return render(request, 'main/business_display.html')
+    return render(request, 'main/business_display.html', context)

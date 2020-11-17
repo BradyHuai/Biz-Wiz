@@ -2,12 +2,13 @@
 
 {% block content %}
     <h1>Business Info</h1>
-{% endblock %}
-
-{% if business. %}
+{% if business %}
     <ul>
-        <li> {{business.industry}} </li>
+        <li><p> Name: {{business.business_name}} </p></li>
+        <li><p> Location: {{business.user_profile.location}} </p></li>
+        <li><p> Industry: {{business.user_profile.industry}}</p></li>
     </ul>
 {% else %}
     <p> No such business is registered</p>
 {% endif %}
+{% endblock %}
