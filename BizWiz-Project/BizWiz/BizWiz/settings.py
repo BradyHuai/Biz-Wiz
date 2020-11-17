@@ -107,8 +107,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTH_USER_MODEL = "main.UserProfile" 
-AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend',
-                            'main.backends.EmailBackend',
+AUTHENTICATION_BACKENDS = ['main.backends.EmailBackend',
+                            'django.contrib.auth.backends.ModelBackend',
                           ]
 
 # Internationalization

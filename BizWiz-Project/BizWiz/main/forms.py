@@ -26,6 +26,7 @@ class BusinessSignUpForm(UserProfileSignUpForm):
     def save(self):
         user = super().save(commit=False)
         user.is_Business = True
+        user.username = self.cleaned_data.get('email')
         user.save()
         business = Business.objects.create(user_profile=user)
         business.business_name = self.cleaned_data.get('business_name')
@@ -41,5 +42,6 @@ class IndividualSignUpForm(UserProfileSignUpForm):
     def save(self):
         user = super().save(commit=False)
         user.is_Individual = True
+        user.username = self.cleaned_data.get('email')
         user.save()
         return user
