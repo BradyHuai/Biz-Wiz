@@ -9,6 +9,7 @@ import SideMenu from "./components/SideMenu";
 import SignUpPage from "./components/SignUp";
 import ProfilePage from "./components/ProfilePage";
 import PortalPage from "./components/PortalPage";
+import Postpage from "./components/PostPage";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route exact path="/pages/home" component={Home} />
         <Route exact path="/sign-up" component={SignUpPage} />
         <Route exact path="/pages/profilepage" component={ProfilePage} />
+        <Route exact path="/pages/post" component={Postpage} />
         <Route exact path="/portal" component={PortalPage} />
       </Switch>
     </div>
