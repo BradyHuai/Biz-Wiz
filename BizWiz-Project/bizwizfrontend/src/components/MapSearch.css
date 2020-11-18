@@ -1,0 +1,49 @@
+.inputField {
+    width: 100%;
+    top: 3rem;
+    position: absolute;
+    z-index: 10;
+    border-radius: 5px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.input { 
+    width: 250px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.submit {
+    width: 75px;
+    height: 40px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: black;
+}
+
+.sideList {
+    height: 75%;
+    top: 10rem;
+    width: 25%;
+    position: absolute;
+    border-radius: 5px;
+    padding: 20px;
+    z-index: 10;
+    box-sizing: border-box;
+    overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.listingBox {
+    border-radius: 25px;
+}
