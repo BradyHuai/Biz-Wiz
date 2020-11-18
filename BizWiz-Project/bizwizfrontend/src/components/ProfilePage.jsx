@@ -49,7 +49,7 @@ const cards = [
   { title: "Need volunteers", desc: "for museum tour" },
   { title: "Need parttime", desc: "for paint job" },
   { title: "Hiring", desc: "event organizer" },
-  { title: "Need a web developer", desc: "for free labour" },
+  { title: "Need web developer", desc: "for free labour" },
 ];
 
 export default function ProfilePage() {
@@ -59,7 +59,7 @@ export default function ProfilePage() {
     history.push("/pages/post");
   };
 
-  const [data, setData] = useState({ cards: [] });
+  const [data, setData] = useState(cards);
   useEffect(() => {
     const url = "http://localhost:8000/user-posting/:id";
     let inputdata;
@@ -68,7 +68,7 @@ export default function ProfilePage() {
       .then((res) => {
         inputdata = result.data;
         this.setState({
-          details: inputdata,
+          inputdata,
         });
       })
       .catch((e) => {
@@ -108,9 +108,16 @@ export default function ProfilePage() {
         <Typography variant="h4" className={classes.postingtitle}>
           Postings
         </Typography>
-        <Grid container className={classes.cardGrid} maxWidth="md">
-          {cards.map((card) => (
-            <Grid className={classes.item} xs={2} sm={2} md={2}>
+        <Grid container className={classes.cardGrid}>
+          {data.map((card) => (
+            <Grid
+              item
+              className={classes.item}
+              xs={2}
+              sm={2}
+              md={2}
+              key={card.title}
+            >
               <Card className={classes.card}>
                 <CardMedia
                   className={classes.cardMedia}
