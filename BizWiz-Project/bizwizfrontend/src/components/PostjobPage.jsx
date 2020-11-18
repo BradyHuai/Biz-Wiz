@@ -1,8 +1,10 @@
-import React, { FunctionComponent, useState } from "react";
-import { Grid, TextField, Divider } from "@material-ui/core";
+import React from "react";
+import { Grid, TextField } from "@material-ui/core";
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-
+import Button from '@material-ui/core/Button';
+import DeleteIcon from '@material-ui/icons/Delete';
+import PostAddIcon from '@material-ui/icons/PostAdd';
 
 const useStyles = makeStyles((theme) => ({
         root: {
@@ -13,16 +15,21 @@ const useStyles = makeStyles((theme) => ({
         textAlign: "left",
         },
         form: {
-            margin: "20px",
+            marginLeft: "auto",
+            marginRight: "auto",
+            marginBottom: "100px",
             height: "100%",
             width: "80%",
         },
         boxText: {
             marginTop: "20px"
-        }
+        },
+        button: {
+            margin: theme.spacing(1),
+            float: "right",
+        },
     })
 );
-
 
 export default function Postjob() {
     const classes = useStyles();
@@ -31,7 +38,7 @@ export default function Postjob() {
         <div className={classes.root}>
             <form autoComplete="off" className={classes.form}>
                 <Typography variant="h6">
-                    Basic Information
+                    BASIC INFORMATION
                 </Typography>
                 <Grid container spacing={3}>
                     <Grid item md={6} sm={12} xs={12}>
@@ -49,7 +56,7 @@ export default function Postjob() {
                 </Grid>
                 <br />
                 <Typography variant="h6">
-                    More about this job
+                    MORE ABOUT THIS JOB
                 </Typography>
                 <Grid container spacing={3}>
                     <Grid item md={6} sm={12} xs={12}>
@@ -59,9 +66,25 @@ export default function Postjob() {
                         <TextField label="Application link" variant="outlined" fullWidth required />
                     </Grid>
                 </Grid>
-                <TextField className={classes.boxText} label="Detailed description about this job" variant="outlined" fullWidth multiline rows={4}/>
-                <TextField className={classes.boxText} label="Job requirements" variant="outlined" fullWidth multiline rows={4}/>
-                <TextField className={classes.boxText} label="Additional notes" variant="outlined" fullWidth multiline rows={4}/>
+                <TextField className={classes.boxText} label="Detailed description about this job" variant="outlined" fullWidth multiline rows={8}/>
+                <TextField className={classes.boxText} label="Job requirements" variant="outlined" fullWidth multiline rows={8}/>
+                <TextField className={classes.boxText} label="Additional notes" variant="outlined" fullWidth multiline rows={8}/>
+                <Button
+                    variant="contained"
+                    color="secondary"
+                    className={classes.button}
+                    startIcon={<DeleteIcon />}
+                >
+                    Delete
+                </Button>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.button}
+                    startIcon={<PostAddIcon />}
+                >
+                    POST
+                </Button>
             </form>
         </div>
     );
