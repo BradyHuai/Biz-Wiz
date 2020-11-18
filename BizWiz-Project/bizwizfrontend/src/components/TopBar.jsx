@@ -106,10 +106,10 @@ export default function TopBar() {
     history.push("/");
   };
   const handleClickSignin = () => {
-    history.push("/login");
-  };
-  const handleClickVisit = () => {
     history.push("/portal");
+  };
+  const handleClickStart = () => {
+    history.push("/start");
   };
   return (
     <div className={classes.root}>
@@ -148,7 +148,7 @@ export default function TopBar() {
           <Button className={classes.buttons} onClick={handleClickSignin}>
             sign in
           </Button>
-          <Button className={classes.buttons} onClick={handleClickVisit}>
+          <Button className={classes.buttons} onClick={handleClickStart}>
             get started
           </Button>
         </Toolbar>

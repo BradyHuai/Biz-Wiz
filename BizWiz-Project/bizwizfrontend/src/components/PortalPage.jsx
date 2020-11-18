@@ -51,6 +51,9 @@ function PortalPage() {
   const classes = myStyles();
   const history = useHistory();
   const handleClickVisit = () => {
+    history.push("/login");
+  };
+  const handleClickGuest = () => {
     history.push("/pages/home");
   };
   return (
@@ -70,7 +73,7 @@ function PortalPage() {
         <Button className={classes.buttons} onClick={handleClickVisit}>
           Individual searching for work
         </Button>
-        <Button className={classes.buttons} onClick={handleClickVisit}>
+        <Button className={classes.buttons} onClick={handleClickGuest}>
           Guest user
         </Button>
       </Paper>

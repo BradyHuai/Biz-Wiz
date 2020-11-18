@@ -15,7 +15,9 @@ import Announcements from "./announcements";
 import Posts from "./posts";
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
+  root: {
+    marginTop: 90,
+  },
   mainList: {
     margin: 20,
     maxWidth: 190,
