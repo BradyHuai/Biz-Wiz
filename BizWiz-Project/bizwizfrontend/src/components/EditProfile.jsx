@@ -22,13 +22,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const cards = [
-  { title: "Need volunteers", desc: "for museum tour" },
-  { title: "Need parttime", desc: "for paint job" },
-  { title: "Hiring", desc: "event organizer" },
-  { title: "Need a web developer", desc: "for free labour" },
-];
-
 export default function EditProfile() {
   const classes = useStyles();
 
