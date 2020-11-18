@@ -18,7 +18,7 @@ export default function MainListItems() {
   };
 
   const handleClickSearch = () => {
-    history.push("/pages/search");
+    history.push("/search");
   };
 
   const handleClickEditProfile = () => {

@@ -8,6 +8,9 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
 import { Typography, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { useHistory } from "react-router";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,6 +54,27 @@ const cards = [
 
 export default function ProfilePage() {
   const classes = useStyles();
+  const history = useHistory();
+  const handleViewPost = () => {
+    history.push("/pages/post");
+  };
+
+  const [data, setData] = useState({ cards: [] });
+  useEffect(() => {
+    const url = "http://localhost:8000/user-posting/:id";
+    let inputdata;
+    const result = axios
+      .get(url)
+      .then((res) => {
+        inputdata = result.data;
+        this.setState({
+          details: inputdata,
+        });
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  });
 
   return (
     <div className={classes.root}>
@@ -100,7 +124,7 @@ export default function ProfilePage() {
                   <Typography>{card.desc}</Typography>
                 </CardContent>
                 <CardActions>
-                  <Button size="small" color="primary">
+                  <Button size="small" color="primary" onClick={handleViewPost}>
                     View
                   </Button>
                   <Button size="small" color="primary">
