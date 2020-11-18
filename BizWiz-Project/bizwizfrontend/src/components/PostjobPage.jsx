@@ -1,4 +1,5 @@
 import React from "react";
+import CssBaseline from "@material-ui/core/CssBaseline";
 import { Grid, TextField } from "@material-ui/core";
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -36,6 +37,7 @@ export default function Postjob() {
 
     return (
         <div className={classes.root}>
+            <CssBaseline />
             <form autoComplete="off" className={classes.form}>
                 <Typography variant="h6">
                     BASIC INFORMATION

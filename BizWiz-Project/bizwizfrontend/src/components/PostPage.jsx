@@ -1,6 +1,9 @@
 import React from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { makeStyles } from "@material-ui/core/styles";
+import Button from '@material-ui/core/Button';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,7 +20,9 @@ const useStyles = makeStyles((theme) => ({
     border: "1px solid",
     borderCollapse: "separate",
     lineHeight: "15px",
-    margin: "20px",
+    marginLeft: "auto",
+    marginRight: "auto",
+    marginBottom: "20px",
   },
   tableHead: {
     display: "table-header-group",
@@ -52,7 +57,17 @@ const useStyles = makeStyles((theme) => ({
     borderTop: "1px solid #ddd",
     borderLeft: "1px solid #ddd",
     width: "75%",
-},
+  },
+  button: {
+    margin: theme.spacing(1),
+    float: "right",
+  },
+  buttons: {
+    width: "80%",
+    marginLeft: "auto",
+    marginRight: "auto",
+    marginBottom: "20px",
+  }
 }));
 
 export default function PostPage() {
@@ -163,6 +178,24 @@ export default function PostPage() {
               </tr>
             </tbody>
       </table>
+      <div className = {classes.buttons}>
+        <Button
+          variant="contained"
+          color="default"
+          className={classes.button}
+          startIcon={<ExitToAppIcon />}
+        >
+          BACK
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          className={classes.button}
+          startIcon={<FavoriteIcon />}
+        >
+          SAVE
+        </Button>
+      </div>
     </div>
   );
 }
