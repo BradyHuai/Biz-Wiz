@@ -57,9 +57,8 @@ export default function ProfilePage() {
       <CssBaseline />
       <Paper className={classes.paper}>
         <Paper variant="outlined">
-          <img src="/images/bwlogo.png" style={{ margin: 10 }}></img>
+          <img src="/images/bwlogo.png" style={{ margin: 10 }} alt=""></img>
         </Paper>
-
         <Paper variant="outlined">
           <Typography variant="subtitle1" className={classes.postingtitle}>
             Website: biz-wiz.ca

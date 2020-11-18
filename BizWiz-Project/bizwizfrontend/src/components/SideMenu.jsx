@@ -1,7 +1,7 @@
 import React from "react";
 import List from "@material-ui/core/List";
 import Drawer from "@material-ui/core/Drawer";
-import { mainListItems } from "../features/HomePage/sidebar";
+import MainListItems from "../features/HomePage/sidebar";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 
@@ -34,7 +34,9 @@ export default function SideMenu() {
           paper: classes.drawerPaper,
         }}
       >
-        <List className={classes.mainList}>{mainListItems}</List>
+        <List className={classes.mainList}>
+          <MainListItems />
+        </List>
       </Drawer>
     </div>
   );

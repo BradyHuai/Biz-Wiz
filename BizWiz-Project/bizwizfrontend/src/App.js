@@ -10,6 +10,7 @@ import SignUpPage from "./components/SignUp";
 import ProfilePage from "./components/ProfilePage";
 import PortalPage from "./components/PortalPage";
 import Postpage from "./components/PostPage";
+import EditProfile from "./components/EditProfile";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route exact path="/pages/profilepage" component={ProfilePage} />
         <Route exact path="/pages/post" component={Postpage} />
         <Route exact path="/portal" component={PortalPage} />
+        <Route exact path="/pages/edit" component={EditProfile} />
       </Switch>
     </div>
   );
