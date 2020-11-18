@@ -3,6 +3,7 @@ import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { Typography, Paper, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { useState } from "react";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,6 +32,17 @@ const cards = [
 export default function EditProfile() {
   const classes = useStyles();
 
+  const [values, setValues] = useState({
+    address: "",
+    email: "",
+    contact: "",
+    website: "",
+  });
+
+  const handleChangeForm = (name) => (event) => {
+    setValues({ ...values, [name]: event.target.value });
+  };
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -47,6 +59,7 @@ export default function EditProfile() {
           <TextField
             defaultValue={"bizwiz.ca"}
             className={classes.postingtitle}
+            onChange={handleChangeForm("website")}
           ></TextField>
           <Button className={classes.postingtitle}>Save</Button>
         </Paper>
@@ -57,6 +70,7 @@ export default function EditProfile() {
           <TextField
             defaultValue={"bizwiz@bizwiz.ca"}
             className={classes.postingtitle}
+            onChange={handleChangeForm("email")}
           ></TextField>
           <Button className={classes.postingtitle}>Save</Button>
         </Paper>
@@ -67,6 +81,7 @@ export default function EditProfile() {
           <TextField
             defaultValue={"123 Bizwiz Street"}
             className={classes.postingtitle}
+            onChange={handleChangeForm("address")}
           ></TextField>
           <Button className={classes.postingtitle}>Save</Button>
         </Paper>
@@ -77,6 +92,7 @@ export default function EditProfile() {
           <TextField
             defaultValue={"Michelle"}
             className={classes.postingtitle}
+            onChange={handleChangeForm("contact")}
           ></TextField>
           <Button className={classes.postingtitle}>Save</Button>
         </Paper>
