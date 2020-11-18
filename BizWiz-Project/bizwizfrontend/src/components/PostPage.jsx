@@ -1,6 +1,5 @@
 import React from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import { Typography, Paper, Collapse } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -13,11 +12,12 @@ const useStyles = makeStyles((theme) => ({
   },
   table: {
     borderRadius: "0px 0px 0px 0px",
-    width: "100%",
+    width: "80%",
     display: "table",
     border: "1px solid",
     borderCollapse: "separate",
     lineHeight: "15px",
+    margin: "20px",
   },
   tableHead: {
     display: "table-header-group",
@@ -37,13 +37,22 @@ const useStyles = makeStyles((theme) => ({
     verticalAlign: "top",
     display: "table-row",
   },
-  cell: {
+  cell1: {
       display: "table-cell",
       padding: "4px",
       lineHeight: "18px",
       borderTop: "1px solid #ddd",
       borderLeft: "1px solid #ddd",
+      width: "25%",
   },
+  cell2: {
+    display: "table-cell",
+    padding: "4px",
+    lineHeight: "18px",
+    borderTop: "1px solid #ddd",
+    borderLeft: "1px solid #ddd",
+    width: "75%",
+},
 }));
 
 export default function PostPage() {
@@ -60,24 +69,24 @@ export default function PostPage() {
           </thead>
           <tbody className={classes.tableBody}>
               <tr className={classes.row}>
-                  <td className={classes.cell} width="25%">Position type:</td>
-                  <td className={classes.cell} width="75%">Full-time</td>
+                  <th className={classes.cell1}>Position type:</th>
+                  <td className={classes.cell2}>Full-time</td>
               </tr>
               <tr className={classes.row}>
-                  <td className={classes.cell} width="25%">Job Title:</td>
-                  <td className={classes.cell} width="75%">Full Stact Developer</td>
+                  <th className={classes.cell1}>Job Title:</th>
+                  <td className={classes.cell2}>Full Stack Developer</td>
               </tr>
               <tr className={classes.row}>
-                  <td className={classes.cell} width="25%">Job Location:</td>
-                  <td className={classes.cell} width="75%">123123 Street Toronto</td>
+                  <th className={classes.cell1}>Job Location:</th>
+                  <td className={classes.cell2}>123123 Street Toronto</td>
               </tr>
               <tr className={classes.row}>
-                  <td className={classes.cell} width="25%">Salary:</td>
-                  <td className={classes.cell} width="75%">$50k annually</td>
+                  <th className={classes.cell1}>Salary:</th>
+                  <td className={classes.cell2}>$50k annually</td>
               </tr>
               <tr className={classes.row}>
-                  <td className={classes.cell} width="25%">About company:</td>
-                  <td className={classes.cell} width="75%">
+                  <th className={classes.cell1}>About company:</th>
+                  <td className={classes.cell2}>
                       <p>
                         Our company is a deep technology start-up dedicated to developing 
                         advanced sensing and control solutions for electrochemical system 
@@ -88,8 +97,8 @@ export default function PostPage() {
                   </td>
               </tr>
               <tr className={classes.row}>
-                  <td className={classes.cell} width="25%">Job description:</td>
-                  <td className={classes.cell} width="75%">
+                  <th className={classes.cell1}>Job description:</th>
+                  <td className={classes.cell2}>
                       <p>
                         We are looking for a skilled, curious, and driven full stack developer to lead the development 
                         of our front-end web architecture and to ensure the responsiveness of our applications as we 
@@ -98,8 +107,8 @@ export default function PostPage() {
                   </td>
               </tr>
               <tr className={classes.row}>
-                  <td className={classes.cell} width="25%">Job Requirements:</td>
-                  <td className={classes.cell} width="75%">
+                  <th className={classes.cell1}>Job Requirements:</th>
+                  <td className={classes.cell2}>
                       <strong>Requirements:</strong>
                       <ul>
                           <li>A B.S./B.A., M.Sc., or PhD in computer science, math, engineering, or related field (min GPA 3.5/4)</li>
@@ -122,6 +131,20 @@ export default function PostPage() {
                     <th>APPLICATION INFORMATION</th>
               </tr>
             </thead>
+            <tbody>
+                <tr className={classes.row}>
+                    <th className={classes.cell1}>Application Deadline:</th>
+                    <td className={classes.cell2}></td>
+                </tr>
+                <tr className={classes.row}>
+                  <th className={classes.cell1}>Application Website:</th>
+                  <td className={classes.cell2}></td>
+              </tr>
+              <tr className={classes.row}>
+                  <th className={classes.cell1}>Additional Information:</th>
+                  <td className={classes.cell2}></td>
+              </tr>
+            </tbody>
       </table>
       <table className = {classes.table}>
             <thead className={classes.tableHead}>
@@ -129,6 +152,16 @@ export default function PostPage() {
                     <th>ORGANIZATION INFORMATION</th>
               </tr>
             </thead>
+            <tbody>
+            <tr className={classes.row}>
+                  <th className={classes.cell1}>Organization:</th>
+                  <td className={classes.cell2}>Google</td>
+              </tr>
+              <tr className={classes.row}>
+                  <th className={classes.cell1}>Website:</th>
+                  <td className={classes.cell2}><a href="url">google.com</a></td>
+              </tr>
+            </tbody>
       </table>
     </div>
   );
