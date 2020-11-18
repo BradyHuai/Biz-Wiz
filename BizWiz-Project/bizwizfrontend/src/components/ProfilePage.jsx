@@ -67,7 +67,7 @@ export default function ProfilePage() {
       .get(url)
       .then((res) => {
         inputdata = result.data;
-        this.setState({
+        setData({
           inputdata,
         });
       })
