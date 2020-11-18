@@ -20,6 +20,10 @@ export default function MainListItems() {
   const handleClickSearch = () => {
     history.push("/pages/search");
   };
+
+  const handleClickEditProfile = () => {
+    history.push("/pages/edit");
+  };
   return (
     <div>
       <ListItem button onClick={handleClickDashboard}>
@@ -40,11 +44,11 @@ export default function MainListItems() {
         </ListItemIcon>
         <ListItemText primary="Profile" />
       </ListItem>
-      <ListItem button>
+      <ListItem button onClick={handleClickEditProfile}>
         <ListItemIcon>
           <BarChartIcon />
         </ListItemIcon>
-        <ListItemText primary="Reports" />
+        <ListItemText primary="Edit Profile" />
       </ListItem>
     </div>
   );

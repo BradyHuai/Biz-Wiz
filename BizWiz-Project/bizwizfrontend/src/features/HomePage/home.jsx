@@ -1,8 +1,5 @@
 import React from "react";
-import List from "@material-ui/core/List";
-import Drawer from "@material-ui/core/Drawer";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import { mainListItems } from "./sidebar";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
