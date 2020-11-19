@@ -46,10 +46,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const cards = [
-  { title: "Need volunteers", desc: "for museum tour" },
-  { title: "Need parttime", desc: "for paint job" },
-  { title: "Hiring", desc: "event organizer" },
-  { title: "Need web developer", desc: "for free labour" },
+  { title: "Need volunteers", desc: "for museum tour", id: 1 },
+  { title: "Need parttime", desc: "for paint job", id: 2 },
+  { title: "Hiring", desc: "event organizer", id: 3 },
+  { title: "Need web developer", desc: "for free labour", id: 4 },
 ];
 
 export default function ProfilePage() {
@@ -61,12 +61,12 @@ export default function ProfilePage() {
 
   const [data, setData] = useState(cards);
   useEffect(() => {
-    const url = "http://localhost:8000/user-posting/:id";
+    const url = "http://localhost:8000/api/user";
     let inputdata;
-    const result = axios
+    axios
       .get(url)
       .then((res) => {
-        inputdata = result.data;
+        inputdata = res.data;
         setData({
           inputdata,
         });
@@ -85,7 +85,7 @@ export default function ProfilePage() {
         </Paper>
         <Paper variant="outlined">
           <Typography variant="subtitle1" className={classes.postingtitle}>
-            Website: biz-wiz.ca
+            Website: {data.id}
           </Typography>
         </Paper>
         <Paper variant="outlined">
@@ -116,7 +116,7 @@ export default function ProfilePage() {
               xs={2}
               sm={2}
               md={2}
-              key={card.title}
+              key={card.id}
             >
               <Card className={classes.card}>
                 <CardMedia
