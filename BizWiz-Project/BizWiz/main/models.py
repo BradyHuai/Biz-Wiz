@@ -9,10 +9,26 @@ class Industry(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = "Industry"
+        verbose_name_plural = "Industries"
+
+class Location(models.Model):
+    address = models.CharField("Address line 1", max_length=1024)
+    zip_code = models.CharField("ZIP / Postal code",max_length=12)
+    city = models.CharField("City",max_length=1024)
+
+    class Meta:
+        verbose_name = "Location Address"
+        verbose_name_plural = "Location Addresses"
+
+    def __str__(self):
+        return "{}\n{}\n{}".format(self.address, self.zip_code, self.city)
+
 
 class UserProfile(AbstractUser):
     industry = models.ForeignKey(Industry, on_delete=models.CASCADE, null=True)
-    location = models.CharField(max_length=80)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE, null=True)
     is_Business = models.BooleanField(default=False)
     is_Individual = models.BooleanField(default=False)
 

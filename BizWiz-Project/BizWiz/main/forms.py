@@ -5,6 +5,10 @@ from django.db import transaction
 from main.models import Business, UserProfile, Industry
 
 class UserProfileSignUpForm(UserCreationForm):
+    address = forms.CharField(max_length=1024,required=True)
+    zip_code = forms.CharField(max_length=12,required=True)
+    city = forms.CharField(max_length=1024,required=True)
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['email'].required = True
@@ -27,6 +31,10 @@ class BusinessSignUpForm(UserProfileSignUpForm):
         user = super().save(commit=False)
         user.is_Business = True
         user.username = self.cleaned_data.get('email')
+        location = Location.objects.create(address=self.cleaned_data.get('address'),
+                                           zip_code=self.cleaned_data.get('zip_code'),
+                                           city=self.cleaned_data.get('city'))
+        user.location = location
         user.save()
         business = Business.objects.create(user_profile=user)
         business.business_name = self.cleaned_data.get('business_name')
@@ -43,5 +51,9 @@ class IndividualSignUpForm(UserProfileSignUpForm):
         user = super().save(commit=False)
         user.is_Individual = True
         user.username = self.cleaned_data.get('email')
+        location = Location.objects.create(address=self.cleaned_data.get('address'),
+                                           zip_code=self.cleaned_data.get('zip_code'),
+                                           city=self.cleaned_data.get('city'))
+        user.location = location
         user.save()
         return user
