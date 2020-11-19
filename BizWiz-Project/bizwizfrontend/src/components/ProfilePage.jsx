@@ -71,23 +71,21 @@ export default function ProfilePage() {
     history.push("/pages/post");
   };
 
-  const [data, setData] = useState(posts);
+  const [data, setData] = useState([{}]);
   useEffect(() => {
-    const url = "http://localhost:8000/api/user";
+    const url = "http://localhost:8000/api/user/";
     let inputdata;
     axios
       .get(url)
       .then((res) => {
-        inputdata = res.data;
-        setData({
-          inputdata,
-        });
+        setData(res.data);
       })
       .catch((e) => {
         console.log(e);
       });
-  });
+  }, []);
 
+  console.log(data);
   return (
     <div className={classes.root}>
       <CssBaseline />
