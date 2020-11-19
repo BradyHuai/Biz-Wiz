@@ -68,22 +68,36 @@ export default function ProfilePage() {
     history.push("/pages/post");
   };
 
-  const [data, setData] = useState([{}]);
+  const [data, setData] = useState({ userid: "", posts: [], userinfo: {} });
   useEffect(() => {
-    const url = "http://localhost:8000/api/user/";
-    let inputdata;
+    const id_url = "http://localhost:8000/api/user/";
     axios
-      .get(url)
+      .get(id_url)
       .then((res) => {
-        setData(res.data);
+        setData({ ...data, userid: res.data });
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+
+    const posts_url = "http://localhost:8000/api/profile/";
+    axios({
+      method: "get",
+      url: posts_url,
+      data: data.userid,
+    })
+      .then((res) => {
+        setData({
+          ...data,
+          posts: res.data.posts,
+          userinfo: res.data.userinfo,
+        });
       })
       .catch((e) => {
         console.log(e);
       });
   }, []);
 
-  console.log(data);
-  // if (!data.length) return <span>loading...</span>;
   return (
     <div className={classes.root}>
       <CssBaseline />
