@@ -69,35 +69,46 @@ export default function ProfilePage() {
   };
 
   const [data, setData] = useState({ userid: "", posts: [], userinfo: {} });
-  useEffect(async () => {
-    const id_url = "http://localhost:8000/api/user/";
-    await axios
-      .get(id_url)
-      .then((res) => {
-        setData({ ...data, userid: res.data });
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+  useEffect(() => {
+    (async () => {
+      const id_url = "http://localhost:8000/api/user/";
+      const ret_id = await axios.get(id_url);
+      // .then((res) => {
+      //   setData({ ...data, userid: res.data });
+      // })
+      // .catch((e) => {
+      //   console.log(e);
+      // });
 
-    const posts_url = "http://localhost:8000/api/profile/";
-    await axios({
-      method: "get",
-      url: posts_url,
-      data: data.userid,
-    })
-      .then((res) => {
-        setData({
-          ...data,
-          posts: res.data.posts,
-          userinfo: res.data.userinfo,
-        });
-      })
-      .catch((e) => {
-        console.log(e);
+      const posts_url = "http://localhost:8000/api/profile/";
+      const profile = await axios({
+        method: "get",
+        url: posts_url,
+        data: ret_id,
       });
+      // .then((res) => {
+      //   setData({
+      //     ...data,
+      //     posts: res.data.posts,
+      //     userinfo: res.data.userinfo,
+      //   });
+      // })
+      // .catch((e) => {
+      //   console.log(e);
+      // });
+      console.log(data);
+      setData({
+        posts: profile.data.posts,
+        userinfo: profile.data.userinfo,
+        userid: ret_id.data.id,
+      });
+    })();
+    // eslint-disable-next-line
   }, []);
 
+  if (data.userinfo === {}) {
+    return <span>waiting... </span>;
+  }
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -107,22 +118,22 @@ export default function ProfilePage() {
         </Paper>
         <Paper variant="outlined">
           <Typography variant="subtitle1" className={classes.postingtitle}>
-            Website: {userinfo.website}
+            Website: {data.userinfo.website}
           </Typography>
         </Paper>
         <Paper variant="outlined">
           <Typography variant="subtitle1" className={classes.postingtitle}>
-            Email: {userinfo.email}
+            Email: {data.userinfo.email}
           </Typography>
         </Paper>
         <Paper variant="outlined">
           <Typography variant="subtitle1" className={classes.postingtitle}>
-            Address: {userinfo.address}
+            Address: {data.userinfo.address}
           </Typography>
         </Paper>
         <Paper variant="outlined">
           <Typography variant="subtitle1" className={classes.postingtitle}>
-            Contact: {userinfo.first_name} {userinfo.last_name}
+            Contact: {data.userinfo.first_name} {userinfo.last_name}
           </Typography>
         </Paper>
       </Paper>

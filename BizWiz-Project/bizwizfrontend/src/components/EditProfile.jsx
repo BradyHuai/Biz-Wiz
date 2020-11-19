@@ -45,7 +45,7 @@ export default function EditProfile() {
       data: values,
     })
       .then((res) => {
-        if (res.status == 200) {
+        if (res.status === 200) {
           console.log("success");
         } else {
           console.log(res.status);
