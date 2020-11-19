@@ -26,7 +26,9 @@ SECRET_KEY = '(inm*ldx!p^0y8!@ovv@lv(=8$(dks=4d4_z+8158a82lcifou'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS=['*']
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 
 # Application definition
@@ -51,7 +53,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "corsheaders.middleware.CorsMiddleware"
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'BizWiz.urls'
@@ -83,7 +86,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'bizwiz', 
         'USER': 'postgres', 
-        'PASSWORD': 'bizwiz123',
+        'PASSWORD': 'fox12373POS',
         'HOST': '127.0.0.1', 
         'PORT': '5432',
     }
@@ -134,5 +137,5 @@ STATIC_URL = '/static/'
 
 LOGOUT_REDIRECT_URL = '/accounts/signup/' # new
 
-CORS_ORIGIN_ALLOW_ALL = True
+
 
