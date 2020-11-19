@@ -52,18 +52,15 @@ const posts = [
   { title: "Need web developer", desc: "for free labour", id: 4 },
 ];
 
-const userinfo = [
-  {
-    first_name: "Biz",
-    last_name: "Wiz",
-    id: 1,
-    email: "bw@bw.com",
-    phone: "123456",
-    address: "123 bw st",
-    website: "biz-wiz.ca",
-  },
-];
-
+const userinfo = {
+  first_name: "Biz",
+  last_name: "Wiz",
+  id: 1,
+  email: "bw@bw.com",
+  phone: "123456",
+  address: "123 bw st",
+  website: "biz-wiz.ca",
+};
 export default function ProfilePage() {
   const classes = useStyles();
   const history = useHistory();
@@ -86,6 +83,7 @@ export default function ProfilePage() {
   }, []);
 
   console.log(data);
+  // if (!data.length) return <span>loading...</span>;
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -95,22 +93,22 @@ export default function ProfilePage() {
         </Paper>
         <Paper variant="outlined">
           <Typography variant="subtitle1" className={classes.postingtitle}>
-            Website: {data.id}
+            Website: {userinfo.website}
           </Typography>
         </Paper>
         <Paper variant="outlined">
           <Typography variant="subtitle1" className={classes.postingtitle}>
-            Email: bizwiz@bizwiz.ca
+            Email: {userinfo.email}
           </Typography>
         </Paper>
         <Paper variant="outlined">
           <Typography variant="subtitle1" className={classes.postingtitle}>
-            Address: 123 Bizwiz Street
+            Address: {userinfo.address}
           </Typography>
         </Paper>
         <Paper variant="outlined">
           <Typography variant="subtitle1" className={classes.postingtitle}>
-            Contact: Michelle
+            Contact: {userinfo.first_name} {userinfo.last_name}
           </Typography>
         </Paper>
       </Paper>

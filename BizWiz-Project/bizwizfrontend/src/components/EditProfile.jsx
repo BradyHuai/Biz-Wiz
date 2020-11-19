@@ -4,6 +4,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import { Typography, Paper, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useState } from "react";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,6 +36,14 @@ export default function EditProfile() {
   const handleChangeForm = (name) => (event) => {
     setValues({ ...values, [name]: event.target.value });
   };
+  const handleSave = (name) => (event) => {
+    const url = "http://localhost:8000/api/profile-change/";
+    axios({
+      method: "post",
+      url: url,
+      data: values,
+    });
+  };
 
   return (
     <div className={classes.root}>
@@ -42,7 +51,6 @@ export default function EditProfile() {
       <Paper className={classes.paper}>
         <Paper variant="outlined">
           <img src="/images/bwlogo.png" style={{ margin: 10 }} alt=""></img>
-          <Button>Edit</Button>
         </Paper>
 
         <Paper variant="outlined">
@@ -54,7 +62,6 @@ export default function EditProfile() {
             className={classes.postingtitle}
             onChange={handleChangeForm("website")}
           ></TextField>
-          <Button className={classes.postingtitle}>Save</Button>
         </Paper>
         <Paper variant="outlined">
           <Typography variant="subtitle1" className={classes.postingtitle}>
@@ -65,7 +72,6 @@ export default function EditProfile() {
             className={classes.postingtitle}
             onChange={handleChangeForm("email")}
           ></TextField>
-          <Button className={classes.postingtitle}>Save</Button>
         </Paper>
         <Paper variant="outlined">
           <Typography variant="subtitle1" className={classes.postingtitle}>
@@ -76,7 +82,6 @@ export default function EditProfile() {
             className={classes.postingtitle}
             onChange={handleChangeForm("address")}
           ></TextField>
-          <Button className={classes.postingtitle}>Save</Button>
         </Paper>
         <Paper variant="outlined">
           <Typography variant="subtitle1" className={classes.postingtitle}>
@@ -87,7 +92,15 @@ export default function EditProfile() {
             className={classes.postingtitle}
             onChange={handleChangeForm("contact")}
           ></TextField>
-          <Button className={classes.postingtitle}>Save</Button>
+        </Paper>
+        <Paper variant="outlined">
+          <Button
+            className={classes.postingtitle}
+            style={{ backgroundColor: "#e3f2fd", margin: 10 }}
+            onClick={handleSave}
+          >
+            Save
+          </Button>
         </Paper>
       </Paper>
     </div>
