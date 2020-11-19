@@ -1,14 +1,41 @@
-from django.shortcuts import redirect, render
-from django.views.generic import TemplateView
-from django.contrib.auth.models import auth
-from django.contrib import messages
-import json
-from django.http import HttpResponse
+from rest_framework import generics, permissions
+from rest_framework.response import Response
+from knox.models import AuthToken
+from ..serializers import UserSerializer, BusinessRegisterSerializer, LoginSerializer
 
+# Register API
+class RegisterBusinessAPI(generics.GenericAPIView):
+    serializer_class = BusinessRegisterSerializer
 
-def cur_user(request):
-    if request.method == "GET":
-        user = request.user
-        data = {'id': user.id}
-        dump = json.dumps(data)
-        return HttpResponse(dump, content_type='application/json')
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        return Response({
+            "user": UserSerializer(user, context=self.get_serializer_context()).data,
+            "token": AuthToken.objects.create(user)[1]
+        })
+
+# Login API
+class LoginAPI(generics.GenericAPIView):
+    serializer_class = LoginSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data
+        _, token = AuthToken.objects.create(user)
+        return Response({
+        "user": UserSerializer(user, context=self.get_serializer_context()).data,
+        "token": token
+        })
+
+# Get User API
+class UserAPI(generics.RetrieveAPIView):
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
+    serializer_class = UserSerializer
+
+    def get_object(self):
+        return self.request.user

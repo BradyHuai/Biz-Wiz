@@ -42,8 +42,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crispy_forms',
-    "corsheaders",
+    'corsheaders',
+    'rest_framework',
+    'knox',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': ('knox.auth.TokenAuthentication',)
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -86,7 +92,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'bizwiz', 
         'USER': 'postgres', 
-        'PASSWORD': 'fox12373POS',
+        'PASSWORD': 'bizwiz123',
         'HOST': '127.0.0.1', 
         'PORT': '5432',
     }
