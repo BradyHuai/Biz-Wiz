@@ -36,13 +36,24 @@ export default function EditProfile() {
   const handleChangeForm = (name) => (event) => {
     setValues({ ...values, [name]: event.target.value });
   };
-  const handleSave = (name) => (event) => {
+  const handleSave = () => {
     const url = "http://localhost:8000/api/profile-change/";
+
     axios({
-      method: "post",
+      method: "patch",
       url: url,
       data: values,
-    });
+    })
+      .then((res) => {
+        if (res.status == 200) {
+          console.log("success");
+        } else {
+          console.log(res.status);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   return (
