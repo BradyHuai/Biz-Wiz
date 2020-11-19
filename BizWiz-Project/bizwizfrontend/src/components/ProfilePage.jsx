@@ -69,9 +69,9 @@ export default function ProfilePage() {
   };
 
   const [data, setData] = useState({ userid: "", posts: [], userinfo: {} });
-  useEffect(() => {
+  useEffect(async () => {
     const id_url = "http://localhost:8000/api/user/";
-    axios
+    await axios
       .get(id_url)
       .then((res) => {
         setData({ ...data, userid: res.data });
@@ -81,7 +81,7 @@ export default function ProfilePage() {
       });
 
     const posts_url = "http://localhost:8000/api/profile/";
-    axios({
+    await axios({
       method: "get",
       url: posts_url,
       data: data.userid,
