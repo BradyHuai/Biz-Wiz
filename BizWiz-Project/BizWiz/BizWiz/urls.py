@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from main.views import main, business, individual
+from main.views import main, business, individual, api
 
 urlpatterns = [
     path('home/', main.home, name='home'),
@@ -26,4 +26,5 @@ urlpatterns = [
     path('accounts/signup/business/', business.BusinessSignUpView.as_view(), name='business_signup'),
     path('accounts/signup/individual/', individual.IndividualSignUpView.as_view(), name='individual_signup'),
     path('view_business/<str:business_name>', business.display_business, name='display_business'),
+    path('api/user', api.cur_user, name='cur user'),
 ]
