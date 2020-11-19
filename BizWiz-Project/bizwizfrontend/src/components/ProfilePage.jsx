@@ -45,11 +45,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const cards = [
+const posts = [
   { title: "Need volunteers", desc: "for museum tour", id: 1 },
   { title: "Need parttime", desc: "for paint job", id: 2 },
   { title: "Hiring", desc: "event organizer", id: 3 },
   { title: "Need web developer", desc: "for free labour", id: 4 },
+];
+
+const userinfo = [
+  {
+    first_name: "Biz",
+    last_name: "Wiz",
+    id: 1,
+    email: "bw@bw.com",
+    phone: "123456",
+    address: "123 bw st",
+    website: "biz-wiz.ca",
+  },
 ];
 
 export default function ProfilePage() {
@@ -59,7 +71,7 @@ export default function ProfilePage() {
     history.push("/pages/post");
   };
 
-  const [data, setData] = useState(cards);
+  const [data, setData] = useState(posts);
   useEffect(() => {
     const url = "http://localhost:8000/api/user";
     let inputdata;
@@ -109,7 +121,7 @@ export default function ProfilePage() {
           Postings
         </Typography>
         <Grid container className={classes.cardGrid}>
-          {data.map((card) => (
+          {posts.map((card) => (
             <Grid
               item
               className={classes.item}
