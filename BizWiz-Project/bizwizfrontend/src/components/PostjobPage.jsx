@@ -37,15 +37,16 @@ export default function Postjob() {
     const classes = useStyles();
 
     const initialData = {
-        "position": "",
-        "title": "",
-        "location": "",
-        "salary": "",
-        "deadline": "",
-        "link": "",
-        "description": "",
-        "requirements": "",
-        "notes": "",
+        business: -1,
+        position: "",
+        title: "",
+        location: "",
+        salary: "",
+        deadline: "",
+        link: "",
+        description: "",
+        requirements: "",
+        notes: "",
     };
     const [data, setdata] = useState(initialData);
     const handleChange = (e) => {
@@ -55,9 +56,26 @@ export default function Postjob() {
             [name]: value
         }));
     }
+    // const url = "http://localhost:8000/api/listings/";
+
+    // axios({
+    //     method: "get",
+    //     url: url,
+    //     data: data,
+    // })
+    // .then((res) => {
+    //     if (res.status === 200) {
+    //       console.log("success");
+    //     } else {
+    //       console.log(res.status);
+    //     }
+    // })
+    // .catch((e) => {
+    //     console.log(e);
+    // });
 
     const handleSubmit = (e) => {
-        const url = "http://localhost:8000/api/post-job/";
+        const url = "http://localhost:8000/api/";
 
         axios({
           method: "post",
@@ -91,7 +109,18 @@ export default function Postjob() {
                 <Typography variant="h6">
                     BASIC INFORMATION
                 </Typography>
+                
                 <Grid container spacing={3}>
+                    <Grid item md={6} sm={12} xs={12}>
+                        <TextField 
+                            name="business" 
+                            label="Your Business ID" 
+                            variant="outlined" 
+                            onChange={handleChange} 
+                            fullWidth 
+                            required
+                            />
+                    </Grid>
                     <Grid item md={6} sm={12} xs={12}>
                         <TextField 
                             name="position" 
