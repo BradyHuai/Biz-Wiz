@@ -6,12 +6,7 @@ import {
     Marker,
     InfoWindow
 } from "@react-google-maps/api";
-
-
-//all three need to be retrieved from database
-const search_results = [{lat: "number", lng: "number", data: "Listing Description"}];           //list of opportunity data
-const cities = ["Toronto", "Markham", "Scarborough", "Guelph", "Richmond Hill", "Hamilton", "Newmarket"];     //list of city locations with opportunities
-const types = ["Online Services", "Work", "Volunteer"];                                         //list of different types of opporunities
+import axios from "axios";
 
 
 //Function to return jsx to render map onto website screen
@@ -21,6 +16,7 @@ function MapSearch() {
     const {isLoaded, loadError} = useLoadScript({
             googleMapsApiKey: "AIzaSyBTqSHfkmVBJ2A5TwE7szjjd4pTd9CCfVo", //my personal key for building this application, need partner to provide their own later 
         });
+
 
     //map states
     //const [markers, setMarkers] = React.useState([{lat: 43.662891, lng: -79.395653, companyName: "Company Name", data: "Looking for x"}]);
@@ -32,8 +28,49 @@ function MapSearch() {
     //input states
     const [input, updateInput] = React.useState({city: "", keyword: "", type: ""});
 
+    //data states
+    const [optionData, updateOptionData] = React.useState({cities: [], types: []});
+
+    React.useEffect(() => {
+        (async () => {
+            
+          const get_url = "http://localhost:8000/api/options";
+          const response = await axios({
+            method: "get",
+            url: get_url,
+          });
+
+          updateOptionData({
+            cities: response.data.cities,
+            types: response.data.types
+          });
+        })();
+      }, []);
+
+/*
+    const [listingData, updateListingData] = React.useState([]);
+
+    React.useEffect(() => {
+        (async () => {
+            
+          //[{address: "", companyName: "", description: "", small description: "", hyperlink: ""}]
+          const posts_url = "http://localhost:8000/api/listings";
+          const response = await axios({
+            method: "post",
+            url: posts_url,
+            data: {
+                city: input.city,
+                keyword: input.keyword,
+                type: input.type
+             }
+          });
+
+          updateListingData(response.data);
+        })();
+      }, [input]);
+*/
+
     //list states
-    //const [listings, updateListings] = React.useState([{address: "", companyName: "", description: "", link: ""}]);
     const [listings, updateListings] = React.useState([]);
 
     //error checking
@@ -45,9 +82,22 @@ function MapSearch() {
 
         <div className="inputField">
             <form onSubmit={(e) => {
+                /*
                 const searchResults = getListings(input.city, input.keyword, input.type);
                 setMarkers(searchResults);
                 updateListings(searchResults);
+                */
+
+                axios
+                .post("http://localhost:8000/api/listings", {keyword: input.keyword, city: input.city, type: input.type})
+                .then(
+                    response => {
+                        console.log(response.data);
+                        updateListings(response.data);
+                        //setMarkers(response.data);
+                })
+                .catch(err => console.log(err));
+
                 e.preventDefault();
             }}>
 
@@ -63,7 +113,7 @@ function MapSearch() {
                     }}>
 
                         <option value="" disabled selected>Select a city...</option>
-                        {getCities()}
+                        {getCities(optionData.cities)}
 
                     </select>
                 </div>
@@ -74,7 +124,7 @@ function MapSearch() {
                     }}>
 
                         <option value="" disabled selected>Select opportunity type...</option>
-                        {getTypes()}
+                        {getTypes(optionData.types)}
 
                     </select>
                 </div>
@@ -85,6 +135,7 @@ function MapSearch() {
 
             </form>
         </div>
+        
 
         <div className="sideList">
 
@@ -100,7 +151,6 @@ function MapSearch() {
             options={{disableDefaultUI: true, zoomControl: true}}
             >
                 {markers.map(marker => <Marker 
-                    //key={marker.data}                             //may not need key value
                     position={{lat: marker.lat, lng: marker.lng}} 
                     onClick={() => {setSelected(marker);}}/>)}
                 
@@ -116,45 +166,26 @@ function MapSearch() {
             </GoogleMap>
         </div>
     </div>
-} 
+}
 
 //return jsx html with options for dropdown regarding cities
-function getCities() {
+function getCities(cityData) {
 
     const options = [];
-    for (let i = 0; i < cities.length; i++) {
-        options.push(<option value={cities[i]}>{cities[i]}</option>);
+    for (let i = 0; i < cityData.length; i++) {
+        options.push(<option key={"city" + i} value={cityData[i]}>{cityData[i]}</option>);
     }
     return options;
 }
 
 //return jsx html with options for dropdown regarding opportunity types
-function getTypes() {
+function getTypes(typeData) {
 
     const options = [];
-    for (let i = 0; i < types.length; i++) {
-    options.push(<option value={types[i]}>{types[i]}</option>)
+    for (let i = 0; i < typeData.length; i++) {
+        options.push(<option key={"type" + i} value={typeData[i]}>{typeData[i]}</option>)
     }
     return options;
-}
-
-//return a list of opportunities that match the search query
-function getListings(city, keyword, type) {             //need to retrieve data from database here
-
-    if (keyword === "school") {                          //example format return
-        return [{lat: 43.662891, lng: -79.395653, companyName: "Company Name", data: "Looking for x"},
-                {lat: 43.660964, lng: -79.395104, companyName: "Company Name", data: "looking for x"},
-                {lat: 43.660729, lng: -79.396282, companyName: "Company Name", data: "looking for x"},
-                {lat: 43.664017, lng: -79.394448, companyName: "Company Name", data: "looking for x"},
-                {lat: 43.662582, lng: -79.398425, companyName: "Company Name", data: "looking for x"}];
-    }
-    else if (keyword === "mall") {
-        return [{lat: 43.654496, lng: -79.381048, companyName: "Company Name", data: "looking for x"}];
-    }
-    else {
-        return [];
-    }
-
 }
 
 //return jsx elements to populate the side list of the map with opportunities
@@ -162,17 +193,14 @@ function createListings(data) {
 
     const listings = [];
     for (let i = 0; i < data.length; i++) {
-
         listings.push(
             <div className="listingBox" style={{backgroundColor: "white", width: "100%", height: "25%"}}>
-                <h6>Company name</h6>
-                <p>Information about company listing</p>
-                <a href="www.google.com">Link to listing</a>
+                <h6>{data[i].companyName}</h6>
+                <p>{data[i].description}</p>
+                <a href={data[i].hyperlink}>View Listing</a>
             </div>
         );
-
     }
-
     return listings;
 }
 
