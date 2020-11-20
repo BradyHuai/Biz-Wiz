@@ -51,7 +51,7 @@ class Individual(models.Model):
 
 
 class Post(models.Model):
-    business = models.OneToOneField(Business, on_delete=models.CASCADE)
+    business = models.ForeignKey(Business, on_delete=models.CASCADE)
     position = models.TextField(max_length=1024)
     post_title = models.CharField(max_length=1024)
     location = models.ForeignKey(Location, on_delete=models.CASCADE)

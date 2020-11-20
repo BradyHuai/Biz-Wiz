@@ -24,6 +24,10 @@ export default function MainListItems() {
   const handleClickEditProfile = () => {
     history.push("/pages/edit");
   };
+
+  const handleClickAddPost = () => {
+    history.push("/pages/post-job");
+  };
   return (
     <div>
       <ListItem button onClick={handleClickDashboard}>
@@ -49,6 +53,12 @@ export default function MainListItems() {
           <BarChartIcon />
         </ListItemIcon>
         <ListItemText primary="Edit Profile" />
+      </ListItem>
+      <ListItem button onClick={handleClickAddPost}>
+        <ListItemIcon>
+          <DashboardIcon />
+        </ListItemIcon>
+        <ListItemText primary="Add Job Posting" />
       </ListItem>
     </div>
   );

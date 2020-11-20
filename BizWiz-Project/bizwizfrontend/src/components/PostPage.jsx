@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState, useEffect }from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from '@material-ui/core/Button';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import axios from "axios";
+import { useHistory } from "react-router";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -70,8 +72,61 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+
 export default function PostPage() {
   const classes = useStyles();
+  const history = useHistory();
+
+  const [data, setData] = useState({
+    position: "",
+    title: "",
+    address: "",
+    address: "",
+    salary: "",
+    about: "",
+    deadline: "",
+    link: "",
+    description: "",
+    requirements: "",
+    notes: "",
+    company: "",
+    website: "",
+  });
+
+  const id = history.location.state.id;
+  const post_id = {"id": id};
+
+  useEffect(() => {
+    (async () => {
+      const posting_url = "http://localhost:8000/api/post";
+      const post = await axios({
+        method: "post",
+        url: posting_url,
+        data: post_id,
+      });
+
+      setData({
+        position: post.data.position,
+        title: post.data.title,
+        address: post.data.location,
+        salary: post.data.salary,
+        deadline: post.data.deadline,
+        link: post.data.link,
+        description: post.data.description,
+        requirements: post.data.requirements,
+        notes: post.data.notes,
+        about: post.data.about,
+        company: post.data.company,
+        website: post.data.website,
+      });
+    })();
+  }, []);
+
+  console.log(data)
+
+  if (data === {}) {
+    return <span>waiting... </span>;
+  }
 
   return (
     <div className={classes.root}>
@@ -85,29 +140,25 @@ export default function PostPage() {
           <tbody className={classes.tableBody}>
               <tr className={classes.row}>
                   <th className={classes.cell1}>Position type:</th>
-                  <td className={classes.cell2}>Full-time</td>
+                  <td className={classes.cell2}>{data.position}</td>
               </tr>
               <tr className={classes.row}>
                   <th className={classes.cell1}>Job Title:</th>
-                  <td className={classes.cell2}>Full Stack Developer</td>
+                  <td className={classes.cell2}>{data.title}</td>
               </tr>
               <tr className={classes.row}>
                   <th className={classes.cell1}>Job Location:</th>
-                  <td className={classes.cell2}>123123 Street Toronto</td>
+                  <td className={classes.cell2}>{data.address}</td>
               </tr>
               <tr className={classes.row}>
                   <th className={classes.cell1}>Salary:</th>
-                  <td className={classes.cell2}>$50k annually</td>
+                  <td className={classes.cell2}>{data.salary}</td>
               </tr>
               <tr className={classes.row}>
                   <th className={classes.cell1}>About company:</th>
                   <td className={classes.cell2}>
                       <p>
-                        Our company is a deep technology start-up dedicated to developing 
-                        advanced sensing and control solutions for electrochemical system 
-                        optimization. Our proprietary hardware and software are first-in-class, 
-                        enabling users of electrochemical systems to gain previously inaccessible 
-                        insights into their operations. 
+                        {data.about}
                       </p>
                   </td>
               </tr>
@@ -115,9 +166,7 @@ export default function PostPage() {
                   <th className={classes.cell1}>Job description:</th>
                   <td className={classes.cell2}>
                       <p>
-                        We are looking for a skilled, curious, and driven full stack developer to lead the development 
-                        of our front-end web architecture and to ensure the responsiveness of our applications as we 
-                        grow and bring our technologies to market. 
+                        {data.description}
                       </p>
                   </td>
               </tr>
@@ -125,17 +174,8 @@ export default function PostPage() {
                   <th className={classes.cell1}>Job Requirements:</th>
                   <td className={classes.cell2}>
                       <strong>Requirements:</strong>
-                      <ul>
-                          <li>A B.S./B.A., M.Sc., or PhD in computer science, math, engineering, or related field (min GPA 3.5/4)</li>
-                          <li> Proficiency in one or more general purpose programming languages including (but not limited to) Java, C/C++, C#, Objective C, Python, JavaScript, or Go</li>
-                          <li> Familiarity with SQL and NoSQL databases</li>
-                      </ul>
-                      <strong>Bonus:</strong>
-                      <ul>
-                          <li>Knowledge and understanding of embedded systems programming and/or systems modelling</li>
-                          <li>Experience developing and deploying statistical models and AI pipelines</li>
-                          <li>Knowledge and understanding of control theory </li>
-                      </ul>
+                      <br></br>
+                      {data.requirements}
                   </td>
               </tr>
           </tbody>
@@ -149,15 +189,15 @@ export default function PostPage() {
             <tbody>
                 <tr className={classes.row}>
                     <th className={classes.cell1}>Application Deadline:</th>
-                    <td className={classes.cell2}></td>
+                    <td className={classes.cell2}>{data.deadline}</td>
                 </tr>
                 <tr className={classes.row}>
                   <th className={classes.cell1}>Application Website:</th>
-                  <td className={classes.cell2}></td>
+                  <td className={classes.cell2}>{data.website}</td>
               </tr>
               <tr className={classes.row}>
                   <th className={classes.cell1}>Additional Information:</th>
-                  <td className={classes.cell2}></td>
+                  <td className={classes.cell2}>{data.notes}</td>
               </tr>
             </tbody>
       </table>
@@ -170,11 +210,11 @@ export default function PostPage() {
             <tbody>
             <tr className={classes.row}>
                   <th className={classes.cell1}>Organization:</th>
-                  <td className={classes.cell2}>Google</td>
+                  <td className={classes.cell2}>{data.company}</td>
               </tr>
               <tr className={classes.row}>
                   <th className={classes.cell1}>Website:</th>
-                  <td className={classes.cell2}><a href="url">google.com</a></td>
+                  <td className={classes.cell2}>{data.website}</td>
               </tr>
             </tbody>
       </table>
