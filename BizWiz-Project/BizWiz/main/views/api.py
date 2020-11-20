@@ -45,8 +45,6 @@ class UserAPI(generics.RetrieveAPIView):
 
 class OptionsView(APIView):
     def get(self, request):
-        # test_data_var = request.query_params['testData']
-        # page_num_var = request.query_params['pageNum']
         return Response({
             'cities' : list({location.city for location in Location.objects.all()}),
             'types' : list({industry.name for industry in Industry.objects.all()}),
@@ -55,7 +53,6 @@ class OptionsView(APIView):
 
 class PostingList(APIView):
     def post(self, request):
-        print(request.data)
         data_city = request.data['city']
         data_keyword = request.data['keyword']
         data_type = request.data['type']
@@ -76,7 +73,22 @@ class PostingList(APIView):
             post['companyName'] = candidate.business.business_name
             post['description'] = candidate.short_description
             post['hyperlink'] = ""
+            post['id'] = candidate.pk
             resp.append(post)
 
-
         return Response(resp)
+
+# {
+#     position: "fulltime",
+#     title: "engineer",
+#     location: "123 street", 
+#     salary: "99999",
+#     about: "company info", business-short_paragraph
+#     deadline: "tomorrow",
+#     link: "www.apply.com",
+#     description: "text",
+#     requirements: "text",
+#     notes: "text",
+#     company: "company name", business-business_name
+#     website: "www.company-website.com",
+# }
