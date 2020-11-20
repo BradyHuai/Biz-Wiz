@@ -56,7 +56,7 @@ class PostingList(APIView):
         data_id = request.data['id']
 
         if data_id:
-            post = Post.objects
+            post = Post.objects.get(pk=data_id)
 
     def post(self, request):
         data_city = request.data['city']
@@ -75,7 +75,7 @@ class PostingList(APIView):
         resp = []
         for candidate in candidates:
             post = {}
-            post['address'] = str(candidate.business.user_profile.location)
+            post['address'] = str(candidate.location)
             post['companyName'] = candidate.business.business_name
             post['description'] = candidate.small_description
             post['hyperlink'] = ""
