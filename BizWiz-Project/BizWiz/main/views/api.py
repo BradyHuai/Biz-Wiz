@@ -3,7 +3,9 @@ from rest_framework.response import Response
 from knox.models import AuthToken
 from rest_framework.views import APIView
 from ..serializers import UserSerializer, BusinessRegisterSerializer, LoginSerializer
-from ..models import Location, Industry, Post
+from ..models import Location, Post
+from ..industries import Industries
+
 
 # Register API
 class RegisterBusinessAPI(generics.GenericAPIView):
@@ -47,7 +49,7 @@ class OptionsView(APIView):
     def get(self, request):
         return Response({
             'cities' : list({location.city for location in Location.objects.all()}),
-            'types' : list({industry.name for industry in Industry.objects.all()}),
+            'types' : list({industry[1] for industry in Industries.get()}),
         })
 
 
@@ -56,13 +58,16 @@ class PostingList(APIView):
         data_city = request.data['city']
         data_keyword = request.data['keyword']
         data_type = request.data['type']
-
+        for tup in Industries.get():
+            if tup[1] == data_type:
+                data_type = tup[0]
+                break
         candidates = lst = Post.objects.all()
 
         if data_city != "":
             candidates = lst.filter(business__user_profile__location__city=data_city)
         if data_type != "":
-            candidates = lst.filter(business__user_profile__industry__name=data_type)
+            candidates = lst.filter(business__user_profile__industry=data_type)
         if data_keyword != "":
             candidates = [candidate for candidate in candidates if data_keyword in candidate.post_title]
 

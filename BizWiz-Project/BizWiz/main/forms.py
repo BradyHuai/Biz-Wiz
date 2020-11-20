@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction
 
-from main.models import Business, UserProfile, Industry, Location
+from main.models import Business, UserProfile, Location
 
 class UserProfileSignUpForm(UserCreationForm):
     address = forms.CharField(max_length=1024,required=True)
