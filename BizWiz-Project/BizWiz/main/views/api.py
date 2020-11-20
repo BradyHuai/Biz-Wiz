@@ -54,7 +54,7 @@ class OptionsView(APIView):
 
 
 class PostingList(APIView):
-    def get(self, request):
+    def post(self, request):
         print(request.data)
         data_city = request.data['city']
         data_keyword = request.data['keyword']
@@ -75,6 +75,7 @@ class PostingList(APIView):
             post['address'] = str(candidate.business.user_profile.location)
             post['companyName'] = candidate.business.business_name
             post['description'] = candidate.short_description
+            post['hyperlink'] = ""
             resp.append(post)
 
 
