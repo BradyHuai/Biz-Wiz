@@ -51,13 +51,34 @@ class OptionsView(APIView):
         })
 
 
-class PostingList(APIView):
+class PostView(APIView):
     def get(self, request):
         data_id = request.data['id']
 
         if data_id:
             post = Post.objects.get(pk=data_id)
+        
+            return Response({
+                'position' : post.position,
+                'title' : post.post_title,
+                'location' : str(post.location), 
+                'salary' : post.salary,
+                'about' : post.business.short_paragraph, 
+                'deadline' : post.deadline,
+                'link' : "",
+                'description' : post.description,
+                'requirements' : post.requirements,
+                'notes' : post.notes,
+                'company' : post.business.business_name,
+                'website': "",
+            })
+        else:
+            return Response({
+                'error' : "Post not found..."
+            })
 
+
+class PostingList(APIView):
     def post(self, request):
         data_city = request.data['city']
         data_keyword = request.data['keyword']
