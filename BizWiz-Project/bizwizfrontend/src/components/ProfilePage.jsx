@@ -45,30 +45,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const posts = [
-  { title: "Need volunteers", desc: "for museum tour", id: 1 },
-  { title: "Need parttime", desc: "for paint job", id: 2 },
-  { title: "Hiring", desc: "event organizer", id: 3 },
-  { title: "Need web developer", desc: "for free labour", id: 4 },
-];
+const posts = [{ title: "Example", desc: "Example", id: 1 }];
 
 const userinfo = {
-  first_name: "Biz",
-  last_name: "Wiz",
-  id: 1,
-  email: "bw@bw.com",
-  phone: "123456",
-  address: "123 bw st",
-  website: "biz-wiz.ca",
+  first_name: "",
+  last_name: "",
+  id: "",
+  email: "",
+  phone: "",
+  address: "",
+  website: "",
 };
+
 export default function ProfilePage() {
   const classes = useStyles();
   const history = useHistory();
-  const handleViewPost = () => {
+  const handleViewPost = (post_id) => () => {
     history.push({
       pathname: "/pages/post",
       search: "?the=search",
-      state: { id: data.userid },
+      state: { id: post_id },
     });
   };
 
@@ -140,11 +136,14 @@ export default function ProfilePage() {
         </Paper>
         <Paper variant="outlined">
           <TextField
+            name="business"
+            label="Your Business ID"
+            variant="outlined"
             style={{
               textAlign: "left",
-              padding: 20,
+              margin: 10,
             }}
-            defaultValue={data.userid}
+            defaultValue={"Enter an user ID"}
             onChange={handleInputId}
           ></TextField>
           <Button
@@ -184,7 +183,7 @@ export default function ProfilePage() {
           Postings
         </Typography>
         <Grid container className={classes.cardGrid}>
-          {posts.map((card) => (
+          {data.posts.map((card) => (
             <Grid
               item
               className={classes.item}
@@ -206,7 +205,11 @@ export default function ProfilePage() {
                   <Typography>{card.desc}</Typography>
                 </CardContent>
                 <CardActions>
-                  <Button size="small" color="primary" onClick={handleViewPost}>
+                  <Button
+                    size="small"
+                    color="primary"
+                    onClick={handleViewPost(card.id)}
+                  >
                     View
                   </Button>
                   <Button size="small" color="primary">

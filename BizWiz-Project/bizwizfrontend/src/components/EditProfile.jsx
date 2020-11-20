@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import { Typography, Paper, TextField } from "@material-ui/core";
+import { Typography, Paper, TextField, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useState } from "react";
 import axios from "axios";
@@ -19,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
   },
   postingtitle: {
     textAlign: "left",
-    padding: 20,
   },
 }));
 
@@ -27,9 +26,12 @@ export default function EditProfile() {
   const classes = useStyles();
 
   const [values, setValues] = useState({
-    address: "",
+    first_name: "",
+    last_name: "",
+    id: "",
     email: "",
-    contact: "",
+    phone: "",
+    address: "",
     website: "",
   });
 
@@ -37,10 +39,10 @@ export default function EditProfile() {
     setValues({ ...values, [name]: event.target.value });
   };
   const handleSave = () => {
-    const url = "http://localhost:8000/api/profile-change/";
+    const url = "http://localhost:8000/api/profile";
 
     axios({
-      method: "patch",
+      method: "post",
       url: url,
       data: values,
     })
@@ -60,58 +62,107 @@ export default function EditProfile() {
     <div className={classes.root}>
       <CssBaseline />
       <Paper className={classes.paper}>
-        <Paper variant="outlined">
-          <img src="/images/bwlogo.png" style={{ margin: 10 }} alt=""></img>
+        <Paper variant="outlined" style={{ padding: 10 }}>
+          <Typography variant="h4" className={classes.postingtitle}>
+            Change Profile
+          </Typography>
         </Paper>
 
-        <Paper variant="outlined">
-          <Typography variant="subtitle1" className={classes.postingtitle}>
-            Website:
-          </Typography>
-          <TextField
-            defaultValue={"bizwiz.ca"}
-            className={classes.postingtitle}
-            onChange={handleChangeForm("website")}
-          ></TextField>
-        </Paper>
-        <Paper variant="outlined">
-          <Typography variant="subtitle1" className={classes.postingtitle}>
-            Email:
-          </Typography>
-          <TextField
-            defaultValue={"bizwiz@bizwiz.ca"}
-            className={classes.postingtitle}
-            onChange={handleChangeForm("email")}
-          ></TextField>
-        </Paper>
-        <Paper variant="outlined">
-          <Typography variant="subtitle1" className={classes.postingtitle}>
-            Address:
-          </Typography>
-          <TextField
-            defaultValue={"123 Bizwiz Street"}
-            className={classes.postingtitle}
-            onChange={handleChangeForm("address")}
-          ></TextField>
-        </Paper>
-        <Paper variant="outlined">
-          <Typography variant="subtitle1" className={classes.postingtitle}>
-            Contact:
-          </Typography>
-          <TextField
-            defaultValue={"Michelle"}
-            className={classes.postingtitle}
-            onChange={handleChangeForm("contact")}
-          ></TextField>
-        </Paper>
-        <Paper variant="outlined">
-          <Button
-            className={classes.postingtitle}
-            style={{ backgroundColor: "#e3f2fd", margin: 10 }}
-            onClick={handleSave}
-          >
-            Save
-          </Button>
+        <Paper variant="outlined" style={{ padding: 10 }}>
+          <Grid container spacing={3}>
+            <Grid item md={6} sm={12} xs={12}>
+              <TextField
+                name="id"
+                label="Your Business ID"
+                variant="outlined"
+                defaultValue={""}
+                className={classes.postingtitle}
+                onChange={handleChangeForm("id")}
+                fullWidth
+                required
+              ></TextField>
+            </Grid>
+            <Grid item md={6} sm={12} xs={12}>
+              <TextField
+                name="first_name"
+                label="Your First Name"
+                variant="outlined"
+                defaultValue={""}
+                className={classes.postingtitle}
+                onChange={handleChangeForm("first_name")}
+                fullWidth
+                required
+              ></TextField>
+            </Grid>
+            <Grid item md={6} sm={12} xs={12}>
+              <TextField
+                name="Last Name"
+                label="Your Last Name"
+                variant="outlined"
+                defaultValue={""}
+                className={classes.postingtitle}
+                onChange={handleChangeForm("last_name")}
+                fullWidth
+                required
+              ></TextField>
+            </Grid>
+            <Grid item md={6} sm={12} xs={12}>
+              <TextField
+                name="Website"
+                label="Your Website"
+                variant="outlined"
+                defaultValue={""}
+                className={classes.postingtitle}
+                onChange={handleChangeForm("website")}
+                fullWidth
+                required
+              ></TextField>
+            </Grid>
+            <Grid item md={6} sm={12} xs={12}>
+              <TextField
+                name="Email"
+                label="Your Email"
+                variant="outlined"
+                defaultValue={""}
+                className={classes.postingtitle}
+                onChange={handleChangeForm("email")}
+                fullWidth
+                required
+              ></TextField>
+            </Grid>
+            <Grid item md={6} sm={12} xs={12}>
+              <TextField
+                name="Address"
+                label="Your Address"
+                variant="outlined"
+                defaultValue={""}
+                className={classes.postingtitle}
+                onChange={handleChangeForm("address")}
+                fullWidth
+                required
+              ></TextField>
+            </Grid>
+            <Grid item md={6} sm={12} xs={12}>
+              <TextField
+                name="Phone"
+                label="Your Contact Phone Number"
+                variant="outlined"
+                defaultValue={""}
+                className={classes.postingtitle}
+                onChange={handleChangeForm("phone")}
+                fullWidth
+                required
+              ></TextField>
+            </Grid>
+
+            <Button
+              className={classes.postingtitle}
+              style={{ backgroundColor: "#e3f2fd", margin: 10, width: 200 }}
+              onClick={handleSave}
+            >
+              Save
+            </Button>
+          </Grid>
         </Paper>
       </Paper>
     </div>
