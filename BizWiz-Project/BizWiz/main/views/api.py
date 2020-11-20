@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from ..serializers import UserSerializer, BusinessRegisterSerializer, LoginSerializer
 from ..models import Location, Post
 from ..industries import Industries
-
+from ..models import Location, Post, Business
 
 # Register API
 class RegisterBusinessAPI(generics.GenericAPIView):
@@ -53,6 +53,64 @@ class OptionsView(APIView):
         })
 
 
+class PostView(APIView):
+    def post(self, request):
+        business_id = request.data['business']
+        # try:
+        business = Business.objects.get(pk=business_id)
+        location = Location.objects.create(
+            address=request.data['address'],
+            zip_code=request.data['zip_code'],
+            city=request.data['city']
+        )
+
+        new_post = Post.objects.create(
+            business=business,
+            position=request.data['position'],
+            post_title=request.data['post_title'],
+            location=location,
+            salary=request.data['salary'],
+            deadline=request.data['deadline'],
+            small_description=request.data['small_description'],
+            description=request.data['description'],
+            requirements=request.data['requirements'],
+            notes=request.data['notes']
+        )
+
+        return Response({"id":new_post.pk})
+        # except Exception:
+        #     print(str(Exception))
+        #     return Response({
+        #         'error' : "Post could not be created..."
+        #     })
+
+    def get(self, request):
+        data_id = self.request.query_params.get("id")
+        print(data_id)
+
+        if data_id:
+            post = Post.objects.get(pk=data_id)
+        
+            return Response({
+                'position' : post.position,
+                'title' : post.post_title,
+                'location' : str(post.location), 
+                'salary' : post.salary,
+                'about' : post.business.short_paragraph, 
+                'deadline' : post.deadline,
+                'link' : "",
+                'description' : post.description,
+                'requirements' : post.requirements,
+                'notes' : post.notes,
+                'company' : post.business.business_name,
+                'website': "",
+            })
+        else:
+            return Response({
+                'error' : "Post not found..."
+            })
+
+
 class PostingList(APIView):
     def post(self, request):
         data_city = request.data['city']
@@ -64,6 +122,8 @@ class PostingList(APIView):
                 break
         candidates = lst = Post.objects.all()
 
+        candidates = Post.objects.all()
+
         if data_city != "":
             candidates = lst.filter(business__user_profile__location__city=data_city)
         if data_type != "":
@@ -74,26 +134,15 @@ class PostingList(APIView):
         resp = []
         for candidate in candidates:
             post = {}
-            post['address'] = str(candidate.business.user_profile.location)
+            post['address'] = str(candidate.location)
             post['companyName'] = candidate.business.business_name
-            post['description'] = candidate.short_description
+            post['description'] = candidate.small_description
+            post['lat'] = 0.0
+            post['lng'] = 0.0
+            post['description'] = candidate.small_description
             post['hyperlink'] = ""
             post['id'] = candidate.pk
             resp.append(post)
 
         return Response(resp)
 
-# {
-#     position: "fulltime",
-#     title: "engineer",
-#     location: "123 street", 
-#     salary: "99999",
-#     about: "company info", business-short_paragraph
-#     deadline: "tomorrow",
-#     link: "www.apply.com",
-#     description: "text",
-#     requirements: "text",
-#     notes: "text",
-#     company: "company name", business-business_name
-#     website: "www.company-website.com",
-# }

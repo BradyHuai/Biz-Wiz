@@ -65,7 +65,8 @@ export default function ProfilePage() {
   const classes = useStyles();
   const history = useHistory();
   const handleViewPost = () => {
-    history.push("/pages/post");
+
+    history.push({pathname: "/pages/post/", search: '?the=search', state: {id: 1}});
   };
 
   const [data, setData] = useState({ userid: "", posts: [], userinfo: {} });
