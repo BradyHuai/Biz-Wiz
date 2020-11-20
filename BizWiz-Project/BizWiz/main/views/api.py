@@ -1,7 +1,9 @@
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from knox.models import AuthToken
+from rest_framework.views import APIView
 from ..serializers import UserSerializer, BusinessRegisterSerializer, LoginSerializer
+from ..models import Location, Industry, Post
 
 # Register API
 class RegisterBusinessAPI(generics.GenericAPIView):
@@ -39,3 +41,41 @@ class UserAPI(generics.RetrieveAPIView):
 
     def get_object(self):
         return self.request.user
+
+
+class OptionsView(APIView):
+    def get(self, request):
+        # test_data_var = request.query_params['testData']
+        # page_num_var = request.query_params['pageNum']
+        return Response({
+            'cities' : list({location.city for location in Location.objects.all()}),
+            'types' : list({industry.name for industry in Industry.objects.all()}),
+        })
+
+
+class PostingList(APIView):
+    def get(self, request):
+        print(request.data)
+        data_city = request.data['city']
+        data_keyword = request.data['keyword']
+        data_type = request.data['type']
+
+        candidates = lst = Post.objects.all()
+
+        if data_city != "":
+            candidates = lst.filter(business__user_profile__location__city=data_city)
+        if data_type != "":
+            candidates = lst.filter(business__user_profile__industry__name=data_type)
+        if data_keyword != "":
+            candidates = [candidate for candidate in candidates if data_keyword in candidate.post_title]
+
+        resp = []
+        for candidate in candidates:
+            post = {}
+            post['address'] = str(candidate.business.user_profile.location)
+            post['companyName'] = candidate.business.business_name
+            post['description'] = candidate.short_description
+            resp.append(post)
+
+
+        return Response(resp)
