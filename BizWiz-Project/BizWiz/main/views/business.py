@@ -2,8 +2,8 @@ from django.contrib.auth import login
 from django.shortcuts import redirect, render
 from django.views.generic import CreateView
 
-from ..forms import BusinessSignUpForm
-from ..models import UserProfile, Business
+from ..forms import BusinessSignUpForm, ApplicationForm
+from ..models import UserProfile, Business, Application
 
 class BusinessSignUpView(CreateView):
     model = UserProfile
@@ -28,3 +28,25 @@ def display_business(request, business_name):
         return redirect('home')
     context = {'business': business}
     return render(request, 'main/business_display.html', context)
+
+def application_detail_view(request, business_name):
+    application = get_object_or_404(Application, business_name=business_name)
+    detail = {
+        "application": application
+    }
+    return render(request, "main/Application/detail.html", detail)
+
+def application_create_view(request):
+    if request.method == "POST":
+        business_name = request.POST.get('business_name')
+
+    form = ApplicationForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        form = ApplicationForm()
+        Application.objects.create(**form.cleaned_data)
+
+    context = {
+        'form': form
+    }
+    return render(request, "main/application/create_application.html", context)

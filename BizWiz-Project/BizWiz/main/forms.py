@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction
 
-from main.models import Business, UserProfile, Location
+from main.models import Business, UserProfile, Location, Application
 
 class UserProfileSignUpForm(UserCreationForm):
     address = forms.CharField(max_length=1024,required=True)
@@ -57,3 +57,47 @@ class IndividualSignUpForm(UserProfileSignUpForm):
         user.location = location
         user.save()
         return user
+
+class ApplicationForm(forms.ModelForm):
+    business_name = forms.CharField(widget=forms.TextInput(
+        attrs={"placeholder": "Business Name"}
+    ))
+    application_name = forms.CharField(widget=forms.TextInput(
+        attrs={"placeholder": "Application Name"}
+    ))
+    num_questions = forms.IntegerField(min_value = 0, max_value = 10)
+    q1 = forms.CharField(
+        required=False, 
+        widget=forms.Textarea(
+        attrs={"rows":2, "cols":20}))
+    q2 = forms.CharField(
+        required=False, 
+        widget=forms.Textarea(
+        attrs={"rows":2, "cols":20}))
+    q3 = forms.CharField(
+        required=False, 
+        widget=forms.Textarea(
+        attrs={"rows":2, "cols":20}))
+    email = forms.EmailField(required=False)
+    class Meta:
+        model = Application
+        fields = [
+            'business_name',
+            'application_name',
+            'num_questions',
+            'q1', 'q2', 'q3',
+            'email'
+        ]
+
+    def clean_title(self):
+        business_name = self.cleaned_data.get("business_name")
+        if Business.objects.exclude(pk=self.instance.pk).filter(business_name=business_name).exists():
+            raise forms.ValidationError(u'Business name "%s" is already in use.' % business_name)
+        return business_name
+
+    def clean_email(self):        
+        email = self.cleaned_data.get("email")
+        if not email.endswith("com"):
+            if not email.endswith("ca"):
+                raise forms.ValidationError("This is not a valid email")
+        return email
