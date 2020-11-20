@@ -156,10 +156,10 @@ class PostingList(APIView):
 
 class ProfileView(APIView):
     def get(self, request):
-        user_id = self.request.query_params.get("id")
-        if user_id:
+        business_id = self.request.query_params.get("id")
+        if business_id:
             try:
-                business = Business.objects.get(pk=user_id)
+                business = Business.objects.get(pk=business_id)
                 posts = Post.objects.all()
                 posts = posts.filter(business=business)
 
@@ -178,6 +178,27 @@ class ProfileView(APIView):
             except Exception:
                 return Response({
                     'error' : "User not found..."
+                })
+        else:
+            return Response({
+                'error' : "Id not provided"
+            })
+    
+    def post(self, request):
+        business_id = self.request.data["id"]
+        if business_id:
+            try:
+                business = Business.objects.get(pk=business_id)
+
+                business.user_profile.location.address = request.data['address']
+                business.user_profile.location.email = request.data['email']
+                business.user_profile.location.first_name = request.data['first_name']
+                business.user_profile.location.last_name = request.data['last_name']
+
+                return Response({"id":business.pk})
+            except Exception:
+                return Response({
+                    'error' : "Business could not be modified..."
                 })
         else:
             return Response({
