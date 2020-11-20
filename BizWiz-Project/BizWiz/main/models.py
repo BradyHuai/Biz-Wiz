@@ -23,7 +23,7 @@ class Location(models.Model):
         verbose_name_plural = "Location Addresses"
 
     def __str__(self):
-        return "{}\n{}\n{}".format(self.address, self.zip_code, self.city)
+        return "{} {} {}".format(self.address, self.zip_code, self.city)
 
 
 class UserProfile(AbstractUser):
@@ -48,3 +48,13 @@ class Business(models.Model):
 
 class Individual(models.Model):
     user_profile = models.OneToOneField(UserProfile, on_delete=models.CASCADE, primary_key=True)
+
+
+class Post(models.Model):
+    business = models.OneToOneField(Business, on_delete=models.CASCADE, primary_key=True)
+    post_title = models.CharField(max_length=1024)
+    short_description = models.TextField()
+    description = models.TextField()
+
+    def __str__(self):
+        return self.post_title
