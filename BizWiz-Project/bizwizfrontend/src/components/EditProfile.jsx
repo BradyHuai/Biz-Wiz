@@ -41,6 +41,7 @@ export default function EditProfile() {
   const handleSave = () => {
     const url = "http://localhost:8000/api/profile";
 
+    console.log(values);
     axios({
       method: "post",
       url: url,
@@ -67,10 +68,9 @@ export default function EditProfile() {
             Change Profile
           </Typography>
         </Paper>
-
         <Paper variant="outlined" style={{ padding: 10 }}>
           <Grid container spacing={3}>
-            <Grid item md={6} sm={12} xs={12}>
+            <Grid item md={8} sm={12} xs={12}>
               <TextField
                 name="id"
                 label="Your Business ID"
@@ -82,7 +82,7 @@ export default function EditProfile() {
                 required
               ></TextField>
             </Grid>
-            <Grid item md={6} sm={12} xs={12}>
+            <Grid item md={8} sm={12} xs={12}>
               <TextField
                 name="first_name"
                 label="Your First Name"
@@ -94,7 +94,7 @@ export default function EditProfile() {
                 required
               ></TextField>
             </Grid>
-            <Grid item md={6} sm={12} xs={12}>
+            <Grid item md={8} sm={12} xs={12}>
               <TextField
                 name="Last Name"
                 label="Your Last Name"
@@ -106,7 +106,7 @@ export default function EditProfile() {
                 required
               ></TextField>
             </Grid>
-            <Grid item md={6} sm={12} xs={12}>
+            <Grid item md={8} sm={12} xs={12}>
               <TextField
                 name="Website"
                 label="Your Website"
@@ -118,7 +118,7 @@ export default function EditProfile() {
                 required
               ></TextField>
             </Grid>
-            <Grid item md={6} sm={12} xs={12}>
+            <Grid item md={8} sm={12} xs={12}>
               <TextField
                 name="Email"
                 label="Your Email"
@@ -130,7 +130,7 @@ export default function EditProfile() {
                 required
               ></TextField>
             </Grid>
-            <Grid item md={6} sm={12} xs={12}>
+            <Grid item md={8} sm={12} xs={12}>
               <TextField
                 name="Address"
                 label="Your Address"
@@ -142,7 +142,7 @@ export default function EditProfile() {
                 required
               ></TextField>
             </Grid>
-            <Grid item md={6} sm={12} xs={12}>
+            <Grid item md={8} sm={12} xs={12}>
               <TextField
                 name="Phone"
                 label="Your Contact Phone Number"
@@ -154,15 +154,16 @@ export default function EditProfile() {
                 required
               ></TextField>
             </Grid>
-
-            <Button
-              className={classes.postingtitle}
-              style={{ backgroundColor: "#e3f2fd", margin: 10, width: 200 }}
-              onClick={handleSave}
-            >
-              Save
-            </Button>
           </Grid>
+        </Paper>
+        <Paper>
+          <Button
+            className={classes.postingtitle}
+            style={{ backgroundColor: "#e3f2fd", margin: 20, width: 200 }}
+            onClick={handleSave}
+          >
+            Save
+          </Button>
         </Paper>
       </Paper>
     </div>
