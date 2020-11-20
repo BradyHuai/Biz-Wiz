@@ -51,10 +51,16 @@ class Individual(models.Model):
 
 
 class Post(models.Model):
-    business = models.OneToOneField(Business, on_delete=models.CASCADE, primary_key=True)
+    business = models.OneToOneField(Business, on_delete=models.CASCADE)
+    position = models.TextField(max_length=1024)
     post_title = models.CharField(max_length=1024)
-    short_description = models.TextField()
-    description = models.TextField()
+    location = models.TextField(max_length=1024)
+    salary = models.TextField(max_length=1024)
+    deadline = models.TextField(max_length=1024)
+    small_description = models.TextField(max_length=1024)
+    description = models.TextField(max_length=1024, null=True)
+    requirements = models.TextField(max_length=1024, null=True)
+    notes = models.TextField(max_length=1024, null=True)
 
     def __str__(self):
         return self.post_title
