@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState }from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { Grid, TextField } from "@material-ui/core";
 import { Typography } from "@material-ui/core";
@@ -6,6 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import PostAddIcon from '@material-ui/icons/PostAdd';
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
         root: {
@@ -35,6 +36,54 @@ const useStyles = makeStyles((theme) => ({
 export default function Postjob() {
     const classes = useStyles();
 
+    const initialData = {
+        "position": "",
+        "title": "",
+        "location": "",
+        "salary": "",
+        "deadline": "",
+        "link": "",
+        "description": "",
+        "requirements": "",
+        "notes": "",
+    };
+    const [data, setdata] = useState(initialData);
+    const handleChange = (e) => {
+        const {name, value} = e.target;
+        setdata(previousData =>({
+            ...previousData,
+            [name]: value
+        }));
+    }
+
+    const handleSubmit = (e) => {
+        const url = "http://localhost:8000/api/post-job/";
+
+        axios({
+          method: "post",
+          url: url,
+          data: data,
+        })
+          .then((res) => {
+            if (res.status === 200) {
+              console.log("success");
+            } else {
+              console.log(res.status);
+            }
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+    }
+
+    const handleDelete = (e) => {
+        setdata(previousData =>({
+            ...previousData,
+            ...initialData
+        }));
+        // go back
+    }
+
     return (
         <div className={classes.root}>
             <CssBaseline />
@@ -44,16 +93,40 @@ export default function Postjob() {
                 </Typography>
                 <Grid container spacing={3}>
                     <Grid item md={6} sm={12} xs={12}>
-                        <TextField label="Position type" variant="outlined" fullWidth required />
+                        <TextField 
+                            name="position" 
+                            label="Position type" 
+                            variant="outlined" 
+                            onChange={handleChange} 
+                            fullWidth 
+                            required />
                     </Grid>
                     <Grid item md={6} sm={12} xs={12}>
-                        <TextField label="Job Title" variant="outlined" fullWidth required />
+                        <TextField 
+                            name="title" 
+                            label="Job Title" 
+                            variant="outlined" 
+                            onChange={handleChange} 
+                            fullWidth 
+                            required />
                     </Grid>
                     <Grid item md={6} sm={12} xs={12}>
-                        <TextField label="Location" variant="outlined" fullWidth required />
+                        <TextField 
+                            name="location" 
+                            label="Location" 
+                            variant="outlined" 
+                            onChange={handleChange} 
+                            fullWidth 
+                            required />
                     </Grid>
                     <Grid item md={6} sm={12} xs={12}>
-                        <TextField label="Salary" variant="outlined" fullWidth required />
+                        <TextField 
+                            name="salary" 
+                            label="Salary" 
+                            variant="outlined" 
+                            onChange={handleChange} 
+                            fullWidth 
+                            required />
                     </Grid>
                 </Grid>
                 <br />
@@ -62,20 +135,57 @@ export default function Postjob() {
                 </Typography>
                 <Grid container spacing={3}>
                     <Grid item md={6} sm={12} xs={12}>
-                        <TextField label="Deadline" variant="outlined" fullWidth required />
+                        <TextField 
+                            name="deadline" 
+                            label="Deadline" 
+                            variant="outlined" 
+                            onChange={handleChange} 
+                            fullWidth 
+                            required />
                     </Grid>
                     <Grid item md={6} sm={12} xs={12}>
-                        <TextField label="Application link" variant="outlined" fullWidth required />
+                        <TextField 
+                            name="link" 
+                            label="Application link" 
+                            variant="outlined" 
+                            onChange={handleChange} 
+                            fullWidth 
+                            required />
                     </Grid>
                 </Grid>
-                <TextField className={classes.boxText} label="Detailed description about this job" variant="outlined" fullWidth multiline rows={8}/>
-                <TextField className={classes.boxText} label="Job requirements" variant="outlined" fullWidth multiline rows={8}/>
-                <TextField className={classes.boxText} label="Additional notes" variant="outlined" fullWidth multiline rows={8}/>
+                <TextField 
+                    name="description" 
+                    className={classes.boxText} 
+                    label="Detailed description about this job" 
+                    variant="outlined" 
+                    onChange={handleChange} 
+                    fullWidth 
+                    multiline 
+                    rows={8}/>
+                <TextField 
+                    name="requirements" 
+                    className={classes.boxText} 
+                    label="Job requirements" 
+                    variant="outlined" 
+                    onChange={handleChange} 
+                    fullWidth 
+                    multiline 
+                    rows={8}/>
+                <TextField 
+                    name="notes" 
+                    className={classes.boxText} 
+                    label="Additional notes" 
+                    variant="outlined" 
+                    onChange={handleChange} 
+                    fullWidth 
+                    multiline 
+                    rows={8}/>
                 <Button
                     variant="contained"
                     color="secondary"
                     className={classes.button}
                     startIcon={<DeleteIcon />}
+                    onClick={handleDelete} 
                 >
                     Delete
                 </Button>
@@ -84,6 +194,7 @@ export default function Postjob() {
                     color="primary"
                     className={classes.button}
                     startIcon={<PostAddIcon />}
+                    onClick={handleSubmit} 
                 >
                     POST
                 </Button>
