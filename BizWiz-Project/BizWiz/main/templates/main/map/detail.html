@@ -1,0 +1,18 @@
+{% extends 'main/base.html' %}
+
+
+{% block content %}
+
+<h1>Map details</h1>
+
+{% if business %}
+<ul>
+    <li>Business Title: {{ business.business_name|title }}</li>
+    <li>Description: {{ business.short_paragraph }}</li>
+    <li>Address: {{ location.address }}</li>
+    <li>Zip_code: {{ location.zip_code }}</li>
+    <li>City: {{ location.city }}</li>
+</ul>
+{% endif %}
+
+{% endblock %}
