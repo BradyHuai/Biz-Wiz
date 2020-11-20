@@ -3,9 +3,9 @@ from rest_framework.response import Response
 from knox.models import AuthToken
 from rest_framework.views import APIView
 from ..serializers import UserSerializer, BusinessRegisterSerializer, LoginSerializer
-from ..models import Location, Post
 from ..industries import Industries
 from ..models import Location, Post, Business
+import requests
 
 # Register API
 class RegisterBusinessAPI(generics.GenericAPIView):
@@ -135,10 +135,18 @@ class PostingList(APIView):
         for candidate in candidates:
             post = {}
             post['address'] = str(candidate.location)
+
+            coordinates = requests.get("https://maps.googleapis.com/maps/api/geocode/json?address=" + str(candidate.location) + "+CA&key=AIzaSyBTqSHfkmVBJ2A5TwE7szjjd4pTd9CCfVo").json()
             post['companyName'] = candidate.business.business_name
             post['description'] = candidate.small_description
-            post['lat'] = 0.0
-            post['lng'] = 0.0
+
+            if coordinates["status"] == "OK":
+                post['lat'] = coordinates["results"][0]["geometry"]["location"]["lat"]
+                post['lng'] = coordinates["results"][0]["geometry"]["location"]["lng"]
+            else:
+                post['lat'] = None
+                post['lng'] = None
+
             post['description'] = candidate.small_description
             post['hyperlink'] = ""
             post['id'] = candidate.pk

@@ -8,6 +8,8 @@ import {
 } from "@react-google-maps/api";
 import axios from "axios";
 
+//[{address: "", companyName: "", description: "", smallDescription: "", hyperlink: ""}]
+
 
 //Function to return jsx to render map onto website screen
 function MapSearch() {
@@ -19,7 +21,6 @@ function MapSearch() {
 
 
     //map states
-    //const [markers, setMarkers] = React.useState([{lat: 43.662891, lng: -79.395653, companyName: "Company Name", data: "Looking for x"}]);
     const [markers, setMarkers] = React.useState([]);
 
     //marker states
@@ -31,6 +32,10 @@ function MapSearch() {
     //data states
     const [optionData, updateOptionData] = React.useState({cities: [], types: []});
 
+    //listing states
+    const [listings, updateListings] = React.useState([]);
+
+    //get the option information regarding the available cities and different types of listings
     React.useEffect(() => {
         (async () => {
             
@@ -47,32 +52,6 @@ function MapSearch() {
         })();
       }, []);
 
-/*
-    const [listingData, updateListingData] = React.useState([]);
-
-    React.useEffect(() => {
-        (async () => {
-            
-          //[{address: "", companyName: "", description: "", small description: "", hyperlink: ""}]
-          const posts_url = "http://localhost:8000/api/listings";
-          const response = await axios({
-            method: "post",
-            url: posts_url,
-            data: {
-                city: input.city,
-                keyword: input.keyword,
-                type: input.type
-             }
-          });
-
-          updateListingData(response.data);
-        })();
-      }, [input]);
-*/
-
-    //list states
-    const [listings, updateListings] = React.useState([]);
-
     //error checking
     if (loadError) return "Error Loading Maps";
     if (!isLoaded) return "Loading Maps";   
@@ -82,22 +61,15 @@ function MapSearch() {
 
         <div className="inputField">
             <form onSubmit={(e) => {
-                /*
-                const searchResults = getListings(input.city, input.keyword, input.type);
-                setMarkers(searchResults);
-                updateListings(searchResults);
-                */
 
                 axios
                 .post("http://localhost:8000/api/listings", {keyword: input.keyword, city: input.city, type: input.type})
                 .then(
                     response => {
-                        console.log(response.data);
                         updateListings(response.data);
-                        //setMarkers(response.data);
+                        setMarkers(response.data);
                 })
                 .catch(err => console.log(err));
-
                 e.preventDefault();
             }}>
 
@@ -113,6 +85,7 @@ function MapSearch() {
                     }}>
 
                         <option value="" disabled selected>Select a city...</option>
+                        <option value="">Any</option>
                         {getCities(optionData.cities)}
 
                     </select>
@@ -124,6 +97,7 @@ function MapSearch() {
                     }}>
 
                         <option value="" disabled selected>Select opportunity type...</option>
+                        <option value="">Any</option>
                         {getTypes(optionData.types)}
 
                     </select>
@@ -159,7 +133,7 @@ function MapSearch() {
                     onCloseClick={() => {setSelected(null);}}>
                     <div style={{width: "150px", height: "100px"}}>
                         <h3>{selected.companyName}</h3>
-                        <p>{selected.data}</p>
+                        <p>{selected.description}</p>
                         <a href={"https://www.google.com"}>View Listing</a>
                     </div>
                 </InfoWindow>) : null}
@@ -194,9 +168,12 @@ function createListings(data) {
     const listings = [];
     for (let i = 0; i < data.length; i++) {
         listings.push(
-            <div className="listingBox" style={{backgroundColor: "white", width: "100%", height: "25%"}}>
-                <h6>{data[i].companyName}</h6>
-                <p>{data[i].description}</p>
+            <div className="listingBox" style={{backgroundColor: "white", width: "100%", height: "40%"}}>
+                <b>{data[i].companyName}</b>
+                <div style={{height: "40%"}}>
+                    <p>{data[i].description}</p>
+                </div>
+                <p>{data[i].address}</p>
                 <a href={data[i].hyperlink}>View Listing</a>
             </div>
         );
