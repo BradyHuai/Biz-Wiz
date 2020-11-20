@@ -20,11 +20,10 @@ from main.views import main, business, individual, api
 urlpatterns = [
     path('home/', main.home, name='home'),
     path('admin/', admin.site.urls),
-    # path('accounts/login/', main.login, name='login'),
-    # path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/login/', main.login, name='login'),
+    path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/signup/', main.SignUpView.as_view(), name='signup'),
-    # path('accounts/signup/business/', business.BusinessSignUpView.as_view(), name='business_signup'),
-    # path('accounts/signup/individual/', individual.IndividualSignUpView.as_view(), name='individual_signup'),
+    path('accounts/signup/business/', business.BusinessSignUpView.as_view(), name='business_signup'),
+    path('accounts/signup/individual/', individual.IndividualSignUpView.as_view(), name='individual_signup'),
     path('view_business/<str:business_name>', business.display_business, name='display_business'),
-    path('', include('main.urls')),
 ]

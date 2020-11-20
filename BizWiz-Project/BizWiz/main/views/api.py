@@ -39,3 +39,19 @@ class UserAPI(generics.RetrieveAPIView):
 
     def get_object(self):
         return self.request.user
+
+def get_user(request):
+    if request.method == 'GET':
+        email = request.POST['email']
+        password = request.POST['password']
+
+        user = auth.authenticate(username = email, password =password )
+
+        if user is not None:
+            auth.login(request , user)
+            return redirect('home')    
+        else:
+            messages.info(request, 'invalid email or password')
+            return redirect('login')
+    else:
+        return render(request,'main/registration/login.html')
