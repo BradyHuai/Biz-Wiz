@@ -99,24 +99,12 @@ class PostingList(APIView):
             post['address'] = str(candidate.location)
             post['companyName'] = candidate.business.business_name
             post['description'] = candidate.small_description
+            post['lat'] = 0.0
+            post['lng'] = 0.0
+            post['description'] = candidate.small_description
             post['hyperlink'] = ""
             post['id'] = candidate.pk
             resp.append(post)
 
         return Response(resp)
 
-
-# {
-#     position: "fulltime",
-#     title: "engineer",
-#     location: "123 street", 
-#     salary: "99999",
-#     about: "company info", business-short_paragraph
-#     deadline: "tomorrow",
-#     link: "www.apply.com",
-#     description: "text",
-#     requirements: "text",
-#     notes: "text",
-#     company: "company name", business-business_name
-#     website: "www.company-website.com",
-# }
