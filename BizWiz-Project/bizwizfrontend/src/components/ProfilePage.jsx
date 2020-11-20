@@ -6,7 +6,7 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
-import { Typography, Paper } from "@material-ui/core";
+import { Typography, Paper, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -65,47 +65,68 @@ export default function ProfilePage() {
   const classes = useStyles();
   const history = useHistory();
   const handleViewPost = () => {
-
-    history.push({pathname: "/pages/post/", search: '?the=search', state: {id: 1}});
+    history.push({
+      pathname: "/pages/post",
+      search: "?the=search",
+      state: { id: data.userid },
+    });
   };
 
-  const [data, setData] = useState({ userid: "", posts: [], userinfo: {} });
-  useEffect(() => {
-    (async () => {
-      const id_url = "http://localhost:8000/api/user/";
-      const ret_id = await axios.get(id_url);
-      // .then((res) => {
-      //   setData({ ...data, userid: res.data });
-      // })
-      // .catch((e) => {
-      //   console.log(e);
-      // });
+  const handleInputId = (event) => {
+    setData({
+      ...data,
+      userid: event.target.value,
+    });
+  };
 
-      const posts_url = "http://localhost:8000/api/profile/";
-      const profile = await axios({
-        method: "get",
-        url: posts_url,
-        data: ret_id,
+  const [data, setData] = useState({
+    userid: 1,
+    posts: posts,
+    userinfo: userinfo,
+  });
+
+  const handleChangeProfile = () => {
+    (async () => {
+      //   const id_url = "http://localhost:8000/api/user/";
+      //   const ret_id = await axios.get(id_url);
+
+      const posts_url = "http://localhost:8000/api/profile";
+      const profile = await axios.get(posts_url, {
+        params: { id: data.userid },
       });
-      // .then((res) => {
-      //   setData({
-      //     ...data,
-      //     posts: res.data.posts,
-      //     userinfo: res.data.userinfo,
-      //   });
-      // })
-      // .catch((e) => {
-      //   console.log(e);
-      // });
-      console.log(data);
-      setData({
-        posts: profile.data.posts,
-        userinfo: profile.data.userinfo,
-        userid: ret_id.data.id,
-      });
-    })();
+      console.log(profile);
+      if ("error" in profile.data) {
+        alert(profile.data["error"]);
+      } else {
+        setData({
+          ...data,
+          posts: profile.data.posts,
+          userinfo: profile.data.userinfo,
+        });
+        console.log(data);
+      }
+    })().catch((e) => {
+      console.log("Invalid ID");
+      alert("Invalid ID");
+    });
     // eslint-disable-next-line
-  }, []);
+  };
+
+  // useEffect(() => {
+  //   (async () => {
+  //     //   const id_url = "http://localhost:8000/api/user/";
+  //     //   const ret_id = await axios.get(id_url);
+
+  //     const posts_url = "http://localhost:8000/api/profile/";
+  //     const profile = await axios.get(posts_url, { params: { id: data.user } });
+  //     setData({
+  //       ...data,
+  //       posts: profile.data.posts,
+  //       userinfo: profile.data.userinfo,
+  //     });
+  //   })();
+  //   // eslint-disable-next-line
+  // }, []);
 
   if (data.userinfo === {}) {
     return <span>waiting... </span>;
@@ -116,6 +137,26 @@ export default function ProfilePage() {
       <Paper className={classes.paper}>
         <Paper variant="outlined">
           <img src="/images/bwlogo.png" style={{ margin: 10 }} alt=""></img>
+        </Paper>
+        <Paper variant="outlined">
+          <TextField
+            style={{
+              textAlign: "left",
+              padding: 20,
+            }}
+            defaultValue={data.userid}
+            onChange={handleInputId}
+          ></TextField>
+          <Button
+            style={{
+              textAlign: "left",
+              backgroundColor: "#e3f2fd",
+              margin: 10,
+            }}
+            onClick={handleChangeProfile}
+          >
+            View Profile
+          </Button>
         </Paper>
         <Paper variant="outlined">
           <Typography variant="subtitle1" className={classes.postingtitle}>
