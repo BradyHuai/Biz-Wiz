@@ -52,12 +52,18 @@ class OptionsView(APIView):
 
 
 class PostingList(APIView):
+    def get(self, request):
+        data_id = request.data['id']
+
+        if data_id:
+            post = Post.objects
+
     def post(self, request):
         data_city = request.data['city']
         data_keyword = request.data['keyword']
         data_type = request.data['type']
 
-        candidates = lst = Post.objects.all()
+        candidates = Post.objects.all()
 
         if data_city != "":
             candidates = lst.filter(business__user_profile__location__city=data_city)
@@ -71,12 +77,13 @@ class PostingList(APIView):
             post = {}
             post['address'] = str(candidate.business.user_profile.location)
             post['companyName'] = candidate.business.business_name
-            post['description'] = candidate.short_description
+            post['description'] = candidate.small_description
             post['hyperlink'] = ""
             post['id'] = candidate.pk
             resp.append(post)
 
         return Response(resp)
+
 
 # {
 #     position: "fulltime",
