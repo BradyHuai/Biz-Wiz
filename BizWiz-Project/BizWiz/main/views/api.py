@@ -3,12 +3,8 @@ from rest_framework.response import Response
 from knox.models import AuthToken
 from rest_framework.views import APIView
 from ..serializers import UserSerializer, BusinessRegisterSerializer, LoginSerializer
-<<<<<<< HEAD
-from ..models import Location, Industry, Post
 import requests
-=======
 from ..models import Location, Industry, Post, Business
->>>>>>> fd56f32fe1d3c95203cc3ae499136428735b8bc2
 
 # Register API
 class RegisterBusinessAPI(generics.GenericAPIView):
@@ -58,6 +54,7 @@ class OptionsView(APIView):
 
 class PostView(APIView):
     def post(self, request):
+        print(request.data)
         business_id = request.data['business']
         # try:
         business = Business.objects.get(pk=business_id)
