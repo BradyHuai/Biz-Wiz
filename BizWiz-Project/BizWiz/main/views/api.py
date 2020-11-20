@@ -64,6 +64,7 @@ class PostView(APIView):
                 zip_code=request.data['zip_code'],
                 city=request.data['city']
             )
+            location.save()
 
             new_post = Post.objects.create(
                 business=business,
@@ -77,6 +78,7 @@ class PostView(APIView):
                 requirements=request.data['requirements'],
                 notes=request.data['notes']
             )
+            new_post.save()
 
             return Response({"id":new_post.pk})
         except Exception:
@@ -194,6 +196,7 @@ class ProfileView(APIView):
                 business.user_profile.location.email = request.data['email']
                 business.user_profile.location.first_name = request.data['first_name']
                 business.user_profile.location.last_name = request.data['last_name']
+                business.save()
 
                 return Response({"id":business.pk})
             except Exception:
