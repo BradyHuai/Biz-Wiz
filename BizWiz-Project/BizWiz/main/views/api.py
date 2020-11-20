@@ -1,7 +1,9 @@
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from knox.models import AuthToken
+from rest_framework.views import APIView
 from ..serializers import UserSerializer, BusinessRegisterSerializer, LoginSerializer
+from ..models import Location, Industry
 
 # Register API
 class RegisterBusinessAPI(generics.GenericAPIView):
@@ -40,18 +42,12 @@ class UserAPI(generics.RetrieveAPIView):
     def get_object(self):
         return self.request.user
 
-def get_user(request):
-    if request.method == 'GET':
-        email = request.POST['email']
-        password = request.POST['password']
 
-        user = auth.authenticate(username = email, password =password )
-
-        if user is not None:
-            auth.login(request , user)
-            return redirect('home')    
-        else:
-            messages.info(request, 'invalid email or password')
-            return redirect('login')
-    else:
-        return render(request,'main/registration/login.html')
+class TestView(APIView):
+    def get(self, request):
+        # test_data_var = request.query_params['testData']
+        # page_num_var = request.query_params['pageNum']
+        return Response({
+            'cities' : list({location.city for location in Location.objects.all()}),
+            'types' : list({industry.name for industry in Industry.objects.all()}),
+        })
