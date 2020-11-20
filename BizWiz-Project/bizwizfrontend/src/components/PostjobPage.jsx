@@ -58,23 +58,6 @@ export default function Postjob() {
             [name]: value
         }));
     }
-    // const url = "http://localhost:8000/api/listings/";
-
-    // axios({
-    //     method: "get",
-    //     url: url,
-    //     data: data,
-    // })
-    // .then((res) => {
-    //     if (res.status === 200) {
-    //       console.log("success");
-    //     } else {
-    //       console.log(res.status);
-    //     }
-    // })
-    // .catch((e) => {
-    //     console.log(e);
-    // });
 
     const handleSubmit = (e) => {
         const url = "http://localhost:8000/api/post";
@@ -87,11 +70,14 @@ export default function Postjob() {
           .then((res) => {
             if (res.status === 200) {
               console.log("success");
+              alert("Posting submitted!")
             } else {
+                alert("Invalid input, please check your inputs.")
               console.log(res.status);
             }
           })
           .catch((e) => {
+            alert("Invalid input, please check your inputs.")
             console.log(e);
           });
     }
