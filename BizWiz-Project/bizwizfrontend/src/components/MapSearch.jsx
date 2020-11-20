@@ -8,8 +8,6 @@ import {
 } from "@react-google-maps/api";
 import axios from "axios";
 
-//[{address: "", companyName: "", description: "", smallDescription: "", hyperlink: ""}]
-
 
 //Function to return jsx to render map onto website screen
 function MapSearch() {
@@ -134,7 +132,7 @@ function MapSearch() {
                     <div style={{width: "150px", height: "100px"}}>
                         <h3>{selected.companyName}</h3>
                         <p>{selected.description}</p>
-                        <a href={"https://www.google.com"}>View Listing</a>
+                        <a href={selected.hyperlink}>View Listing</a>
                     </div>
                 </InfoWindow>) : null}
             </GoogleMap>
@@ -168,7 +166,7 @@ function createListings(data) {
     const listings = [];
     for (let i = 0; i < data.length; i++) {
         listings.push(
-            <div className="listingBox" style={{backgroundColor: "white", width: "100%", height: "40%"}}>
+            <div className="listingBox" style={{backgroundColor: "white", width: "100%", height: "30%"}}>
                 <b>{data[i].companyName}</b>
                 <div style={{height: "40%"}}>
                     <p>{data[i].description}</p>
