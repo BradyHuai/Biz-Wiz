@@ -54,7 +54,7 @@ class OptionsView(APIView):
 
 
 class PostingList(APIView):
-    def get(self, request):
+    def post(self, request):
         print(request.data)
         data_city = request.data['city']
         data_keyword = request.data['keyword']
