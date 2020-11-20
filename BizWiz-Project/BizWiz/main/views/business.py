@@ -29,6 +29,15 @@ def display_business(request, business_name):
     context = {'business': business}
     return render(request, 'main/business_display.html', context)
 
+def map_detail_view(request, business_name):
+    business = get_object_or_404(Business, business_name=business_name)
+    location = business.user_profile.location
+    detail = {
+        "business": business,
+        "location": location
+    }
+    return render(request, "main/map/detail.html", detail)
+
 def application_detail_view(request, business_name):
     application = get_object_or_404(Application, business_name=business_name)
     detail = {
