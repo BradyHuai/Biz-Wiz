@@ -37,16 +37,18 @@ export default function Postjob() {
     const classes = useStyles();
 
     const initialData = {
-        business: -1,
-        position: "",
-        title: "",
-        location: "",
-        salary: "",
-        deadline: "",
-        link: "",
-        description: "",
-        requirements: "",
-        notes: "",
+        "business": -1,
+        "position": "",
+        "post_title": "",
+        "address": "",
+        "zip_code": "",
+        "city": "",
+        "salary": "",
+        "deadline": "",
+        "description": "",
+        "small_description": "",
+        "requirements": "",
+        "notes": "",
     };
     const [data, setdata] = useState(initialData);
     const handleChange = (e) => {
@@ -75,7 +77,7 @@ export default function Postjob() {
     // });
 
     const handleSubmit = (e) => {
-        const url = "http://localhost:8000/api/";
+        const url = "http://localhost:8000/api/post";
 
         axios({
           method: "post",
@@ -132,7 +134,7 @@ export default function Postjob() {
                     </Grid>
                     <Grid item md={6} sm={12} xs={12}>
                         <TextField 
-                            name="title" 
+                            name="post_title" 
                             label="Job Title" 
                             variant="outlined" 
                             onChange={handleChange} 
@@ -141,8 +143,26 @@ export default function Postjob() {
                     </Grid>
                     <Grid item md={6} sm={12} xs={12}>
                         <TextField 
-                            name="location" 
-                            label="Location" 
+                            name="address" 
+                            label="address" 
+                            variant="outlined" 
+                            onChange={handleChange} 
+                            fullWidth 
+                            required />
+                    </Grid>
+                    <Grid item md={6} sm={12} xs={12}>
+                        <TextField 
+                            name="zip_code" 
+                            label="zip code" 
+                            variant="outlined" 
+                            onChange={handleChange} 
+                            fullWidth 
+                            required />
+                    </Grid>
+                    <Grid item md={6} sm={12} xs={12}>
+                        <TextField 
+                            name="city" 
+                            label="city" 
                             variant="outlined" 
                             onChange={handleChange} 
                             fullWidth 

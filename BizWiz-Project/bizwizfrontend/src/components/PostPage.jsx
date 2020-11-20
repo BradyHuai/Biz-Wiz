@@ -94,16 +94,11 @@ export default function PostPage() {
   });
 
   const id = history.location.state.id;
-  const post_id = {"id": id};
 
   useEffect(() => {
     (async () => {
       const posting_url = "http://localhost:8000/api/post";
-      const post = await axios({
-        method: "post",
-        url: posting_url,
-        data: post_id,
-      });
+      const post = await axios.get(posting_url, {params: {id: id}});
 
       setData({
         position: post.data.position,
@@ -224,6 +219,7 @@ export default function PostPage() {
           color="default"
           className={classes.button}
           startIcon={<ExitToAppIcon />}
+          
         >
           BACK
         </Button>
