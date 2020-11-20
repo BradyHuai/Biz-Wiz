@@ -120,7 +120,6 @@ class PostingList(APIView):
             if tup[1] == data_type:
                 data_type = tup[0]
                 break
-        candidates = lst = Post.objects.all()
 
         candidates = Post.objects.all()
 
@@ -153,4 +152,31 @@ class PostingList(APIView):
             resp.append(post)
 
         return Response(resp)
+
+
+class ProfileView(APIView):
+    def get(self, request):
+        user_id = self.request.query_params.get("id")
+
+        if user_id:
+            business = Business.objects.get(pk=user_id)
+            posts = Post.objects.all()
+            posts = posts.filter(business=business)
+
+            return Response({
+                "posts": [{'title':post.post_title, 'desc':post.description, 'id':post.pk} for post in posts], 
+                "userinfo": {
+                    'first_name': business.user_profile.first_name,
+                    'last_name': business.user_profile.last_name,
+                    'id': business.pk,
+                    'email': business.user_profile.email,
+                    'phone': "",
+                    'address': str(business.user_profile.location),
+                    'website': "",
+                }
+        })
+        else:
+            return Response({
+                'error' : "Post not found..."
+            })
 
