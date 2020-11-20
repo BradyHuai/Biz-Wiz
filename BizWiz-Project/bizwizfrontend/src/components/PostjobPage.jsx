@@ -37,16 +37,18 @@ export default function Postjob() {
     const classes = useStyles();
 
     const initialData = {
-        business: -1,
-        position: "",
-        title: "",
-        location: "",
-        salary: "",
-        deadline: "",
-        link: "",
-        description: "",
-        requirements: "",
-        notes: "",
+        "business": -1,
+        "position": "",
+        "post_title": "",
+        "address": "",
+        "zip_code": "",
+        "city": "",
+        "salary": "",
+        "deadline": "",
+        "description": "",
+        "small_description": "",
+        "requirements": "",
+        "notes": "",
     };
     const [data, setdata] = useState(initialData);
     const handleChange = (e) => {
@@ -56,26 +58,9 @@ export default function Postjob() {
             [name]: value
         }));
     }
-    // const url = "http://localhost:8000/api/listings/";
-
-    // axios({
-    //     method: "get",
-    //     url: url,
-    //     data: data,
-    // })
-    // .then((res) => {
-    //     if (res.status === 200) {
-    //       console.log("success");
-    //     } else {
-    //       console.log(res.status);
-    //     }
-    // })
-    // .catch((e) => {
-    //     console.log(e);
-    // });
 
     const handleSubmit = (e) => {
-        const url = "http://localhost:8000/api/";
+        const url = "http://localhost:8000/api/post";
 
         axios({
           method: "post",
@@ -85,11 +70,14 @@ export default function Postjob() {
           .then((res) => {
             if (res.status === 200) {
               console.log("success");
+              alert("Posting submitted!")
             } else {
+                alert("Invalid input, please check your inputs.")
               console.log(res.status);
             }
           })
           .catch((e) => {
+            alert("Invalid input, please check your inputs.")
             console.log(e);
           });
     }
@@ -132,7 +120,7 @@ export default function Postjob() {
                     </Grid>
                     <Grid item md={6} sm={12} xs={12}>
                         <TextField 
-                            name="title" 
+                            name="post_title" 
                             label="Job Title" 
                             variant="outlined" 
                             onChange={handleChange} 
@@ -141,8 +129,26 @@ export default function Postjob() {
                     </Grid>
                     <Grid item md={6} sm={12} xs={12}>
                         <TextField 
-                            name="location" 
-                            label="Location" 
+                            name="address" 
+                            label="address" 
+                            variant="outlined" 
+                            onChange={handleChange} 
+                            fullWidth 
+                            required />
+                    </Grid>
+                    <Grid item md={6} sm={12} xs={12}>
+                        <TextField 
+                            name="zip_code" 
+                            label="zip code" 
+                            variant="outlined" 
+                            onChange={handleChange} 
+                            fullWidth 
+                            required />
+                    </Grid>
+                    <Grid item md={6} sm={12} xs={12}>
+                        <TextField 
+                            name="city" 
+                            label="city" 
                             variant="outlined" 
                             onChange={handleChange} 
                             fullWidth 

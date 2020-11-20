@@ -6,7 +6,7 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
-import { Typography, Paper } from "@material-ui/core";
+import { Typography, Paper, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -45,67 +45,84 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const posts = [
-  { title: "Need volunteers", desc: "for museum tour", id: 1 },
-  { title: "Need parttime", desc: "for paint job", id: 2 },
-  { title: "Hiring", desc: "event organizer", id: 3 },
-  { title: "Need web developer", desc: "for free labour", id: 4 },
-];
+const posts = [{ title: "Example", desc: "Example", id: 1 }];
 
 const userinfo = {
-  first_name: "Biz",
-  last_name: "Wiz",
-  id: 1,
-  email: "bw@bw.com",
-  phone: "123456",
-  address: "123 bw st",
-  website: "biz-wiz.ca",
+  first_name: "",
+  last_name: "",
+  id: "",
+  email: "",
+  phone: "",
+  address: "",
+  website: "",
 };
+
 export default function ProfilePage() {
   const classes = useStyles();
   const history = useHistory();
-  const handleViewPost = () => {
-
-    history.push({pathname: "/pages/post/", search: '?the=search', state: {id: 1}});
+  const handleViewPost = (post_id) => () => {
+    history.push({
+      pathname: "/pages/post",
+      search: "?the=search",
+      state: { id: post_id },
+    });
   };
 
-  const [data, setData] = useState({ userid: "", posts: [], userinfo: {} });
-  useEffect(() => {
-    (async () => {
-      const id_url = "http://localhost:8000/api/user/";
-      const ret_id = await axios.get(id_url);
-      // .then((res) => {
-      //   setData({ ...data, userid: res.data });
-      // })
-      // .catch((e) => {
-      //   console.log(e);
-      // });
+  const handleInputId = (event) => {
+    setData({
+      ...data,
+      userid: event.target.value,
+    });
+  };
 
-      const posts_url = "http://localhost:8000/api/profile/";
-      const profile = await axios({
-        method: "get",
-        url: posts_url,
-        data: ret_id,
+  const [data, setData] = useState({
+    userid: 1,
+    posts: posts,
+    userinfo: userinfo,
+  });
+
+  const handleChangeProfile = () => {
+    (async () => {
+      //   const id_url = "http://localhost:8000/api/user/";
+      //   const ret_id = await axios.get(id_url);
+
+      const posts_url = "http://localhost:8000/api/profile";
+      const profile = await axios.get(posts_url, {
+        params: { id: data.userid },
       });
-      // .then((res) => {
-      //   setData({
-      //     ...data,
-      //     posts: res.data.posts,
-      //     userinfo: res.data.userinfo,
-      //   });
-      // })
-      // .catch((e) => {
-      //   console.log(e);
-      // });
-      console.log(data);
-      setData({
-        posts: profile.data.posts,
-        userinfo: profile.data.userinfo,
-        userid: ret_id.data.id,
-      });
-    })();
+      console.log(profile);
+      if ("error" in profile.data) {
+        alert(profile.data["error"]);
+      } else {
+        setData({
+          ...data,
+          posts: profile.data.posts,
+          userinfo: profile.data.userinfo,
+        });
+        console.log(data);
+      }
+    })().catch((e) => {
+      console.log("Invalid ID");
+      alert("Invalid ID");
+    });
     // eslint-disable-next-line
-  }, []);
+  };
+
+  // useEffect(() => {
+  //   (async () => {
+  //     //   const id_url = "http://localhost:8000/api/user/";
+  //     //   const ret_id = await axios.get(id_url);
+
+  //     const posts_url = "http://localhost:8000/api/profile/";
+  //     const profile = await axios.get(posts_url, { params: { id: data.user } });
+  //     setData({
+  //       ...data,
+  //       posts: profile.data.posts,
+  //       userinfo: profile.data.userinfo,
+  //     });
+  //   })();
+  //   // eslint-disable-next-line
+  // }, []);
 
   if (data.userinfo === {}) {
     return <span>waiting... </span>;
@@ -116,6 +133,29 @@ export default function ProfilePage() {
       <Paper className={classes.paper}>
         <Paper variant="outlined">
           <img src="/images/bwlogo.png" style={{ margin: 10 }} alt=""></img>
+        </Paper>
+        <Paper variant="outlined">
+          <TextField
+            name="business"
+            label="Your Business ID"
+            variant="outlined"
+            style={{
+              textAlign: "left",
+              margin: 10,
+            }}
+            defaultValue={"Enter an user ID"}
+            onChange={handleInputId}
+          ></TextField>
+          <Button
+            style={{
+              textAlign: "left",
+              backgroundColor: "#e3f2fd",
+              margin: 10,
+            }}
+            onClick={handleChangeProfile}
+          >
+            View Profile
+          </Button>
         </Paper>
         <Paper variant="outlined">
           <Typography variant="subtitle1" className={classes.postingtitle}>
@@ -143,7 +183,7 @@ export default function ProfilePage() {
           Postings
         </Typography>
         <Grid container className={classes.cardGrid}>
-          {posts.map((card) => (
+          {data.posts.map((card) => (
             <Grid
               item
               className={classes.item}
@@ -165,7 +205,11 @@ export default function ProfilePage() {
                   <Typography>{card.desc}</Typography>
                 </CardContent>
                 <CardActions>
-                  <Button size="small" color="primary" onClick={handleViewPost}>
+                  <Button
+                    size="small"
+                    color="primary"
+                    onClick={handleViewPost(card.id)}
+                  >
                     View
                   </Button>
                   <Button size="small" color="primary">

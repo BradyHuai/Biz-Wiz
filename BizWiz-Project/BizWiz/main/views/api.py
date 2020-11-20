@@ -4,7 +4,7 @@ from knox.models import AuthToken
 from rest_framework.views import APIView
 from ..serializers import UserSerializer, BusinessRegisterSerializer, LoginSerializer
 from ..industries import Industries
-from ..models import Location, Post, Business
+from ..models import Location, Post, Business, Application
 import requests
 
 # Register API
@@ -55,34 +55,36 @@ class OptionsView(APIView):
 
 class PostView(APIView):
     def post(self, request):
+        print(request.data)
         business_id = request.data['business']
-        # try:
-        business = Business.objects.get(pk=business_id)
-        location = Location.objects.create(
-            address=request.data['address'],
-            zip_code=request.data['zip_code'],
-            city=request.data['city']
-        )
+        try:
+            business = Business.objects.get(pk=business_id)
+            location = Location.objects.create(
+                address=request.data['address'],
+                zip_code=request.data['zip_code'],
+                city=request.data['city']
+            )
+            location.save()
 
-        new_post = Post.objects.create(
-            business=business,
-            position=request.data['position'],
-            post_title=request.data['post_title'],
-            location=location,
-            salary=request.data['salary'],
-            deadline=request.data['deadline'],
-            small_description=request.data['small_description'],
-            description=request.data['description'],
-            requirements=request.data['requirements'],
-            notes=request.data['notes']
-        )
+            new_post = Post.objects.create(
+                business=business,
+                position=request.data['position'],
+                post_title=request.data['post_title'],
+                location=location,
+                salary=request.data['salary'],
+                deadline=request.data['deadline'],
+                small_description=request.data['small_description'],
+                description=request.data['description'],
+                requirements=request.data['requirements'],
+                notes=request.data['notes']
+            )
+            new_post.save()
 
-        return Response({"id":new_post.pk})
-        # except Exception:
-        #     print(str(Exception))
-        #     return Response({
-        #         'error' : "Post could not be created..."
-        #     })
+            return Response({"id":new_post.pk})
+        except Exception:
+            return Response({
+                'error' : "Post could not be created..."
+            })
 
     def get(self, request):
         data_id = self.request.query_params.get("id")
@@ -120,7 +122,6 @@ class PostingList(APIView):
             if tup[1] == data_type:
                 data_type = tup[0]
                 break
-        candidates = lst = Post.objects.all()
 
         candidates = Post.objects.all()
 
@@ -154,3 +155,98 @@ class PostingList(APIView):
 
         return Response(resp)
 
+
+class ProfileView(APIView):
+    def get(self, request):
+        business_id = self.request.query_params.get("id")
+        if business_id:
+            try:
+                business = Business.objects.get(pk=business_id)
+                posts = Post.objects.all()
+                posts = posts.filter(business=business)
+
+                return Response({
+                    "posts": [{'title':post.post_title, 'desc':post.description, 'id':post.pk} for post in posts], 
+                    "userinfo": {
+                        'first_name': business.user_profile.first_name,
+                        'last_name': business.user_profile.last_name,
+                        'id': business.pk,
+                        'email': business.user_profile.email,
+                        'phone': "",
+                        'address': str(business.user_profile.location),
+                        'website': "",
+                    }
+                })
+            except Exception:
+                return Response({
+                    'error' : "User not found..."
+                })
+        else:
+            return Response({
+                'error' : "Id not provided"
+            })
+    
+    def post(self, request):
+        business_id = self.request.data["id"]
+        if business_id:
+            try:
+                business = Business.objects.get(pk=business_id)
+
+                business.user_profile.location.address = request.data['address']
+                business.user_profile.location.email = request.data['email']
+                business.user_profile.location.first_name = request.data['first_name']
+                business.user_profile.location.last_name = request.data['last_name']
+                business.save()
+
+                return Response({"id":business.pk})
+            except Exception:
+                return Response({
+                    'error' : "Business could not be modified..."
+                })
+        else:
+            return Response({
+                'error' : "Id not provided"
+            })
+
+class ApplicationView(APIView):    
+    def get(self, request):
+        data_id = self.request.query_params.get("id")
+        print(data_id)
+
+        if data_id:
+            app = Application.objects.get(pk=data_id)
+        
+            return Response({
+                'business_name' : app.business_name,
+                'application_name' : app.application_name,
+                'num_questions' : app.num_questions, 
+                'q1' : app.q1,
+                'q2' : app.q2,
+                'q3' : app.q3,
+                'email' : app.email,
+            })
+        else:
+            return Response({
+                'error' : "Post not found..."
+            })
+
+    # this is not working yet
+    def post(self, request):
+        post_id = request.data['post']
+        try:
+            post = Post.objects.get(pk=post_id)
+
+            new_app = Application.objects.create(
+                post=post,
+                questions=request.data['questions'],
+                email=request.data['email']
+            )
+            new_app.save()
+
+            return Response({"id":new_app.pk})
+        except Exception:
+            return Response({
+                'error' : "Application could not be created..."
+            })
+
+    
