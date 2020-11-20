@@ -1,17 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-
-
+from .industries import Industries
 # Create your models here.
-class Industry(models.Model):
-    name = models.CharField(max_length=30)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = "Industry"
-        verbose_name_plural = "Industries"
 
 class Location(models.Model):
     address = models.CharField("Address line 1", max_length=1024)
@@ -27,7 +17,7 @@ class Location(models.Model):
 
 
 class UserProfile(AbstractUser):
-    industry = models.ForeignKey(Industry, on_delete=models.CASCADE, null=True)
+    industry = models.CharField(max_length=30, choices=(Industries.get()), null=True)
     location = models.ForeignKey(Location, on_delete=models.CASCADE, null=True)
     is_Business = models.BooleanField(default=False)
     is_Individual = models.BooleanField(default=False)
