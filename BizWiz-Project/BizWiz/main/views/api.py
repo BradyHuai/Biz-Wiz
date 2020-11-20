@@ -57,33 +57,32 @@ class PostView(APIView):
     def post(self, request):
         print(request.data)
         business_id = request.data['business']
-        # try:
-        business = Business.objects.get(pk=business_id)
-        location = Location.objects.create(
-            address=request.data['address'],
-            zip_code=request.data['zip_code'],
-            city=request.data['city']
-        )
+        try:
+            business = Business.objects.get(pk=business_id)
+            location = Location.objects.create(
+                address=request.data['address'],
+                zip_code=request.data['zip_code'],
+                city=request.data['city']
+            )
 
-        new_post = Post.objects.create(
-            business=business,
-            position=request.data['position'],
-            post_title=request.data['post_title'],
-            location=location,
-            salary=request.data['salary'],
-            deadline=request.data['deadline'],
-            small_description=request.data['small_description'],
-            description=request.data['description'],
-            requirements=request.data['requirements'],
-            notes=request.data['notes']
-        )
+            new_post = Post.objects.create(
+                business=business,
+                position=request.data['position'],
+                post_title=request.data['post_title'],
+                location=location,
+                salary=request.data['salary'],
+                deadline=request.data['deadline'],
+                small_description=request.data['small_description'],
+                description=request.data['description'],
+                requirements=request.data['requirements'],
+                notes=request.data['notes']
+            )
 
-        return Response({"id":new_post.pk})
-        # except Exception:
-        #     print(str(Exception))
-        #     return Response({
-        #         'error' : "Post could not be created..."
-        #     })
+            return Response({"id":new_post.pk})
+        except Exception:
+            return Response({
+                'error' : "Post could not be created..."
+            })
 
     def get(self, request):
         data_id = self.request.query_params.get("id")
@@ -158,26 +157,30 @@ class PostingList(APIView):
 class ProfileView(APIView):
     def get(self, request):
         user_id = self.request.query_params.get("id")
-
         if user_id:
-            business = Business.objects.get(pk=user_id)
-            posts = Post.objects.all()
-            posts = posts.filter(business=business)
+            try:
+                business = Business.objects.get(pk=user_id)
+                posts = Post.objects.all()
+                posts = posts.filter(business=business)
 
-            return Response({
-                "posts": [{'title':post.post_title, 'desc':post.description, 'id':post.pk} for post in posts], 
-                "userinfo": {
-                    'first_name': business.user_profile.first_name,
-                    'last_name': business.user_profile.last_name,
-                    'id': business.pk,
-                    'email': business.user_profile.email,
-                    'phone': "",
-                    'address': str(business.user_profile.location),
-                    'website': "",
-                }
-        })
+                return Response({
+                    "posts": [{'title':post.post_title, 'desc':post.description, 'id':post.pk} for post in posts], 
+                    "userinfo": {
+                        'first_name': business.user_profile.first_name,
+                        'last_name': business.user_profile.last_name,
+                        'id': business.pk,
+                        'email': business.user_profile.email,
+                        'phone': "",
+                        'address': str(business.user_profile.location),
+                        'website': "",
+                    }
+                })
+            except Exception:
+                return Response({
+                    'error' : "User not found..."
+                })
         else:
             return Response({
-                'error' : "Post not found..."
+                'error' : "Id not provided"
             })
 
