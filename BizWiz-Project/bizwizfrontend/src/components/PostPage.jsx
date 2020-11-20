@@ -219,7 +219,7 @@ export default function PostPage() {
           color="default"
           className={classes.button}
           startIcon={<ExitToAppIcon />}
-          
+          onClick={history.goBack}
         >
           BACK
         </Button>
