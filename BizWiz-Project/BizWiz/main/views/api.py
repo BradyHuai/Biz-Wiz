@@ -4,7 +4,7 @@ from knox.models import AuthToken
 from rest_framework.views import APIView
 from ..serializers import UserSerializer, BusinessRegisterSerializer, LoginSerializer
 from ..industries import Industries
-from ..models import Location, Post, Business
+from ..models import Location, Post, Business, Application
 import requests
 
 # Register API
@@ -208,3 +208,45 @@ class ProfileView(APIView):
                 'error' : "Id not provided"
             })
 
+class ApplicationView(APIView):    
+    def get(self, request):
+        data_id = self.request.query_params.get("id")
+        print(data_id)
+
+        if data_id:
+            app = Application.objects.get(pk=data_id)
+        
+            return Response({
+                'business_name' : app.business_name,
+                'application_name' : app.application_name,
+                'num_questions' : app.num_questions, 
+                'q1' : app.q1,
+                'q2' : app.q2,
+                'q3' : app.q3,
+                'email' : app.email,
+            })
+        else:
+            return Response({
+                'error' : "Post not found..."
+            })
+
+    # this is not working yet
+    def post(self, request):
+        post_id = request.data['post']
+        try:
+            post = Post.objects.get(pk=post_id)
+
+            new_app = Application.objects.create(
+                post=post,
+                questions=request.data['questions'],
+                email=request.data['email']
+            )
+            new_app.save()
+
+            return Response({"id":new_app.pk})
+        except Exception:
+            return Response({
+                'error' : "Application could not be created..."
+            })
+
+    
