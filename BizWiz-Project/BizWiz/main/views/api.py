@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from knox.models import AuthToken
 from rest_framework.views import APIView
 from ..serializers import UserSerializer, BusinessRegisterSerializer, LoginSerializer
-from ..models import Location, Industry, Post
+from ..models import Location, Industry, Post, Business
 
 # Register API
 class RegisterBusinessAPI(generics.GenericAPIView):
@@ -52,8 +52,39 @@ class OptionsView(APIView):
 
 
 class PostView(APIView):
+    def post(self, request):
+        business_id = request.data['business']
+        # try:
+        business = Business.objects.get(pk=business_id)
+        location = Location.objects.create(
+            address=request.data['address'],
+            zip_code=request.data['zip_code'],
+            city=request.data['city']
+        )
+
+        new_post = Post.objects.create(
+            business=business,
+            position=request.data['position'],
+            post_title=request.data['post_title'],
+            location=location,
+            salary=request.data['salary'],
+            deadline=request.data['deadline'],
+            small_description=request.data['small_description'],
+            description=request.data['description'],
+            requirements=request.data['requirements'],
+            notes=request.data['notes']
+        )
+
+        return Response({"id":new_post.pk})
+        # except Exception:
+        #     print(str(Exception))
+        #     return Response({
+        #         'error' : "Post could not be created..."
+        #     })
+
     def get(self, request):
-        data_id = request.data['id']
+        data_id = self.request.query_params.get("id")
+        print(data_id)
 
         if data_id:
             post = Post.objects.get(pk=data_id)
