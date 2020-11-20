@@ -55,6 +55,7 @@ class OptionsView(APIView):
 
 class PostView(APIView):
     def post(self, request):
+        print(request.data)
         business_id = request.data['business']
         # try:
         business = Business.objects.get(pk=business_id)
