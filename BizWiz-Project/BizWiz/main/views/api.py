@@ -4,7 +4,7 @@ from knox.models import AuthToken
 from rest_framework.views import APIView
 from ..serializers import UserSerializer, BusinessRegisterSerializer, LoginSerializer
 from ..industries import Industries
-from ..models import Location, Post, Business, Application
+from ..models import Location, Post, Business, Application, UserProfile
 import requests
 
 # Register API
@@ -190,16 +190,30 @@ class ProfileView(APIView):
         business_id = self.request.data["id"]
         if business_id:
             try:
-                business = Business.objects.get(pk=business_id)
-
-                business.user_profile.location.address = request.data['address']
-                business.user_profile.location.email = request.data['email']
-                business.user_profile.location.first_name = request.data['first_name']
-                business.user_profile.location.last_name = request.data['last_name']
+                location = Location.objects.create(
+                    address=request.data['address'],
+                    zip_code='temp',
+                    city='temp'
+                )
+                location.save()
+                user = UserProfile.objects.create(
+                    industry="IT",
+                    is_Business=True,
+                    first_name=request.data['first_name'],
+                    last_name=request.data['last_name'],
+                    location=location,
+                    username=request.data['website'],
+                    pk=business_id
+                )
+                user.save()
+                business = Business.objects.create(
+                    user_profile=user,
+                    business_name='temp',
+                )
                 business.save()
-
                 return Response({"id":business.pk})
             except Exception:
+                print(Exception)
                 return Response({
                     'error' : "Business could not be modified..."
                 })
