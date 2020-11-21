@@ -28,4 +28,6 @@ urlpatterns = [
     path('accounts/signup/business/', business.BusinessSignUpView.as_view(), name='business_signup'),
     path('accounts/signup/individual/', individual.IndividualSignUpView.as_view(), name='individual_signup'),
     path('view_business/<str:business_name>', business.display_business, name='display_business'),
+    # path('map/<str:business_name>', business.map_detail_view, name='map'),
+
 ]
