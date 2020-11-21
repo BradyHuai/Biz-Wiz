@@ -54,7 +54,7 @@ function PortalPage() {
     history.push("/login");
   };
   const handleClickGuest = () => {
-    history.push("/pages/home");
+    history.push("/pages/profilepage");
   };
   return (
     <div>

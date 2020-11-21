@@ -53,7 +53,7 @@ export default function LoginPage() {
 
   const handleSignIn = () => {
     if (values.username === "bizwiz" && values.password === "bizwiz") {
-      history.push("/pages/home");
+      history.push("/pages/profilepage");
     }
   };
   const handleSignUp = () => {

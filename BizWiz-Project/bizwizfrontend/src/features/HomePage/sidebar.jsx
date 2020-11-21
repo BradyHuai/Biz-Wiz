@@ -13,9 +13,9 @@ export default function MainListItems() {
   const handleClickProfile = () => {
     history.push("/pages/profilepage");
   };
-  const handleClickDashboard = () => {
-    history.push("/pages/home");
-  };
+  // const handleClickDashboard = () => {
+  //   history.push("/pages/home");
+  // };
 
   const handleClickSearch = () => {
     history.push("/search");
@@ -30,12 +30,12 @@ export default function MainListItems() {
   };
   return (
     <div>
-      <ListItem button onClick={handleClickDashboard}>
+      {/* <ListItem button onClick={handleClickDashboard}>
         <ListItemIcon>
           <DashboardIcon />
         </ListItemIcon>
         <ListItemText primary="Dashboard" />
-      </ListItem>
+      </ListItem> */}
       <ListItem button onClick={handleClickSearch}>
         <ListItemIcon>
           <SearchIcon />
