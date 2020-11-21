@@ -190,34 +190,44 @@ class ProfileView(APIView):
         business_id = self.request.data["id"]
         if business_id:
             try:
-                location = Location.objects.create(
-                    address=request.data['address'],
-                    zip_code='temp',
-                    city='temp'
-                )
-                location.save()
-                user = UserProfile.objects.create(
-                    industry="IT",
-                    is_Business=True,
-                    first_name=request.data['first_name'],
-                    last_name=request.data['last_name'],
-                    location=location,
-                    username=request.data['website'],
-                    pk=business_id,
-                    email=request.data['email']
-                )
-                user.save()
-                business = Business.objects.create(
-                    user_profile=user,
-                    business_name='temp',
-                )
-                business.save()
-                return Response({"id":business.pk})
+                business = Business.objects.get(pk=business_id)
+                business.user_profile.location.address = request.data['address']
+                business.user_profile.location.zip_code = request.data['postal_code']
+                business.user_profile.location.city = request.data['city']
+                business.user_profile.first_name = request.data['first_name']
+                business.user_profile.last_name = request.data['last_name']
+                business.user_profile.email = request.data['email']
+                
             except Exception:
-                print(Exception)
-                return Response({
-                    'error' : "Business could not be modified..."
-                })
+                try:
+                    location = Location.objects.create(
+                        address=request.data['address'],
+                        zip_code='temp',
+                        city='temp'
+                    )
+                    location.save()
+                    user = UserProfile.objects.create(
+                        industry="IT",
+                        is_Business=True,
+                        first_name=request.data['first_name'],
+                        last_name=request.data['last_name'],
+                        location=location,
+                        username=request.data['website'],
+                        pk=business_id,
+                        email=request.data['email']
+                    )
+                    user.save()
+                    business = Business.objects.create(
+                        user_profile=user,
+                        business_name='temp',
+                    )
+                    business.save()
+                    return Response({"id":business.pk})
+                except Exception:
+                    print(Exception)
+                    return Response({
+                        'error' : "Business could not be modified..."
+                    })
         else:
             return Response({
                 'error' : "Id not provided"
