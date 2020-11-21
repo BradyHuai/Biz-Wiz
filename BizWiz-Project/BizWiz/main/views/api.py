@@ -206,8 +206,8 @@ class ProfileView(APIView):
                 try:
                     location = Location.objects.create(
                         address=request.data['address'],
-                        zip_code='temp',
-                        city='temp'
+                        zip_code=request.data['postal_code'],
+                        city=request.data['city']
                     )
                     location.save()
                     user = UserProfile.objects.create(
