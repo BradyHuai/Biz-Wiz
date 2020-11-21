@@ -32,6 +32,8 @@ export default function EditProfile() {
     email: "",
     phone: "",
     address: "",
+    city: "",
+    postal_code: "",
     website: "",
   });
 
@@ -138,6 +140,30 @@ export default function EditProfile() {
                 defaultValue={""}
                 className={classes.postingtitle}
                 onChange={handleChangeForm("address")}
+                fullWidth
+                required
+              ></TextField>
+            </Grid>
+            <Grid item md={8} sm={12} xs={12}>
+              <TextField
+                name="City"
+                label="Your City"
+                variant="outlined"
+                defaultValue={""}
+                className={classes.postingtitle}
+                onChange={handleChangeForm("city")}
+                fullWidth
+                required
+              ></TextField>
+            </Grid>
+            <Grid item md={8} sm={12} xs={12}>
+              <TextField
+                name="Postal_Code"
+                label="Your Postal Code"
+                variant="outlined"
+                defaultValue={""}
+                className={classes.postingtitle}
+                onChange={handleChangeForm("postal_code")}
                 fullWidth
                 required
               ></TextField>

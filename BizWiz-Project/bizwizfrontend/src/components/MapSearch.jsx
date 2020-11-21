@@ -167,12 +167,12 @@ function createListings(data) {
     for (let i = 0; i < data.length; i++) {
         listings.push(
             <div className="listingBox" style={{backgroundColor: "white", width: "100%", height: "30%"}}>
+                <div style={{height: "100%", width: "100%"}}>
                 <b>{data[i].companyName}</b>
-                <div style={{height: "40%"}}>
-                    <p>{data[i].description}</p>
-                </div>
+                <p>{data[i].description}</p>
                 <p>{data[i].address}</p>
                 <a href={data[i].hyperlink}>View Listing</a>
+                </div>
             </div>
         );
     }
