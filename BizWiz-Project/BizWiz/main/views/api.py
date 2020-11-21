@@ -174,7 +174,7 @@ class ProfileView(APIView):
                         'email': business.user_profile.email,
                         'phone': "",
                         'address': str(business.user_profile.location),
-                        'website': "",
+                        'website': business.user_profile.username,
                     }
                 })
             except Exception:
@@ -197,7 +197,7 @@ class ProfileView(APIView):
                 business.user_profile.first_name = request.data['first_name']
                 business.user_profile.last_name = request.data['last_name']
                 business.user_profile.email = request.data['email']
-                
+
             except Exception:
                 try:
                     location = Location.objects.create(
@@ -224,7 +224,6 @@ class ProfileView(APIView):
                     business.save()
                     return Response({"id":business.pk})
                 except Exception:
-                    print(Exception)
                     return Response({
                         'error' : "Business could not be modified..."
                     })
