@@ -62,14 +62,16 @@ In order to upload a new job posting, the user can click on the Add Job Posting 
  * If a developer were to set this up on their machine or a remote server, what are the technical requirements (e.g. OS, libraries, etc.)?
  * Briefly describe instructions for setting up and running the application (think a true README).
  
- To install this on a machine, a developer must have already installed Python, PostgreSQL, and Node.js. Then the user must install the modules stated below in their python environment. To run the server, the user must first create a SQL server known as bizwiz on port 5432 with a owner “postgres” with password “bizwiz123”. Alternatively, the user could update the values in the “DATABASES” dictionary at the key ‘default’ with their own SQL server information.  Then the user should navigate to the “BizWiz-Project/BizWiz” directory and run “python3 manage.py makemigrations” and subsequently “python3 manage.py runserver” to launch the backend server. Then the developer will need to navigate to the “BizWiz-Project/bizwizfrontend/” directory and run npm install followed by npm start.This will launch the frontend.
+ To install this on a machine, a developer must have already installed Python, PostgreSQL, and Node.js. Then the user must install the modules stated below in their python environment. To run the server, the user must first create a SQL database known as bizwiz on port 5432 with a owner “postgres” with password “bizwiz123”. This can be through PGAdmin4 which is installed when installing postgres from the link below. Alternatively, the user could update the values in the “DATABASES” dictionary at the key ‘default’ with their own SQL server information.  Then the user should navigate to the “BizWiz-Project/BizWiz” directory and run “python3 manage.py makemigrations” and subsequently “python3 manage.py runserver” to launch the backend server. Then the developer will need to navigate to the “BizWiz-Project/bizwizfrontend/” directory and run npm install followed by npm start. This will launch the frontend.
 On any future launch of the project, the developer will only need to run “manage.py runserver” and “npm start” in the correct directories to launch the project.
 Python Ver: 3.9
 PostgreSQL: 13.1, Downloaded from https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
 This download will automatically create a server and install pgAdmin 4 to use for managing the database
 
 Node.js: Latest
+
 Python Modules Used and their versions:
+
 asgiref==3.3.1
 cffi==1.14.3
 cryptography==3.2.1
