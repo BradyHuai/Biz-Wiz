@@ -55,7 +55,7 @@ Map search:
 In order to demo the map search, the user must create a job posting using the administrator account. After the user has created a posting, the user can click on the “Search Jobs” button on the sidebar to navigate to the map feature. In the feature, the user can input keywords describing the type of job posting and also input the different types or city locations of postings. After the user hits the submit button, results should show up on the map as markers and a list on the side should appear displaying all the job postings that match the search query. 
 
 Posting:
-In order to upload a new job posting, the user can click on the Add Job Posting on the left side bar, then the form that you have to fill out is being displayed on the page. After the filling is done, then click the POST button on the bottom of the page will upload the posting to the database. The post will be added to the database after refreshing the localhost:8000 page.
+In order to upload a new job posting, the user can click on the Add Job Posting on the left side bar, then the form that you have to fill out is being displayed on the page. After the filling is done, then click the POST button on the bottom of the page will upload the posting to the database. The post will be added to the database after refreshing the localhost:8000 page. Also, in the profile page, if the correct businessID is filled in, then the posting should be displayed in the posting section on that page.
 
  
  ## Development requirements
