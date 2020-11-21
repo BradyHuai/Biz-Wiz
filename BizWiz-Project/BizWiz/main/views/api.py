@@ -197,6 +197,10 @@ class ProfileView(APIView):
                 business.user_profile.first_name = request.data['first_name']
                 business.user_profile.last_name = request.data['last_name']
                 business.user_profile.email = request.data['email']
+                business.user_profile.location.save()
+                business.user_profile.save()
+                business.save()
+                return Response({"id": business.pk})
 
             except Exception:
                 try:
