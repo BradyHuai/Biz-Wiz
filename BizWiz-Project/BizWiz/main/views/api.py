@@ -203,7 +203,8 @@ class ProfileView(APIView):
                     last_name=request.data['last_name'],
                     location=location,
                     username=request.data['website'],
-                    pk=business_id
+                    pk=business_id,
+                    email=request.data['email']
                 )
                 user.save()
                 business = Business.objects.create(
