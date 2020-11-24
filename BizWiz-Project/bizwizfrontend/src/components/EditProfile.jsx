@@ -52,8 +52,10 @@ export default function EditProfile() {
       .then((res) => {
         if (res.status === 200) {
           console.log("success");
+          alert("Success");
         } else {
           console.log(res.status);
+          alert("Failed");
         }
       })
       .catch((e) => {
