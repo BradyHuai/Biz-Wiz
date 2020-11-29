@@ -1,0 +1,61 @@
+body {
+    font-family: "Acumin Variable Concept";
+}
+
+.title {
+    height: 100px;
+    width: 70%;
+    background-color: #f1c418;
+    margin: auto;
+    text-align: auto;
+    vertical-align: middle;
+    line-height: 100px;
+    color: white;
+    border-radius: 25px;
+    margin-top: 100px;
+    font-size: 200%;
+}
+
+.signUp {
+    height: 100%;
+    width: 70%;
+    background-color: #eaeaea;
+    margin: auto;
+    color: black;
+    margin-top: 25px;
+}
+
+label {
+    width: 100%;
+    font-size: 1.75em;
+    float: left;
+    margin: 5px;
+}
+
+input[type=text], input[type=password] {
+    width: 90%;
+    padding: 12px 20px;
+    margin: auto;
+    display: block;
+    border: none;
+    border-width: 0px;
+    border-radius: 40px;
+    box-sizing: border-box;
+    font-size: large;
+}
+
+*:focus { 
+    outline: none;
+}
+
+input[type=submit] {
+    width: 30%;
+    background-color: #f1c418;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+}
+
