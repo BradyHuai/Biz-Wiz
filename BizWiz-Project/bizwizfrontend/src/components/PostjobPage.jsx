@@ -7,6 +7,14 @@ import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import axios from "axios";
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+
+const theme = createMuiTheme({
+  typography: {
+    fontFamily: [
+      'Acumin Variable Concept',
+    ].join(','),
+  },});
 
 const useStyles = makeStyles((theme) => ({
         root: {
@@ -26,9 +34,21 @@ const useStyles = makeStyles((theme) => ({
         boxText: {
             marginTop: "20px"
         },
-        button: {
+        buttonsave: {
             margin: theme.spacing(1),
             float: "right",
+            color: "#000000",
+            backgroundColor: "#f1c418"
+        },
+        buttondelete: {
+            margin: theme.spacing(1),
+            float: "right",
+            color: "#000000",
+            backgroundColor: "#eaeced"
+        },
+        titles: {
+            fontSize: "1.6em",
+            fontWeight: "bold",
         },
     })
 );
@@ -92,9 +112,10 @@ export default function Postjob() {
 
     return (
         <div className={classes.root}>
+            <ThemeProvider theme={theme}>
             <CssBaseline />
             <form autoComplete="off" className={classes.form}>
-                <Typography variant="h6">
+                <Typography variant="h6" className={classes.titles} >
                     BASIC INFORMATION
                 </Typography>
                 
@@ -111,6 +132,7 @@ export default function Postjob() {
                     </Grid>
                     <Grid item md={6} sm={12} xs={12}>
                         <TextField 
+                            className={classes.textfield}
                             name="position" 
                             label="Position type" 
                             variant="outlined" 
@@ -120,6 +142,7 @@ export default function Postjob() {
                     </Grid>
                     <Grid item md={6} sm={12} xs={12}>
                         <TextField 
+                            className={classes.textfield}
                             name="post_title" 
                             label="Job Title" 
                             variant="outlined" 
@@ -129,6 +152,7 @@ export default function Postjob() {
                     </Grid>
                     <Grid item md={6} sm={12} xs={12}>
                         <TextField 
+                            className={classes.textfield}
                             name="address" 
                             label="address" 
                             variant="outlined" 
@@ -138,6 +162,7 @@ export default function Postjob() {
                     </Grid>
                     <Grid item md={6} sm={12} xs={12}>
                         <TextField 
+                            className={classes.textfield}
                             name="zip_code" 
                             label="zip code" 
                             variant="outlined" 
@@ -165,7 +190,7 @@ export default function Postjob() {
                     </Grid>
                 </Grid>
                 <br />
-                <Typography variant="h6">
+                <Typography variant="h6" className={classes.titles}>
                     MORE ABOUT THIS JOB
                 </Typography>
                 <Grid container spacing={3}>
@@ -217,8 +242,7 @@ export default function Postjob() {
                     rows={8}/>
                 <Button
                     variant="contained"
-                    color="secondary"
-                    className={classes.button}
+                    className={classes.buttondelete}
                     startIcon={<DeleteIcon />}
                     onClick={handleDelete} 
                 >
@@ -226,14 +250,14 @@ export default function Postjob() {
                 </Button>
                 <Button
                     variant="contained"
-                    color="primary"
-                    className={classes.button}
+                    className={classes.buttonsave}
                     startIcon={<PostAddIcon />}
                     onClick={handleSubmit} 
                 >
                     POST
                 </Button>
             </form>
+            </ThemeProvider>
         </div>
     );
 }
