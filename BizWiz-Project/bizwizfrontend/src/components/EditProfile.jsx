@@ -5,6 +5,7 @@ import { Typography, Paper, TextField, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useState } from "react";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,18 +29,20 @@ export default function EditProfile() {
   const [values, setValues] = useState({
     first_name: "",
     last_name: "",
-    id: "",
     email: "",
     phone: "",
     address: "",
     city: "",
     postal_code: "",
     website: "",
+    username: "",
   });
 
   const handleChangeForm = (name) => (event) => {
     setValues({ ...values, [name]: event.target.value });
   };
+  const username = useSelector((state) => state.userinfo.username);
+
   const handleSave = () => {
     const url = "http://localhost:8000/api/profile";
 
@@ -47,7 +50,7 @@ export default function EditProfile() {
     axios({
       method: "post",
       url: url,
-      data: values,
+      data: { ...values, username: username },
     })
       .then((res) => {
         if (res.status === 200) {
@@ -75,16 +78,7 @@ export default function EditProfile() {
         <Paper variant="outlined" style={{ padding: 10 }}>
           <Grid container spacing={3}>
             <Grid item md={8} sm={12} xs={12}>
-              <TextField
-                name="id"
-                label="Your Business ID"
-                variant="outlined"
-                defaultValue={""}
-                className={classes.postingtitle}
-                onChange={handleChangeForm("id")}
-                fullWidth
-                required
-              ></TextField>
+              <Typography>Logged In As: {username}</Typography>
             </Grid>
             <Grid item md={8} sm={12} xs={12}>
               <TextField
