@@ -14,6 +14,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router";
 import { useState } from "react";
 import axios from "axios";
+import { updateInfo } from "../redux/ducks/userinfo";
+import { useDispatch } from "react-redux";
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "100vh",
@@ -50,6 +52,7 @@ const useStyles = makeStyles((theme) => ({
 export default function LoginPage() {
   const classes = useStyles();
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const [values, setValues] = useState({
     username: "",
@@ -67,6 +70,7 @@ export default function LoginPage() {
       .then((res) => {
         if (res.status === 200) {
           history.push("/pages/profilepage");
+          dispatch(updateInfo(values.username));
         } else {
           alert("Invalid username or password.");
           console.log(res.status);
