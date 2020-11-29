@@ -174,7 +174,7 @@ class ProfileView(APIView):
                         'email': business.user_profile.email,
                         'phone': "",
                         'address': str(business.user_profile.location),
-                        'website': business.user_profile.username,
+                        'website': business.website,
                     }
                 })
             except Exception:
@@ -199,6 +199,7 @@ class ProfileView(APIView):
                 business.user_profile.email = request.data['email']
                 business.user_profile.location.save()
                 business.user_profile.save()
+                business.website = request.data['website']
                 business.save()
                 return Response({"id": business.pk})
 
@@ -216,7 +217,6 @@ class ProfileView(APIView):
                         first_name=request.data['first_name'],
                         last_name=request.data['last_name'],
                         location=location,
-                        username=request.data['website'],
                         pk=business_id,
                         email=request.data['email']
                     )
@@ -224,6 +224,7 @@ class ProfileView(APIView):
                     business = Business.objects.create(
                         user_profile=user,
                         business_name='temp',
+                        website=request.data['website'],
                     )
                     business.save()
                     return Response({"id":business.pk})
