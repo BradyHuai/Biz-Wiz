@@ -10,6 +10,9 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router";
+import "./SignUp.css"
+import { useState } from "react";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,93 +54,79 @@ export default function SignUpPage() {
     history.push("/login");
   };
 
-  return (
-    <Grid container component="main" className={classes.root}>
-      <CssBaseline />
-      <Grid item xs={false} sm={4} md={7} className={classes.image} />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign Up
-          </Typography>
-          <form className={classes.form} noValidate>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="username"
-              label="Username"
-              name="username"
-              autoComplete="email"
-              autoFocus
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              style={{ width: "50%" }}
-              id="firstname"
-              label="firstname"
-              name="firstname"
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              style={{ width: "50%" }}
-              id="lastname"
-              label="lastname"
-              name="lastname"
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
+  const [values, setValues] = useState({
+    "business_name": "",
+    "username": "",
+    "email": "",
+    "first_name": "",
+    "last_name": "",
+    "industry": null,
+    "password": "",
+    "address": "",
+    "zip_code": "",
+    "city": "",
+    "short_paragraph": ""
+  });
+  
+  return <div className="container">
+    <div className="title">
+      Biz-Wiz Account Registration
+    </div>
+    
+    <div className="signUp">
+      <form style={{padding: "10px"}} onSubmit={(e) => {
 
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="Confirm Password"
-              label="Confirm Password"
-              type="password"
-              id="confirm_password"
-              autoComplete="current-password"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              style={{
-                background: "linear-gradient(45deg, #2979ff 30%, #2196f3 90%)",
-              }}
-            >
-              Create Your Account
-            </Button>
-            <Grid container className={classes.back}>
-              <Grid item>
-                <Link href="#" variant="body2" onClick={handleSignIn}>
-                  {"Already have an account? Sign in"}
-                </Link>
-              </Grid>
-            </Grid>
-          </form>
-        </div>
-      </Grid>
-    </Grid>
-  );
+        axios
+        .post("http://localhost:8000/accounts/signup/business/", values)
+        .then((res) => {
+          if (res.status === 200) {
+            console.log("success");
+            alert("Success");
+          } else {
+            console.log(res.status);
+            alert("Failed");
+          }
+        })
+        .catch(err => console.log(err));
+        e.preventDefault();
+        }}>
+
+        <label for="businessName">Business Name:</label>
+        <input id="businessName" type="text" onChange={(e) => {setValues((current) => ({...current, "business_name": e.target.value}));}}/>
+
+        <label for="user">User Name:</label>
+        <input id="user" type="text" onChange={(e) => {setValues((current) => ({...current, "username": e.target.value}));}}/>
+
+        <label for="email">Email Address:</label>
+        <input id="email" type="text" onChange={(e) => {setValues((current) => ({...current, "email": e.target.value}));}}/>
+
+        <label for="fname">First Name:</label>
+        <input id="fname" type="text" onChange={(e) => {setValues((current) => ({...current, "first_name": e.target.value}));}}/>
+
+        <label for="lname">Last Name:</label>
+        <input id="lname" type="text" onChange={(e) => {setValues((current) => ({...current, "last_name": e.target.value}));}}/>
+
+        <label for="industry">Industry: </label>
+        <input id="industry" type="text" onChange={(e) => {setValues((current) => ({...current, "industry": null}));}}/>
+
+        <label for="password">Password:</label>
+        <input id="password" type="password" onChange={(e) => {setValues((current) => ({...current, "password": e.target.value}));}}/>
+
+        <label for="address">Address:</label>
+        <input id="address" type="text" onChange={(e) => {setValues((current) => ({...current, "address": e.target.value}));}}/>
+
+        <label for="postalCode">Postal Code:</label>
+        <input id="postalCode" type="text" onChange={(e) => {setValues((current) => ({...current, "zip_code": e.target.value}));}}/>
+
+        <label for="city">City:</label>
+        <input id="city" type="text" onChange={(e) => {setValues((current) => ({...current, "city": e.target.value}));}}/>
+
+        <label for="description">Short description of your company:</label>
+        <input id="description" type="text" onChange={(e) => {setValues((current) => ({...current, "short_paragraph": e.target.value}));}}/>
+
+        <input type="submit" value="Sign Me Up!"/>
+      </form>
+    </div>
+  </div>
+
 }

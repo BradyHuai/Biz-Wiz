@@ -26,9 +26,24 @@ const useStyles = makeStyles((theme) => ({
         boxText: {
             marginTop: "20px"
         },
-        button: {
+        buttonsave: {
             margin: theme.spacing(1),
             float: "right",
+            color: "#000000",
+            backgroundColor: "#f1c418",
+            fontFamily: 'Acumin Variable Concept',
+        },
+        buttondelete: {
+            margin: theme.spacing(1),
+            float: "right",
+            color: "#000000",
+            backgroundColor: "#eaeced",
+            fontFamily: 'Acumin Variable Concept',
+        },
+        titles: {
+            fontSize: "1.8em",
+            fontWeight: "bold",
+            fontFamily: 'Acumin Variable Concept',
         },
     })
 );
@@ -94,7 +109,7 @@ export default function Postjob() {
         <div className={classes.root}>
             <CssBaseline />
             <form autoComplete="off" className={classes.form}>
-                <Typography variant="h6">
+                <Typography className={classes.titles} >
                     BASIC INFORMATION
                 </Typography>
                 
@@ -111,6 +126,7 @@ export default function Postjob() {
                     </Grid>
                     <Grid item md={6} sm={12} xs={12}>
                         <TextField 
+                            className={classes.textfield}
                             name="position" 
                             label="Position type" 
                             variant="outlined" 
@@ -120,6 +136,7 @@ export default function Postjob() {
                     </Grid>
                     <Grid item md={6} sm={12} xs={12}>
                         <TextField 
+                            className={classes.textfield}
                             name="post_title" 
                             label="Job Title" 
                             variant="outlined" 
@@ -129,6 +146,7 @@ export default function Postjob() {
                     </Grid>
                     <Grid item md={6} sm={12} xs={12}>
                         <TextField 
+                            className={classes.textfield}
                             name="address" 
                             label="address" 
                             variant="outlined" 
@@ -138,6 +156,7 @@ export default function Postjob() {
                     </Grid>
                     <Grid item md={6} sm={12} xs={12}>
                         <TextField 
+                            className={classes.textfield}
                             name="zip_code" 
                             label="zip code" 
                             variant="outlined" 
@@ -165,7 +184,7 @@ export default function Postjob() {
                     </Grid>
                 </Grid>
                 <br />
-                <Typography variant="h6">
+                <Typography className={classes.titles}>
                     MORE ABOUT THIS JOB
                 </Typography>
                 <Grid container spacing={3}>
@@ -217,8 +236,7 @@ export default function Postjob() {
                     rows={8}/>
                 <Button
                     variant="contained"
-                    color="secondary"
-                    className={classes.button}
+                    className={classes.buttondelete}
                     startIcon={<DeleteIcon />}
                     onClick={handleDelete} 
                 >
@@ -226,8 +244,7 @@ export default function Postjob() {
                 </Button>
                 <Button
                     variant="contained"
-                    color="primary"
-                    className={classes.button}
+                    className={classes.buttonsave}
                     startIcon={<PostAddIcon />}
                     onClick={handleSubmit} 
                 >

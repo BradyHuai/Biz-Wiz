@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   tableHead: {
     display: "table-header-group",
     verticalAlign: "middle",
-    backgroundColor: "#D9EDF7",
+    backgroundColor: "#f1c418",
   },
   title: {
     borderColor: "#7e7e7e #7e7e7e #7e7e7e #7e7e7e",
@@ -63,6 +63,12 @@ const useStyles = makeStyles((theme) => ({
   button: {
     margin: theme.spacing(1),
     float: "right",
+    backgroundColor: "#f1c418",
+  },
+  button2: {
+    margin: theme.spacing(1),
+    float: "right",
+    backgroundColor: "#eaeced",
   },
   buttons: {
     width: "80%",
@@ -216,8 +222,7 @@ export default function PostPage() {
       <div className = {classes.buttons}>
         <Button
           variant="contained"
-          color="default"
-          className={classes.button}
+          className={classes.button2}
           startIcon={<ExitToAppIcon />}
           onClick={history.goBack}
         >
@@ -225,7 +230,6 @@ export default function PostPage() {
         </Button>
         <Button
           variant="contained"
-          color="primary"
           className={classes.button}
           startIcon={<FavoriteIcon />}
         >

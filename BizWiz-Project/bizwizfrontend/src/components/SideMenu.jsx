@@ -17,7 +17,7 @@ export default function SideMenu() {
       maxWidth: 220,
     },
     drawerPaper: {
-      backgroundColor: "#e3f2fd",
+      backgroundColor: "#f1c418",
       marginTop: 80,
       maxWidth: 220,
     },

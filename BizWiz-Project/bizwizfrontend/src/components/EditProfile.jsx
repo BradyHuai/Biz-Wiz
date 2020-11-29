@@ -20,6 +20,16 @@ const useStyles = makeStyles((theme) => ({
   },
   postingtitle: {
     textAlign: "left",
+    fontSize: "1.8em",
+    fontWeight: "bold",
+    fontFamily: 'Acumin Variable Concept'
+  },
+  button: {
+    margin: theme.spacing(1),
+    textAlign: "left",
+    backgroundColor: "#f1c418",
+    margin: 20, 
+    width: 200,
   },
 }));
 
@@ -180,8 +190,7 @@ export default function EditProfile() {
         </Paper>
         <Paper>
           <Button
-            className={classes.postingtitle}
-            style={{ backgroundColor: "#e3f2fd", margin: 20, width: 200 }}
+            className={classes.button}
             onClick={handleSave}
           >
             Save
