@@ -51,7 +51,7 @@ const posts = [{ title: "Example", desc: "Example", id: 1 }];
 const userinfo = {
   first_name: "",
   last_name: "",
-  id: "",
+  username: "",
   email: "",
   phone: "",
   address: "",
@@ -74,7 +74,7 @@ export default function ProfilePage() {
   const handleInputId = (event) => {
     setData({
       ...data,
-      userid: event.target.value,
+      username: event.target.value,
     });
   };
 
@@ -87,7 +87,7 @@ export default function ProfilePage() {
     (async () => {
       const posts_url = "http://localhost:8000/api/profile";
       const profile = await axios.get(posts_url, {
-        params: { username: username },
+        params: { username: data.username },
       });
       console.log(profile);
       if ("error" in profile.data) {
