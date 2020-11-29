@@ -156,10 +156,10 @@ class PostingList(APIView):
 
 class ProfileView(APIView):
     def get(self, request):
-        business_id = self.request.query_params.get("id")
-        if business_id:
+        username = self.request.query_params.get("username")
+        if username:
             try:
-                business = Business.objects.get(pk=business_id)
+                business = Business.objects.get(username=username)
                 posts = Post.objects.all()
                 posts = posts.filter(business=business)
 
@@ -181,11 +181,11 @@ class ProfileView(APIView):
                 })
         else:
             return Response({
-                'error' : "Id not provided"
+                'error' : "Id not provided LMAO"
             })
     
     def post(self, request):
-        username = request.data["username"]
+        username = self.request.query_params.get("username")
         if username:
             try:
                 business = Business.objects.get(username=username)
