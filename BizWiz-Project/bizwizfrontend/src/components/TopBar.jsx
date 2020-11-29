@@ -95,9 +95,13 @@ export default function TopBar() {
           <Typography className={classes.title} variant="h6" noWrap>
             Biz-Wiz Community Board
           </Typography>
-          <Button className={classes.buttons} onClick={handleClickSignin}>
-            sign in
-          </Button>
+          {1 == 1 ? (
+            <Button className={classes.buttons} onClick={handleClickSignin}>
+              sign in
+            </Button>
+          ) : (
+            <Typography>Hello</Typography>
+          )}
           <Button className={classes.buttons} onClick={handleClickStart}>
             get started
           </Button>
