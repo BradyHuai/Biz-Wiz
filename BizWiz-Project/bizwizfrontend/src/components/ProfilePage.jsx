@@ -79,7 +79,6 @@ export default function ProfilePage() {
   };
 
   const [data, setData] = useState({
-    userid: 1,
     posts: posts,
     userinfo: userinfo,
   });
@@ -102,8 +101,8 @@ export default function ProfilePage() {
         console.log(data);
       }
     })().catch((e) => {
-      console.log("Invalid ID");
-      alert("Invalid ID");
+      console.log("Invalid Username");
+      alert("Invalid Username");
     });
     // eslint-disable-next-line
   };
@@ -135,14 +134,14 @@ export default function ProfilePage() {
         </Paper>
         <Paper variant="outlined">
           <TextField
-            name="business"
-            label="Your Business ID"
+            name="profile"
+            label="Business/Username"
             variant="outlined"
             style={{
               textAlign: "left",
               margin: 10,
             }}
-            defaultValue={username}
+            defaultValue={"Business/Username"}
             onChange={handleInputId}
           ></TextField>
           <Button
