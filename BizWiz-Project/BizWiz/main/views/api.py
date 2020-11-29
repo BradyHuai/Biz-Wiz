@@ -181,7 +181,7 @@ class ProfileView(APIView):
                 })
         else:
             return Response({
-                'error' : "Id not provided LMAO"
+                'error' : "Username not provided"
             })
     
     def post(self, request):
