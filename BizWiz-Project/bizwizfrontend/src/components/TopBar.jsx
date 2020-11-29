@@ -6,13 +6,15 @@ import { makeStyles } from "@material-ui/core/styles";
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import { Button } from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
+import image from "../Images/bwlogo.png";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
   barColored: {
-    background: "linear-gradient(45deg, #2979ff 30%, #2196f3 90%)",
+    background: "#f1c418",
     height: 80,
   },
 
@@ -29,28 +31,26 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("sm")]: {
       display: "block",
     },
-    color: "white",
+    color: "#f1c418",
   },
   icon: {
     height: "70%",
     width: "70%",
   },
   buttons: {
-    background: "rgba(67, 129, 168,0.5)",
+    background: "white",
     border: 0,
     borderRadius: 10,
-    color: "white",
+    color: "#f1c418",
     marginLeft: 20,
+    fontFamily: "Acumin Variable Concept",
   },
 }));
 
 export default function TopBar() {
   const classes = useStyles();
-  const [appBarBg, setappBarBg] = useState(
-    window.location.href === "http://localhost:3000/"
-      ? "transparent"
-      : "barColored"
-  );
+  const username = useSelector((state) => state.userinfo.username);
+  const [appBarBg, setappBarBg] = useState("barColored");
   const barRef = React.useRef();
   barRef.current = appBarBg;
 
@@ -89,18 +89,18 @@ export default function TopBar() {
             color="inherit"
             onClick={handleClickLogo}
           >
-            <img className={classes.icon} src="/images/bwlogo.png" alt="" />
+            <img className={classes.icon} src={image} alt="nothing" />
           </IconButton>
 
           <Typography className={classes.title} variant="h6" noWrap>
             Biz-Wiz Community Board
           </Typography>
-          {1 == 1 ? (
+          {username === "" ? (
             <Button className={classes.buttons} onClick={handleClickSignin}>
               sign in
             </Button>
           ) : (
-            <Typography>Hello</Typography>
+            <Typography>Hello {username}</Typography>
           )}
           <Button className={classes.buttons} onClick={handleClickStart}>
             get started
