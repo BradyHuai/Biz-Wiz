@@ -185,7 +185,7 @@ class ProfileView(APIView):
             })
     
     def post(self, request):
-        username = self.request.query_params.get("username")
+        username = self.request.data("username")
         if username:
             try:
                 business = Business.objects.get(username=username)
@@ -276,4 +276,8 @@ class ApplicationView(APIView):
                 'error' : "Application could not be created..."
             })
 
-    
+class IndustryView(APIView):
+    def get(self, requests):
+        return Response({
+            "industries": Industries.get().keys()
+        })
