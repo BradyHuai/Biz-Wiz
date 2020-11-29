@@ -13,7 +13,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router";
 import { useState } from "react";
-
+import axios from "axios";
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "100vh",
@@ -64,20 +64,20 @@ export default function LoginPage() {
       url: url,
       data: values,
     })
-    .then((res) => {
-      if (res.status === 200) {
-        history.push("/pages/profilepage");
-      } else {
-        alert("Invalid username or password.")
-        console.log(res.status);
-      }
-    })
-    .catch((e) => {
-      alert("Invalid input, please check your inputs.")
-      console.log(e);
-    });
+      .then((res) => {
+        if (res.status === 200) {
+          history.push("/pages/profilepage");
+        } else {
+          alert("Invalid username or password.");
+          console.log(res.status);
+        }
+      })
+      .catch((e) => {
+        alert("Invalid input, please check your inputs.");
+        console.log(e);
+      });
   };
-  
+
   const handleSignUp = () => {
     history.push("/sign-up");
   };
