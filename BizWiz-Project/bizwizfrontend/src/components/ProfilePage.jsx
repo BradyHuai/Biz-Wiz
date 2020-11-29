@@ -74,7 +74,7 @@ export default function ProfilePage() {
   const handleInputId = (event) => {
     setData({
       ...data,
-      userid: event.target.value,
+      username: event.target.value,
     });
   };
 
