@@ -185,7 +185,7 @@ class ProfileView(APIView):
             })
     
     def post(self, request):
-        username = self.request.data["username"]
+        username = request.data["username"]
         if username:
             try:
                 business = Business.objects.get(username=username)
