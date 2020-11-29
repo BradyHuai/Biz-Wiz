@@ -187,10 +187,10 @@ class ProfileView(APIView):
             })
     
     def post(self, request):
-        business_id = self.request.data["id"]
-        if business_id:
+        username = self.request.data["username"]
+        if username:
             try:
-                business = Business.objects.get(pk=business_id)
+                business = Business.objects.get(username=username)
                 business.user_profile.location.address = request.data['address']
                 business.user_profile.location.zip_code = request.data['postal_code']
                 business.user_profile.location.city = request.data['city']
@@ -201,7 +201,7 @@ class ProfileView(APIView):
                 business.user_profile.save()
                 business.website = request.data['website']
                 business.save()
-                return Response({"id": business.pk})
+                return Response({"username": business.user_profile.username})
 
             except Exception:
                 try:
@@ -217,8 +217,8 @@ class ProfileView(APIView):
                         first_name=request.data['first_name'],
                         last_name=request.data['last_name'],
                         location=location,
-                        pk=business_id,
-                        email=request.data['email']
+                        email=request.data['email'],
+                        username=username
                     )
                     user.save()
                     business = Business.objects.create(
@@ -227,7 +227,7 @@ class ProfileView(APIView):
                         website=request.data['website'],
                     )
                     business.save()
-                    return Response({"id":business.pk})
+                    return Response({"username":business.user_profile.username})
                 except Exception:
                     return Response({
                         'error' : "Business could not be modified..."
