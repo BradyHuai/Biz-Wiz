@@ -135,13 +135,13 @@ export default function ProfilePage() {
         <Paper variant="outlined">
           <TextField
             name="profile"
-            label="Business/Username"
+            label="Business/Email"
             variant="outlined"
             style={{
               textAlign: "left",
               margin: 10,
             }}
-            defaultValue={"Business/Username"}
+            defaultValue={"Business/Email"}
             onChange={handleInputId}
           ></TextField>
           <Button

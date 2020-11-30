@@ -1,13 +1,27 @@
 from rest_framework import serializers
 from main.models import UserProfile, Business, Individual, Location
-from django.contrib.auth import authenticate
+from django.contrib.auth.models import auth
 from django.core.validators import EmailValidator
+
+class LocationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Location
+        fields = ("address", "zip_code", "city")
 
 # User Serializer
 class UserSerializer(serializers.ModelSerializer):
-  class Meta:
-    model = UserProfile
-    fields = ('id', 'email', 'first_name', 'last_name', 'username')
+    location = LocationSerializer(read_only=True)
+
+    class Meta:
+        model = UserProfile
+        fields = ('id', 'email', 'first_name', 'last_name', 'username', 'location')
+
+class BusinessUserSerializer(serializers.ModelSerializer):
+    user_profile = UserSerializer(read_only=True)
+
+    class Meta:
+        model = Business
+        fields = ("short_paragraph", "business_name", "user_profile")
 
 # Register Serializer
 class UserRegisterSerializer(serializers.ModelSerializer):
@@ -17,7 +31,11 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserProfile
-        extra_kwargs = {'password': {'write_only': True}}
+        extra_kwargs = {
+            'password': {'write_only': True},
+            'email': {'validators': [EmailValidator,]},
+            }
+
 
 class BusinessRegisterSerializer(UserRegisterSerializer):
     business_name = serializers.CharField(max_length=80, required=True)
@@ -26,9 +44,6 @@ class BusinessRegisterSerializer(UserRegisterSerializer):
 
     class Meta(UserRegisterSerializer.Meta):
         fields = ('id', "username", "email", "first_name", "last_name", "industry", "password", "address", "zip_code", "city", "short_paragraph", "business_name")#, "image")
-        extra_kwargs = {
-            'email': {'validators': [EmailValidator,]},
-        }
 
     def create(self, validated_data):            
         user = UserProfile.objects.create_user(username=validated_data['username'], email=validated_data['email'], password=validated_data['password'])
@@ -51,11 +66,18 @@ class BusinessRegisterSerializer(UserRegisterSerializer):
 
 # Login Serializer
 class LoginSerializer(serializers.Serializer):
-    username = serializers.CharField()
+    email = serializers.CharField()
     password = serializers.CharField()
 
     def validate(self, data):
-        user = authenticate(**data)
+        user = auth.authenticate(username=data['email'], password=data['password'])
+
         if user and user.is_active:
-            return user
+            if user.is_Business:
+                business = Business.objects.get(user_profile=user)
+                return user, business
+            if user.is_Individual:
+                individual = Individual.objects.get(user_profile=user)
+                return user, individual
+
         raise serializers.ValidationError("Incorrect Credentials")
