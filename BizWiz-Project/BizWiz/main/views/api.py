@@ -159,7 +159,10 @@ class ProfileView(APIView):
         username = self.request.query_params.get("username")
         if username:
             try:
-                business = Business.objects.get(username=username)
+                if "%40" in username:
+                    username.replace("%40", "@")
+                user = UserProfile.objects.get(username=username)
+                business = Business.objects.get(user_profile=user)
                 posts = Post.objects.all()
                 posts = posts.filter(business=business)
 
@@ -188,7 +191,8 @@ class ProfileView(APIView):
         username = self.request.data("username")
         if username:
             try:
-                business = Business.objects.get(username=username)
+                user = UserProfile.objects.get(username=username)
+                business = Business.objects.get(user_profile=user)
                 business.user_profile.location.address = request.data['address']
                 business.user_profile.location.zip_code = request.data['postal_code']
                 business.user_profile.location.city = request.data['city']
