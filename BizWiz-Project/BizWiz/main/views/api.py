@@ -189,7 +189,7 @@ class ProfileView(APIView):
             })
     
     def post(self, request):
-        username = self.request.data("username")
+        username = self.request.data["username"]
         if username:
             try:
                 user = UserProfile.objects.get(username=username)
