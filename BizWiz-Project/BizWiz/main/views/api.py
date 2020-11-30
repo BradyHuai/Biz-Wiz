@@ -174,7 +174,6 @@ class ProfileView(APIView):
                         'last_name': business.user_profile.last_name,
                         'id': business.pk,
                         'email': business.user_profile.email,
-                        'phone': "",
                         'address': str(business.user_profile.location),
                         'website': business.website,
                         'short_paragraph': business.short_paragraph
@@ -209,37 +208,12 @@ class ProfileView(APIView):
                 return Response({"username": business.user_profile.username})
 
             except Exception:
-                try:
-                    location = Location.objects.create(
-                        address=request.data['address'],
-                        zip_code=request.data['postal_code'],
-                        city=request.data['city']
-                    )
-                    location.save()
-                    user = UserProfile.objects.create(
-                        industry="IT",
-                        is_Business=True,
-                        first_name=request.data['first_name'],
-                        last_name=request.data['last_name'],
-                        location=location,
-                        email=request.data['email'],
-                        username=username
-                    )
-                    user.save()
-                    business = Business.objects.create(
-                        user_profile=user,
-                        business_name='temp',
-                        website=request.data['website'],
-                    )
-                    business.save()
-                    return Response({"username":business.user_profile.username})
-                except Exception:
-                    return Response({
-                        'error' : "Business could not be modified..."
-                    })
+                return Response({
+                    'error': "Business could not be modified..."
+                })
         else:
             return Response({
-                'error' : "Id not provided"
+                'error' : "Username not provided"
             })
 
 class ApplicationView(APIView):    
