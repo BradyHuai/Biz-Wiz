@@ -11,6 +11,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -60,6 +61,8 @@ const userinfo = {
 export default function ProfilePage() {
   const classes = useStyles();
   const history = useHistory();
+  const dispatch = useDispatch();
+  const username = useSelector((state) => state.userinfo.username);
   const handleViewPost = (post_id) => () => {
     history.push({
       pathname: "/pages/post",
@@ -76,19 +79,15 @@ export default function ProfilePage() {
   };
 
   const [data, setData] = useState({
-    userid: 1,
     posts: posts,
     userinfo: userinfo,
   });
 
   const handleChangeProfile = () => {
     (async () => {
-      //   const id_url = "http://localhost:8000/api/user/";
-      //   const ret_id = await axios.get(id_url);
-
       const posts_url = "http://localhost:8000/api/profile";
       const profile = await axios.get(posts_url, {
-        params: { id: data.userid },
+        params: { username: username },
       });
       console.log(profile);
       if ("error" in profile.data) {
@@ -102,27 +101,26 @@ export default function ProfilePage() {
         console.log(data);
       }
     })().catch((e) => {
-      console.log("Invalid ID");
-      alert("Invalid ID");
+      console.log("Invalid Username");
+      alert("Invalid Username");
     });
     // eslint-disable-next-line
   };
 
-  // useEffect(() => {
-  //   (async () => {
-  //     //   const id_url = "http://localhost:8000/api/user/";
-  //     //   const ret_id = await axios.get(id_url);
-
-  //     const posts_url = "http://localhost:8000/api/profile/";
-  //     const profile = await axios.get(posts_url, { params: { id: data.user } });
-  //     setData({
-  //       ...data,
-  //       posts: profile.data.posts,
-  //       userinfo: profile.data.userinfo,
-  //     });
-  //   })();
-  //   // eslint-disable-next-line
-  // }, []);
+  useEffect(() => {
+    (async () => {
+      const posts_url = "http://localhost:8000/api/profile/";
+      const profile = await axios.get(posts_url, {
+        params: { username: username },
+      });
+      setData({
+        ...data,
+        posts: profile.data.posts,
+        userinfo: profile.data.userinfo,
+      });
+    })();
+    // eslint-disable-next-line
+  }, []);
 
   if (data.userinfo === {}) {
     return <span>waiting... </span>;
@@ -136,14 +134,14 @@ export default function ProfilePage() {
         </Paper>
         <Paper variant="outlined">
           <TextField
-            name="business"
-            label="Your Business ID"
+            name="profile"
+            label="Business/Username"
             variant="outlined"
             style={{
               textAlign: "left",
               margin: 10,
             }}
-            defaultValue={"Enter an user ID"}
+            defaultValue={"Business/Username"}
             onChange={handleInputId}
           ></TextField>
           <Button
