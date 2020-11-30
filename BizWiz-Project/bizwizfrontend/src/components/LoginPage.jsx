@@ -16,6 +16,8 @@ import { useState } from "react";
 import axios from "axios";
 import { updateInfo } from "../redux/ducks/userinfo";
 import { useDispatch } from "react-redux";
+
+
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "100vh",
@@ -62,24 +64,44 @@ export default function LoginPage() {
   const handleSignIn = (e) => {
     const url = "http://localhost:8000/api/auth";
 
-    axios({
-      method: "post",
-      url: url,
-      data: values,
-    })
-      .then((res) => {
-        if (res.status === 200) {
-          history.push("/pages/profilepage");
-          dispatch(updateInfo(values.username));
-        } else {
+      // (async () => {
+      //   const result = await axios({
+      //     method: "post",
+      //     url: url,
+      //     data: values,
+      //   })
+      //   .then((res) => {
+      //       if (res.status !== 200) {
+      //         alert("Invalid username or password.");
+      //         console.log(res.status);
+      //         return;
+      //       }
+      //     })
+      //   .catch((e) => {
+      //       alert("Invalid input, please check your inputs.");
+      //       console.log(e);
+      //   });
+        
+      //   dispatch(updateInfo(values.username));
+      //   history.push("/pages/profilepage");
+      // })();
+
+      (async () => {
+        const result = await axios({
+          method: "post",
+          url: url,
+          data: values,
+        })
+
+        if (result.status !== 200){
           alert("Invalid username or password.");
-          console.log(res.status);
+          console.log(result.status);
+          return;
         }
-      })
-      .catch((e) => {
-        alert("Invalid input, please check your inputs.");
-        console.log(e);
-      });
+        
+        dispatch(updateInfo(values.username));
+        history.push("/pages/profilepage");
+      })();
   };
 
   const handleSignUp = () => {

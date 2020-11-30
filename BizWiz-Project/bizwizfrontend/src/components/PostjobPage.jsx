@@ -122,6 +122,7 @@ export default function Postjob() {
                             onChange={handleChange} 
                             fullWidth 
                             required
+                            
                             />
                     </Grid>
                     <Grid item md={6} sm={12} xs={12}>
