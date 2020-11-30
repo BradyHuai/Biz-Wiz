@@ -2,6 +2,7 @@ const GETINFO = "getInfo";
 const UPDATEINFO = "updateInfo";
 
 const initialState = {
+  token: "",
   username: "",
 };
 

@@ -1,4 +1,4 @@
-import { combineReducers, createStore, applyMiddleware } from "redux";
+import { combineReducers, createStore } from "redux";
 // import axiosMiddleware from "redux-axios-middleware";
 // import axios from "axios";
 import userinfoReducer from "./ducks/userinfo";

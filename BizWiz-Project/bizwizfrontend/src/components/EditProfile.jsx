@@ -5,7 +5,7 @@ import { Typography, Paper, TextField, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useState } from "react";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,13 +22,12 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "left",
     fontSize: "1.8em",
     fontWeight: "bold",
-    fontFamily: 'Acumin Variable Concept'
+    fontFamily: "Acumin Variable Concept",
   },
   button: {
-    margin: theme.spacing(1),
     textAlign: "left",
     backgroundColor: "#f1c418",
-    margin: 20, 
+    margin: 20,
     width: 200,
   },
 }));
@@ -40,7 +39,6 @@ export default function EditProfile() {
     first_name: "",
     last_name: "",
     email: "",
-    phone: "",
     address: "",
     city: "",
     postal_code: "",
@@ -54,13 +52,15 @@ export default function EditProfile() {
   const username = useSelector((state) => state.userinfo.username);
 
   const handleSave = () => {
+    setValues({ ...values, username: username });
+
     const url = "http://localhost:8000/api/profile";
 
     console.log(values);
     axios({
       method: "post",
       url: url,
-      data: { ...values, username: username },
+      data: values,
     })
       .then((res) => {
         if (res.status === 200) {
@@ -174,25 +174,10 @@ export default function EditProfile() {
                 required
               ></TextField>
             </Grid>
-            <Grid item md={8} sm={12} xs={12}>
-              <TextField
-                name="Phone"
-                label="Your Contact Phone Number"
-                variant="outlined"
-                defaultValue={""}
-                className={classes.postingtitle}
-                onChange={handleChangeForm("phone")}
-                fullWidth
-                required
-              ></TextField>
-            </Grid>
           </Grid>
         </Paper>
         <Paper>
-          <Button
-            className={classes.button}
-            onClick={handleSave}
-          >
+          <Button className={classes.button} onClick={handleSave}>
             Save
           </Button>
         </Paper>

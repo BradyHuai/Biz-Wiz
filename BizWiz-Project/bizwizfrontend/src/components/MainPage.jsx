@@ -93,13 +93,15 @@ function MainPage() {
 
       <Grid container align="center" style={{ padding: 20 }}>
         <Grid className={classes.pic2}>
-          <img src={community} className={classes.pic}></img>
+          <img src={community} alt="" className={classes.pic}>
+            {" "}
+          </img>
         </Grid>
         <Grid className={classes.pic2}>
-          <img src={financial} className={classes.pic}></img>
+          <img src={financial} alt="" className={classes.pic}></img>
         </Grid>
         <Grid className={classes.pic2}>
-          <img src={chat} className={classes.pic}></img>
+          <img src={chat} alt="" className={classes.pic}></img>
         </Grid>
       </Grid>
 
@@ -112,13 +114,13 @@ function MainPage() {
           </Typography>
         </Paper>
         <Grid className={classes.paper2}>
-          <img src={bw_desc} className={classes.pic}></img>
+          <img src={bw_desc} alt="" className={classes.pic}></img>
         </Grid>
       </Grid>
 
       <Grid container>
         <Grid className={classes.paper2}>
-          <img src={why_bw_image} className={classes.pic}></img>
+          <img src={why_bw_image} alt="" className={classes.pic}></img>
         </Grid>
         <Grid item className={classes.paper3}>
           <Typography variant="h6" className={classes.text2} align="left">

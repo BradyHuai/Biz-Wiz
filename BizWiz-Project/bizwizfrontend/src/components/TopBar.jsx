@@ -6,7 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import { Button } from "@material-ui/core";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import image from "../Images/bwlogo.png";
 
 const useStyles = makeStyles((theme) => ({

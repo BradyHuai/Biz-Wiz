@@ -1,5 +1,5 @@
 body {
-    font-family: "Acumin Variable Concept";
+  font-family: "Acumin Variable Concept";
 }
 /*
 .title {
@@ -55,8 +55,6 @@ input[type=submit] {
     font-size: large;
   }
 */
-*:focus { 
-    outline: none;
+*:focus {
+  outline: none;
 }
-
-

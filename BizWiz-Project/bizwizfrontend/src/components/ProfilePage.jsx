@@ -11,7 +11,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import bwlogo from "../Images/bwlogo.png";
 
 const useStyles = makeStyles((theme) => ({
@@ -54,15 +54,13 @@ const userinfo = {
   last_name: "",
   username: "",
   email: "",
-  phone: "",
+  postal_code: "",
   address: "",
-  website: "",
 };
 
 export default function ProfilePage() {
   const classes = useStyles();
   const history = useHistory();
-  const dispatch = useDispatch();
   const username = useSelector((state) => state.userinfo.username);
   const handleViewPost = (post_id) => () => {
     history.push({
@@ -112,7 +110,7 @@ export default function ProfilePage() {
   useEffect(() => {
     (async () => {
       const posts_url = "http://localhost:8000/api/profile";
-      console.log(username);
+
       const profile = await axios.get(posts_url, {
         params: { username: username },
       });
@@ -141,12 +139,6 @@ export default function ProfilePage() {
         <Paper variant="outlined">
           <img src={bwlogo} style={{ margin: 10 }} alt=""></img>
         </Paper>
-
-        <Paper variant="outlined">
-          <Typography variant="subtitle1" className={classes.postingtitle}>
-            Website: {data.userinfo.website}
-          </Typography>
-        </Paper>
         <Paper variant="outlined">
           <Typography variant="subtitle1" className={classes.postingtitle}>
             Email: {data.userinfo.email}
@@ -159,7 +151,7 @@ export default function ProfilePage() {
         </Paper>
         <Paper variant="outlined">
           <Typography variant="subtitle1" className={classes.postingtitle}>
-            Contact: {data.userinfo.first_name} {userinfo.last_name}
+            Contact Person: {data.userinfo.first_name} {data.userinfo.last_name}
           </Typography>
         </Paper>
         <Paper variant="outlined">

@@ -1,9 +1,9 @@
-import React, { useState, useEffect }from "react";
+import React, { useState, useEffect } from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { makeStyles } from "@material-ui/core/styles";
-import Button from '@material-ui/core/Button';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import Button from "@material-ui/core/Button";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import axios from "axios";
 import { useHistory } from "react-router";
 
@@ -45,12 +45,12 @@ const useStyles = makeStyles((theme) => ({
     display: "table-row",
   },
   cell1: {
-      display: "table-cell",
-      padding: "4px",
-      lineHeight: "18px",
-      borderTop: "1px solid #ddd",
-      borderLeft: "1px solid #ddd",
-      width: "25%",
+    display: "table-cell",
+    padding: "4px",
+    lineHeight: "18px",
+    borderTop: "1px solid #ddd",
+    borderLeft: "1px solid #ddd",
+    width: "25%",
   },
   cell2: {
     display: "table-cell",
@@ -75,9 +75,8 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "auto",
     marginRight: "auto",
     marginBottom: "20px",
-  }
+  },
 }));
-
 
 export default function PostPage() {
   const classes = useStyles();
@@ -86,7 +85,6 @@ export default function PostPage() {
   const [data, setData] = useState({
     position: "",
     title: "",
-    address: "",
     address: "",
     salary: "",
     about: "",
@@ -104,7 +102,7 @@ export default function PostPage() {
   useEffect(() => {
     (async () => {
       const posting_url = "http://localhost:8000/api/post";
-      const post = await axios.get(posting_url, {params: {id: id}});
+      const post = await axios.get(posting_url, { params: { id: id } });
 
       setData({
         position: post.data.position,
@@ -121,9 +119,10 @@ export default function PostPage() {
         website: post.data.website,
       });
     })();
+    // eslint-disable-next-line
   }, []);
 
-  console.log(data)
+  console.log(data);
 
   if (data === {}) {
     return <span>waiting... </span>;
@@ -132,94 +131,90 @@ export default function PostPage() {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <table className = {classes.table}>
-          <thead className={classes.tableHead}>
-              <tr className={classes.title}>
-                  <th>JOB POSTING INFORMATION</th>
-              </tr>
-          </thead>
-          <tbody className={classes.tableBody}>
-              <tr className={classes.row}>
-                  <th className={classes.cell1}>Position type:</th>
-                  <td className={classes.cell2}>{data.position}</td>
-              </tr>
-              <tr className={classes.row}>
-                  <th className={classes.cell1}>Job Title:</th>
-                  <td className={classes.cell2}>{data.title}</td>
-              </tr>
-              <tr className={classes.row}>
-                  <th className={classes.cell1}>Job Location:</th>
-                  <td className={classes.cell2}>{data.address}</td>
-              </tr>
-              <tr className={classes.row}>
-                  <th className={classes.cell1}>Salary:</th>
-                  <td className={classes.cell2}>{data.salary}</td>
-              </tr>
-              <tr className={classes.row}>
-                  <th className={classes.cell1}>About company:</th>
-                  <td className={classes.cell2}>
-                      <p>
-                        {data.about}
-                      </p>
-                  </td>
-              </tr>
-              <tr className={classes.row}>
-                  <th className={classes.cell1}>Job description:</th>
-                  <td className={classes.cell2}>
-                      <p>
-                        {data.description}
-                      </p>
-                  </td>
-              </tr>
-              <tr className={classes.row}>
-                  <th className={classes.cell1}>Job Requirements:</th>
-                  <td className={classes.cell2}>
-                      <strong>Requirements:</strong>
-                      <br></br>
-                      {data.requirements}
-                  </td>
-              </tr>
-          </tbody>
+      <table className={classes.table}>
+        <thead className={classes.tableHead}>
+          <tr className={classes.title}>
+            <th>JOB POSTING INFORMATION</th>
+          </tr>
+        </thead>
+        <tbody className={classes.tableBody}>
+          <tr className={classes.row}>
+            <th className={classes.cell1}>Position type:</th>
+            <td className={classes.cell2}>{data.position}</td>
+          </tr>
+          <tr className={classes.row}>
+            <th className={classes.cell1}>Job Title:</th>
+            <td className={classes.cell2}>{data.title}</td>
+          </tr>
+          <tr className={classes.row}>
+            <th className={classes.cell1}>Job Location:</th>
+            <td className={classes.cell2}>{data.address}</td>
+          </tr>
+          <tr className={classes.row}>
+            <th className={classes.cell1}>Salary:</th>
+            <td className={classes.cell2}>{data.salary}</td>
+          </tr>
+          <tr className={classes.row}>
+            <th className={classes.cell1}>About company:</th>
+            <td className={classes.cell2}>
+              <p>{data.about}</p>
+            </td>
+          </tr>
+          <tr className={classes.row}>
+            <th className={classes.cell1}>Job description:</th>
+            <td className={classes.cell2}>
+              <p>{data.description}</p>
+            </td>
+          </tr>
+          <tr className={classes.row}>
+            <th className={classes.cell1}>Job Requirements:</th>
+            <td className={classes.cell2}>
+              <strong>Requirements:</strong>
+              <br></br>
+              {data.requirements}
+            </td>
+          </tr>
+        </tbody>
       </table>
-      <table className = {classes.table}>
-            <thead className={classes.tableHead}>
-              <tr className={classes.title}>
-                    <th>APPLICATION INFORMATION</th>
-              </tr>
-            </thead>
-            <tbody>
-                <tr className={classes.row}>
-                    <th className={classes.cell1}>Application Deadline:</th>
-                    <td className={classes.cell2}>{data.deadline}</td>
-                </tr>
-                <tr className={classes.row}>
-                  <th className={classes.cell1}>Application Website:</th>
-                  <td className={classes.cell2}>{data.website}</td>
-              </tr>
-              <tr className={classes.row}>
-                  <th className={classes.cell1}>Additional Information:</th>
-                  <td className={classes.cell2}>{data.notes}</td>
-              </tr>
-            </tbody>
+      <table className={classes.table}>
+        <thead className={classes.tableHead}>
+          <tr className={classes.title}>
+            <th>APPLICATION INFORMATION</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr className={classes.row}>
+            <th className={classes.cell1}>Application Deadline:</th>
+            <td className={classes.cell2}>{data.deadline}</td>
+          </tr>
+          <tr className={classes.row}>
+            <th className={classes.cell1}>Application Website:</th>
+            <td className={classes.cell2}>{data.website}</td>
+          </tr>
+          <tr className={classes.row}>
+            <th className={classes.cell1}>Additional Information:</th>
+            <td className={classes.cell2}>{data.notes}</td>
+          </tr>
+        </tbody>
       </table>
-      <table className = {classes.table}>
-            <thead className={classes.tableHead}>
-              <tr className={classes.title}>
-                    <th>ORGANIZATION INFORMATION</th>
-              </tr>
-            </thead>
-            <tbody>
-            <tr className={classes.row}>
-                  <th className={classes.cell1}>Organization:</th>
-                  <td className={classes.cell2}>{data.company}</td>
-              </tr>
-              <tr className={classes.row}>
-                  <th className={classes.cell1}>Website:</th>
-                  <td className={classes.cell2}>{data.website}</td>
-              </tr>
-            </tbody>
+      <table className={classes.table}>
+        <thead className={classes.tableHead}>
+          <tr className={classes.title}>
+            <th>ORGANIZATION INFORMATION</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr className={classes.row}>
+            <th className={classes.cell1}>Organization:</th>
+            <td className={classes.cell2}>{data.company}</td>
+          </tr>
+          <tr className={classes.row}>
+            <th className={classes.cell1}>Website:</th>
+            <td className={classes.cell2}>{data.website}</td>
+          </tr>
+        </tbody>
       </table>
-      <div className = {classes.buttons}>
+      <div className={classes.buttons}>
         <Button
           variant="contained"
           className={classes.button2}
