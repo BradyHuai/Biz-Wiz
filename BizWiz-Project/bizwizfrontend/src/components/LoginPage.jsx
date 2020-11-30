@@ -64,7 +64,7 @@ export default function LoginPage() {
   const [verify, setVerify] = useState(false);
 
   const handleSignIn = (e) => {
-    const url = "http://localhost:8000/api/auth";
+    const url = "http://localhost:8000/api/accounts/login/";
     let x = false;
     
       // (async () => {
@@ -89,53 +89,54 @@ export default function LoginPage() {
       //   history.push("/pages/profilepage");
       // })();
 
-      (async () => {
-        const result = await axios({
-          method: "post",
-          url: url,
-          data: values,
-        })
-        .then((res) => {
-            if (res.status === 200) {
-              x = true;
-              setVerify(true);
-              dispatch(updateInfo(values.username));
-            }
-            else {
-              alert("Invalid username or password.");
-              console.log(res.status);
-              x = false;
-            }
-          })
-        .catch((e) => {
-            alert("Invalid input, please check your inputs.");
-            console.log(e);
-        });
-        console.log(result);
-        if (x){
-          history.push("/pages/profilepage");
-        }
-        // if (verify){
-        //   history.push("/pages/profilepage");
-        // }
-      })();
-
       // (async () => {
       //   const result = await axios({
       //     method: "post",
       //     url: url,
       //     data: values,
       //   })
-
-      //   if (result.status !== 200){
-      //     alert("Invalid username or password.");
-      //     console.log(result.status);
-      //     return;
+      //   .then((res) => {
+      //       if (res.status === 200) {
+      //         x = true;
+      //         setVerify(true);
+      //         dispatch(updateInfo(values.username));
+      //       }
+      //       else {
+      //         alert("Invalid username or password.");
+      //         console.log(res.status);
+      //         x = false;
+      //       }
+      //     })
+      //   .catch((e) => {
+      //       alert("Invalid input, please check your inputs.");
+      //       console.log(e);
+      //   });
+      //   console.log(result);
+      //   if (x){
+      //     history.push("/pages/profilepage");
       //   }
-        
-      //   dispatch(updateInfo(values.username));
-      //   history.push("/pages/profilepage");
+      //   // if (verify){
+      //   //   history.push("/pages/profilepage");
+      //   // }
       // })();
+
+      (async () => {
+        const result = await axios({
+          method: "post",
+          url: url,
+          data: values,
+        })
+        console.log(result);
+
+        if (result.status !== 200){
+          alert("Invalid username or password.");
+          console.log(result.status);
+          return;
+        }
+        
+        dispatch(updateInfo(values.username));
+        history.push("/pages/profilepage");
+      })();
   };
 
   const handleSignUp = () => {
