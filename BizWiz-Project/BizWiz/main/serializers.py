@@ -30,10 +30,7 @@ class BusinessRegisterSerializer(UserRegisterSerializer):
             'email': {'validators': [EmailValidator,]},
         }
 
-    def create(self, validated_data):
-        duplicate_users = UserProfile.objects.filter(email=validated_data['email'])
-        if duplicate_users.exists():
-
+    def create(self, validated_data):            
         user = UserProfile.objects.create_user(username=validated_data['username'], email=validated_data['email'], password=validated_data['password'])
         user.first_name = validated_data['first_name']
         user.last_name = validated_data['last_name']
