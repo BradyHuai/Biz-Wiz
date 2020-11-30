@@ -177,6 +177,7 @@ class ProfileView(APIView):
                         'phone': "",
                         'address': str(business.user_profile.location),
                         'website': business.website,
+                        'short_paragraph': business.short_paragraph
                     }
                 })
             except Exception:
@@ -203,6 +204,7 @@ class ProfileView(APIView):
                 business.user_profile.location.save()
                 business.user_profile.save()
                 business.website = request.data['website']
+                business.short_paragraph = request.data['short_paragraph']
                 business.save()
                 return Response({"username": business.user_profile.username})
 
