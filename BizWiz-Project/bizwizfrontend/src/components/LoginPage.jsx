@@ -16,18 +16,13 @@ import { useState } from "react";
 import axios from "axios";
 import { updateInfo } from "../redux/ducks/userinfo";
 import { useDispatch } from "react-redux";
-
+import image from "../Images/main-page-background.jpg";
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "100vh",
   },
   image: {
-    backgroundImage: "url(https://source.unsplash.com/random)",
-    backgroundRepeat: "no-repeat",
-    backgroundColor:
-      theme.palette.type === "light"
-        ? theme.palette.grey[50]
-        : theme.palette.grey[900],
+    backgroundImage: `url(${image})`,
     backgroundSize: "cover",
     backgroundPosition: "center",
   },
@@ -61,86 +56,40 @@ export default function LoginPage() {
     authenticated: false,
   });
 
-  const [verify, setVerify] = useState(false);
-
-  const handleSignIn = (e) => {
-    const url = "http://localhost:8000/api/accounts/login/";
-    let x = false;
-
-    // (async () => {
-    //   const result = await axios({
-    //     method: "post",
-    //     url: url,
-    //     data: values,
-    //   })
-    //   .then((res) => {
-    //       if (res.status !== 200) {
-    //         alert("Invalid username or password.");
-    //         console.log(res.status);
-    //         return;
-    //       }
-    //     })
-    //   .catch((e) => {
-    //       alert("Invalid input, please check your inputs.");
-    //       console.log(e);
-    //   });
-
-    //   dispatch(updateInfo(values.username));
-    //   history.push("/pages/profilepage");
-    // })();
-
-    // (async () => {
-    //   const result = await axios({
-    //     method: "post",
-    //     url: url,
-    //     data: values,
-    //   })
-    //   .then((res) => {
-    //       if (res.status === 200) {
-    //         x = true;
-    //         setVerify(true);
-    //         dispatch(updateInfo(values.username));
-    //       }
-    //       else {
-    //         alert("Invalid username or password.");
-    //         console.log(res.status);
-    //         x = false;
-    //       }
-    //     })
-    //   .catch((e) => {
-    //       alert("Invalid input, please check your inputs.");
-    //       console.log(e);
-    //   });
-    //   console.log(result);
-    //   if (x){
-    //     history.push("/pages/profilepage");
-    //   }
-    //   // if (verify){
-    //   //   history.push("/pages/profilepage");
-    //   // }
-    // })();
-
+  const handleSignIn = () => {
     (async () => {
-      const result = await axios({
+      const url = "http://localhost:8000/accounts/login/";
+
+      console.log(values);
+
+      const login_request = await axios({
         method: "post",
         url: url,
-        data: values,
+        data: { email: values.username, password: values.password },
       });
-      console.log(result);
 
-      if (result.status !== 200) {
+      console.log(login_request.status);
+
+      if ("token" in login_request.data) {
+        setValues({ ...values, authenticated: true });
+        dispatch(updateInfo(values.username));
+        handleSignInSuccess();
+      } else {
         alert("Invalid username or password.");
-        console.log(result.status);
-        return;
+        console.log(login_request.status);
       }
-
-      dispatch(updateInfo(values.username));
-      history.push("/pages/profilepage");
-    })();
+    })().catch((e) => {
+      alert("Invalid input, please check your inputs.");
+      console.log(e);
+    });
   };
 
   const handleSignUp = () => {
     history.push("/sign-up");
+  };
+
+  const handleSignInSuccess = () => {
+    history.push("/pages/profilepage");
   };
 
   const handleChangeForm = (name) => (event) => {
@@ -189,7 +138,6 @@ export default function LoginPage() {
               label="Remember me"
             />
             <Button
-              type="submit"
               fullWidth
               variant="contained"
               color="primary"
@@ -199,8 +147,9 @@ export default function LoginPage() {
                 background: "linear-gradient(45deg, #2979ff 30%, #2196f3 90%)",
               }}
             >
-              Sign In
+              {values.authenticated ? "Continue" : "Sign In"}
             </Button>
+
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
