@@ -42,18 +42,19 @@ const myStyles = makeStyles((theme) => ({
   text: {
     color: "white",
     padding: 50,
-    fontSize: 36,
+    fontSize: 24,
     fontFamily: "Acumin Variable Concept",
   },
   text2: {
     color: "black",
-    fontSize: 36,
+    fontSize: 24,
+    padding: 10,
     fontFamily: "Acumin Variable Concept",
   },
 
   text3: {
     color: "black",
-    fontSize: 72,
+    fontSize: 36,
     fontFamily: "Acumin Variable Concept",
   },
   image: {
@@ -70,8 +71,8 @@ const myStyles = makeStyles((theme) => ({
     background: "#eaeced",
     width: "30vh",
     height: "30vh",
-    padding: 10,
-    margin: 10,
+    padding: 20,
+    margin: "auto",
   },
 }));
 
@@ -90,7 +91,7 @@ function MainPage() {
         </Typography>
       </Paper>
 
-      <Grid container align="center">
+      <Grid container align="center" style={{ padding: 20 }}>
         <Grid className={classes.pic2}>
           <img src={community} className={classes.pic}></img>
         </Grid>
