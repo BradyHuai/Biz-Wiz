@@ -12,6 +12,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
+import bwlogo from "../Images/bwlogo.png";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -108,20 +109,27 @@ export default function ProfilePage() {
     // eslint-disable-next-line
   };
 
-  // useEffect(() => {
-  //   (async () => {
-  //     const posts_url = "http://localhost:8000/api/profile/";
-  //     const profile = await axios.get(posts_url, {
-  //       params: { username: username },
-  //     });
-  //     setData({
-  //       ...data,
-  //       posts: profile.data.posts,
-  //       userinfo: profile.data.userinfo,
-  //     });
-  //   })();
-  //   // eslint-disable-next-line
-  // }, []);
+  useEffect(() => {
+    (async () => {
+      const posts_url = "http://localhost:8000/api/profile";
+      console.log(username);
+      const profile = await axios.get(posts_url, {
+        params: { username: username },
+      });
+      console.log(profile);
+      if ("error" in profile.data) {
+        alert("Not Logged In");
+      } else {
+        setData({
+          ...data,
+          posts: profile.data.posts,
+          userinfo: profile.data.userinfo,
+        });
+        console.log(data);
+      }
+    })();
+    // eslint-disable-next-line
+  }, [username]);
 
   if (data.userinfo === {}) {
     return <span>waiting... </span>;
@@ -131,7 +139,28 @@ export default function ProfilePage() {
       <CssBaseline />
       <Paper className={classes.paper}>
         <Paper variant="outlined">
-          <img src="/images/bwlogo.png" style={{ margin: 10 }} alt=""></img>
+          <img src={bwlogo} style={{ margin: 10 }} alt=""></img>
+        </Paper>
+
+        <Paper variant="outlined">
+          <Typography variant="subtitle1" className={classes.postingtitle}>
+            Website: {data.userinfo.website}
+          </Typography>
+        </Paper>
+        <Paper variant="outlined">
+          <Typography variant="subtitle1" className={classes.postingtitle}>
+            Email: {data.userinfo.email}
+          </Typography>
+        </Paper>
+        <Paper variant="outlined">
+          <Typography variant="subtitle1" className={classes.postingtitle}>
+            Address: {data.userinfo.address}
+          </Typography>
+        </Paper>
+        <Paper variant="outlined">
+          <Typography variant="subtitle1" className={classes.postingtitle}>
+            Contact: {data.userinfo.first_name} {userinfo.last_name}
+          </Typography>
         </Paper>
         <Paper variant="outlined">
           <TextField
@@ -153,30 +182,11 @@ export default function ProfilePage() {
             }}
             onClick={handleChangeProfile}
           >
-            View Profile
+            View A Company Profile
           </Button>
         </Paper>
-        <Paper variant="outlined">
-          <Typography variant="subtitle1" className={classes.postingtitle}>
-            Website: {data.userinfo.website}
-          </Typography>
-        </Paper>
-        <Paper variant="outlined">
-          <Typography variant="subtitle1" className={classes.postingtitle}>
-            Email: {data.userinfo.email}
-          </Typography>
-        </Paper>
-        <Paper variant="outlined">
-          <Typography variant="subtitle1" className={classes.postingtitle}>
-            Address: {data.userinfo.address}
-          </Typography>
-        </Paper>
-        <Paper variant="outlined">
-          <Typography variant="subtitle1" className={classes.postingtitle}>
-            Contact: {data.userinfo.first_name} {userinfo.last_name}
-          </Typography>
-        </Paper>
       </Paper>
+
       <Paper className={classes.paper}>
         <Typography variant="h4" className={classes.postingtitle}>
           Postings
