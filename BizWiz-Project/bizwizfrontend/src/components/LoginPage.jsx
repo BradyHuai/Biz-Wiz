@@ -57,19 +57,21 @@ export default function LoginPage() {
   const [values, setValues] = useState({
     username: "",
     password: "",
+    authenticated: false,
   });
 
   const handleSignIn = (e) => {
-    const url = "http://localhost:8000/api/auth";
+    const url = "http://localhost:8000/accounts/login/";
 
     axios({
       method: "post",
       url: url,
-      data: values,
+      data: { username: values.username, password: values.password },
     })
       .then((res) => {
         if (res.status === 200) {
-          history.push("/pages/profilepage");
+          console.log("yes");
+          setValues({ ...values, authenticated: true });
           dispatch(updateInfo(values.username));
         } else {
           alert("Invalid username or password.");
@@ -80,6 +82,8 @@ export default function LoginPage() {
         alert("Invalid input, please check your inputs.");
         console.log(e);
       });
+
+    history.push("/pages/profilepage");
   };
 
   const handleSignUp = () => {

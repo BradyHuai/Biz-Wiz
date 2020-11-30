@@ -89,6 +89,7 @@ export default function ProfilePage() {
       const profile = await axios.get(posts_url, {
         params: { username: data.username },
       });
+      console.log(data.username);
       console.log(profile);
       if ("error" in profile.data) {
         alert(profile.data["error"]);
@@ -107,20 +108,20 @@ export default function ProfilePage() {
     // eslint-disable-next-line
   };
 
-  useEffect(() => {
-    (async () => {
-      const posts_url = "http://localhost:8000/api/profile/";
-      const profile = await axios.get(posts_url, {
-        params: { username: username },
-      });
-      setData({
-        ...data,
-        posts: profile.data.posts,
-        userinfo: profile.data.userinfo,
-      });
-    })();
-    // eslint-disable-next-line
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     const posts_url = "http://localhost:8000/api/profile/";
+  //     const profile = await axios.get(posts_url, {
+  //       params: { username: username },
+  //     });
+  //     setData({
+  //       ...data,
+  //       posts: profile.data.posts,
+  //       userinfo: profile.data.userinfo,
+  //     });
+  //   })();
+  //   // eslint-disable-next-line
+  // }, []);
 
   if (data.userinfo === {}) {
     return <span>waiting... </span>;
