@@ -54,9 +54,10 @@ class OptionsView(APIView):
 class PostView(APIView):
     def post(self, request):
         print(request.data)
-        business_id = request.data['business']
+        username = request.data['business']
         try:
-            business = Business.objects.get(pk=business_id)
+            user = UserProfile.objects.get(username=username)
+            business = Business.objects.get(user_profile=user)
             location = Location.objects.create(
                 address=request.data['address'],
                 zip_code=request.data['zip_code'],
