@@ -27,10 +27,10 @@ class LoginAPI(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data
-        _, token = AuthToken.objects.create(user)
+        user_profile, user = serializer.validated_data
+        _, token = AuthToken.objects.create(user_profile)
         return Response({
-        "user": UserSerializer(user, context=self.get_serializer_context()).data,
+        "user": BusinessUserSerializer(user, context=self.get_serializer_context()).data,
         "token": token
         })
 
@@ -54,9 +54,10 @@ class OptionsView(APIView):
 class PostView(APIView):
     def post(self, request):
         print(request.data)
-        business_id = request.data['business']
+        username = request.data['business']
         try:
-            business = Business.objects.get(pk=business_id)
+            user = UserProfile.objects.get(username=username)
+            business = Business.objects.get(user_profile=user)
             location = Location.objects.create(
                 address=request.data['address'],
                 zip_code=request.data['zip_code'],
@@ -159,7 +160,10 @@ class ProfileView(APIView):
         username = self.request.query_params.get("username")
         if username:
             try:
-                business = Business.objects.get(username=username)
+                if "%40" in username:
+                    username.replace("%40", "@")
+                user = UserProfile.objects.get(username=username)
+                business = Business.objects.get(user_profile=user)
                 posts = Post.objects.all()
                 posts = posts.filter(business=business)
 
@@ -188,7 +192,8 @@ class ProfileView(APIView):
         username = self.request.data("username")
         if username:
             try:
-                business = Business.objects.get(username=username)
+                user = UserProfile.objects.get(username=username)
+                business = Business.objects.get(user_profile=user)
                 business.user_profile.location.address = request.data['address']
                 business.user_profile.location.zip_code = request.data['postal_code']
                 business.user_profile.location.city = request.data['city']

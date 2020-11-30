@@ -117,11 +117,12 @@ export default function Postjob() {
                     <Grid item md={6} sm={12} xs={12}>
                         <TextField 
                             name="business" 
-                            label="Your Business ID" 
+                            label="Your Email" 
                             variant="outlined" 
                             onChange={handleChange} 
                             fullWidth 
                             required
+                            
                             />
                     </Grid>
                     <Grid item md={6} sm={12} xs={12}>
