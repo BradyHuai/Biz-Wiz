@@ -57,14 +57,12 @@ class Post(models.Model):
         return self.post_title
 
 class Application(models.Model):
-    business_name = models.CharField(max_length=80, default="")
-    application_name = models.CharField(max_length=80, default="")
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
     num_questions = models.IntegerField()
     # questions = models.TextField(max_length=1024, blank=True, null=True)
     q1 = models.TextField(blank=True, null=True)
     q2 = models.TextField(blank=True, null=True)
     q3 = models.TextField(blank=True, null=True)
-    email = models.EmailField(null=True)
 
     def __str__(self):
-        return self.application_name
+        return self.post.post_title

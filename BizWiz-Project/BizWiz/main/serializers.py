@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from main.models import UserProfile, Business, Individual, Location
+from main.models import UserProfile, Business, Individual, Location, Application
 from django.contrib.auth import authenticate
 
 # User Serializer
@@ -52,3 +52,8 @@ class LoginSerializer(serializers.Serializer):
         if user and user.is_active:
             return user
         raise serializers.ValidationError("Incorrect Credentials")
+
+class ApplicationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Application
+        fields = '__all__'

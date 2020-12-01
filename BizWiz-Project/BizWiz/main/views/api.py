@@ -1,8 +1,9 @@
 from rest_framework import generics, permissions
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from knox.models import AuthToken
 from rest_framework.views import APIView
-from ..serializers import UserSerializer, BusinessRegisterSerializer, LoginSerializer
+from ..serializers import UserSerializer, BusinessRegisterSerializer, LoginSerializer, ApplicationSerializer
 from ..industries import Industries
 from ..models import Location, Post, Business, Application, UserProfile
 import requests
@@ -236,6 +237,45 @@ class ProfileView(APIView):
             return Response({
                 'error' : "Id not provided"
             })
+
+@api_view(['GET'])
+def applicationList(request):
+    apps = Application.objects.all()
+    serializer = ApplicationSerializer(apps, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def applicationDetail(request, pk):
+    app = Application.objects.get(id=pk)
+    serializer = ApplicationSerializer(app, many=False)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def applicationCreate(request):
+    serializer = ApplicationSerializer(data=request.data)
+
+    if serializer.is_valid():
+        serializer.save()
+
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def applicationUpdate(request, pk):
+    app = Application.objects.get(id=pk)
+    serializer = ApplicationSerializer(instance=app, data=request.data)
+
+    if serializer.is_valid():
+        serializer.save()
+
+    return Response(serializer.data)
+
+@api_view(['DELETE'])
+def applicationDelete(request, pk):
+    app = Application.objects.get(id=pk)
+    app.delete()
+
+    return Response('Application deleted successfully!')
+
 
 class ApplicationView(APIView):    
     def get(self, request):
