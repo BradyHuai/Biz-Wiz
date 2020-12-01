@@ -256,6 +256,8 @@ def applicationCreate(request):
 
     if serializer.is_valid():
         serializer.save()
+    else:
+        return Response('error: application not created')
 
     return Response(serializer.data)
 
@@ -266,6 +268,8 @@ def applicationUpdate(request, pk):
 
     if serializer.is_valid():
         serializer.save()
+    else:
+        return Response('error: application not created')
 
     return Response(serializer.data)
 
