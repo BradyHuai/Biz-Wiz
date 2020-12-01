@@ -1,4 +1,5 @@
-import React, { useState }from "react";
+import React, { useState, useEffect }from "react";
+import { useHistory } from "react-router";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { Grid, TextField } from "@material-ui/core";
 import { Typography } from "@material-ui/core";
@@ -50,18 +51,18 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Postjob() {
     const classes = useStyles();
+    const history = useHistory();
 
     const initialData = {
-        "business": -1,
         "position": "",
         "post_title": "",
         "address": "",
         "zip_code": "",
         "city": "",
         "salary": "",
+        "link": "",
         "deadline": "",
         "description": "",
-        "small_description": "",
         "requirements": "",
         "notes": "",
     };
@@ -72,6 +73,43 @@ export default function Postjob() {
             ...previousData,
             [name]: value
         }));
+    }
+
+    const [otherData, setOtherData] = useState("");
+
+    useEffect(() => {
+      (async () => {
+          try {
+              const id = history.location.state.id;
+                const posting_url = "http://localhost:8000/api/post";
+                const post = await axios.get(posting_url, { params: { id: id } });
+        
+                setdata({
+                position: post.data.position,
+                post_title: post.data.title,
+                address: post.data.location,
+                zip_code: post.data.zip_code,
+                city: post.data.city,
+                salary: post.data.salary,
+                link: post.data.link,
+                deadline: post.data.deadline,
+                description: post.data.description,
+                requirements: post.data.requirements,
+                notes: post.data.notes,
+                });
+                setOtherData(post.data.company);
+          } catch (error) {
+              
+          }
+        
+      })();
+
+    }, []);
+  
+    console.log(data);
+  
+    if (data === {}) {
+      return <span>waiting... </span>;
     }
 
     const handleSubmit = (e) => {
@@ -122,7 +160,8 @@ export default function Postjob() {
                             onChange={handleChange} 
                             fullWidth 
                             required
-                            
+                            disabled
+                            defaultValue={otherData}
                             />
                     </Grid>
                     <Grid item md={6} sm={12} xs={12}>
@@ -133,7 +172,9 @@ export default function Postjob() {
                             variant="outlined" 
                             onChange={handleChange} 
                             fullWidth 
-                            required />
+                            required 
+                            defaultValue={initialData.position}
+                            />
                     </Grid>
                     <Grid item md={6} sm={12} xs={12}>
                         <TextField 
@@ -143,7 +184,9 @@ export default function Postjob() {
                             variant="outlined" 
                             onChange={handleChange} 
                             fullWidth 
-                            required />
+                            required 
+                            defaultValue={initialData.post_title}
+                            />
                     </Grid>
                     <Grid item md={6} sm={12} xs={12}>
                         <TextField 
@@ -153,7 +196,9 @@ export default function Postjob() {
                             variant="outlined" 
                             onChange={handleChange} 
                             fullWidth 
-                            required />
+                            required 
+                            defaultValue={initialData.address}
+                            />
                     </Grid>
                     <Grid item md={6} sm={12} xs={12}>
                         <TextField 
@@ -163,7 +208,9 @@ export default function Postjob() {
                             variant="outlined" 
                             onChange={handleChange} 
                             fullWidth 
-                            required />
+                            required 
+                            defaultValue={initialData.zip_code}
+                            />
                     </Grid>
                     <Grid item md={6} sm={12} xs={12}>
                         <TextField 
@@ -172,7 +219,9 @@ export default function Postjob() {
                             variant="outlined" 
                             onChange={handleChange} 
                             fullWidth 
-                            required />
+                            required 
+                            defaultValue={initialData.city}
+                            />
                     </Grid>
                     <Grid item md={6} sm={12} xs={12}>
                         <TextField 
@@ -181,7 +230,9 @@ export default function Postjob() {
                             variant="outlined" 
                             onChange={handleChange} 
                             fullWidth 
-                            required />
+                            required 
+                            defaultValue={initialData.salary}
+                            />
                     </Grid>
                 </Grid>
                 <br />
@@ -196,7 +247,9 @@ export default function Postjob() {
                             variant="outlined" 
                             onChange={handleChange} 
                             fullWidth 
-                            required />
+                            required 
+                            defaultValue={initialData.deadline}
+                            />
                     </Grid>
                     <Grid item md={6} sm={12} xs={12}>
                         <TextField 
@@ -205,7 +258,8 @@ export default function Postjob() {
                             variant="outlined" 
                             onChange={handleChange} 
                             fullWidth 
-                            required />
+                            required 
+                            />
                     </Grid>
                 </Grid>
                 <TextField 
@@ -216,7 +270,9 @@ export default function Postjob() {
                     onChange={handleChange} 
                     fullWidth 
                     multiline 
-                    rows={8}/>
+                    rows={8}
+                    defaultValue={initialData.description}
+                    />
                 <TextField 
                     name="requirements" 
                     className={classes.boxText} 
@@ -225,7 +281,9 @@ export default function Postjob() {
                     onChange={handleChange} 
                     fullWidth 
                     multiline 
-                    rows={8}/>
+                    rows={8}
+                    defaultValue={initialData.requirements}
+                    />
                 <TextField 
                     name="notes" 
                     className={classes.boxText} 
@@ -234,7 +292,9 @@ export default function Postjob() {
                     onChange={handleChange} 
                     fullWidth 
                     multiline 
-                    rows={8}/>
+                    rows={8}
+                    defaultValue={initialData.notes}
+                    />
                 <Button
                     variant="contained"
                     className={classes.buttondelete}

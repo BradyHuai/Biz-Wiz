@@ -71,6 +71,14 @@ export default function ProfilePage() {
     });
   };
 
+  const handleEditPost = (post_id) => () => {
+    history.push({
+      pathname: "/pages/post-job",
+      search: "?the=search",
+      state: { id: post_id },
+    });
+  }
+
   const handleInputId = (event) => {
     setData({
       ...data,
@@ -223,7 +231,11 @@ export default function ProfilePage() {
                   >
                     View
                   </Button>
-                  <Button size="small" color="primary">
+                  <Button 
+                    size="small" 
+                    color="primary"
+                    onClick={handleEditPost(card.id)}
+                  >
                     Edit
                   </Button>
                 </CardActions>
