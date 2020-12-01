@@ -123,6 +123,11 @@ export default function PostPage() {
     return <span>waiting... </span>;
   }
 
+  const routeChange = () =>{ 
+    let path = '/pages/edit-application'; 
+    history.push(path);
+  }
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -231,7 +236,19 @@ export default function PostPage() {
         >
           SAVE
         </Button>
+        <Button
+          variant="contained"
+          color="secondary"
+          className={classes.button}
+          startIcon={<ExitToAppIcon />}
+          onClick={routeChange}
+        >
+          APPLY NOW
+        </Button>
+        
       </div>
     </div>
   );
+
+  
 }

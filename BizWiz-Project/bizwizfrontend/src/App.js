@@ -13,6 +13,7 @@ import Postpage from "./components/PostPage";
 import EditProfile from "./components/EditProfile";
 import Postjob from "./components/PostjobPage";
 import MapSearch from "./components/MapSearch";
+import EditApplication from "./components/EditApplication";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         <Route exact path="/pages/post-job" component={Postjob} />
         <Route exact path="/portal" component={PortalPage} />
         <Route exact path="/pages/edit" component={EditProfile} />
+        <Route exact path="/pages/edit-application" component={EditApplication} />
         <Route exact path="/search" component={MapSearch} />
       </Switch>
     </div>
