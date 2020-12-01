@@ -8,6 +8,8 @@ import { useHistory } from "react-router";
 import { Button } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import image from "../Images/bwlogo.png";
+import { updateInfo } from "../redux/ducks/userinfo";
+import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TopBar() {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const username = useSelector((state) => state.userinfo.username);
   const [appBarBg, setappBarBg] = useState("barColored");
   const barRef = React.useRef();
@@ -71,6 +74,12 @@ export default function TopBar() {
   const handleClickSignin = () => {
     history.push("/login");
   };
+
+  const handleClickSignOut = () => {
+    history.push("/login");
+    dispatch(updateInfo(""));
+  };
+
   const handleClickStart = () => {
     history.push("/start");
   };
@@ -96,11 +105,18 @@ export default function TopBar() {
             Biz-Wiz Community Board
           </Typography>
           {username === "" ? (
+            <div></div>
+          ) : (
+            <Typography>Hello {username}</Typography>
+          )}
+          {username === "" ? (
             <Button className={classes.buttons} onClick={handleClickSignin}>
               sign in
             </Button>
           ) : (
-            <Typography>Hello {username}</Typography>
+            <Button className={classes.buttons} onClick={handleClickSignOut}>
+              sign out
+            </Button>
           )}
           <Button className={classes.buttons} onClick={handleClickStart}>
             get started

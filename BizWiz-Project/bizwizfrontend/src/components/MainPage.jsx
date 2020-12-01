@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography, Paper } from "@material-ui/core";
+import { Typography, Paper, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -9,6 +9,7 @@ import bw_desc from "../Images/bw-desc.jpg";
 import community from "../Images/group-chat.png";
 import financial from "../Images/dollar.png";
 import chat from "../Images/chat.png";
+import { useHistory } from "react-router";
 const myStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -74,10 +75,34 @@ const myStyles = makeStyles((theme) => ({
     padding: 20,
     margin: "auto",
   },
+  buttons: {
+    background: "#f1c418",
+    border: 0,
+    borderRadius: 10,
+    color: "white",
+    fontFamily: "Acumin Variable Concept",
+    height: 80,
+    width: 200,
+    margin: 36,
+  },
 }));
 
 function MainPage() {
   const classes = myStyles();
+
+  const history = useHistory();
+
+  const handleClickBusiness = () => {
+    history.push("/sign-up-business");
+  };
+  const handleClickIndividual = () => {
+    history.push("/sign-up-individual");
+  };
+
+  const handleClickGuest = () => {
+    history.push("/pages/profilepage");
+  };
+
   return (
     <div>
       <Grid container className={classes.root} direction="column">
@@ -137,6 +162,22 @@ function MainPage() {
           </Typography>
         </Grid>
       </Grid>
+      <Paper className={classes.paper4}>
+        <Typography variant="body1" className={classes.text3}>
+          Let us help you find what you are looking for. <br></br> I am a...
+        </Typography>
+        <Button className={classes.buttons} onClick={handleClickBusiness}>
+          {" "}
+          Business Owner
+        </Button>
+        <Button className={classes.buttons} onClick={handleClickIndividual}>
+          Individual looking for work
+        </Button>
+        <Button className={classes.buttons} onClick={handleClickGuest}>
+          {" "}
+          Guest User
+        </Button>
+      </Paper>
     </div>
   );
 }
