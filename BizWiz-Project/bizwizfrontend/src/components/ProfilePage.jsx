@@ -56,6 +56,7 @@ const userinfo = {
   email: "",
   postal_code: "",
   address: "",
+  short_paragraph: "",
 };
 
 export default function ProfilePage() {
@@ -123,7 +124,6 @@ export default function ProfilePage() {
           posts: profile.data.posts,
           userinfo: profile.data.userinfo,
         });
-        console.log(data);
       }
     })();
     // eslint-disable-next-line
@@ -151,7 +151,17 @@ export default function ProfilePage() {
         </Paper>
         <Paper variant="outlined">
           <Typography variant="subtitle1" className={classes.postingtitle}>
+            Website: {data.userinfo.website}
+          </Typography>
+        </Paper>
+        <Paper variant="outlined">
+          <Typography variant="subtitle1" className={classes.postingtitle}>
             Contact Person: {data.userinfo.first_name} {data.userinfo.last_name}
+          </Typography>
+        </Paper>
+        <Paper variant="outlined">
+          <Typography variant="subtitle1" className={classes.postingtitle}>
+            Company Description: {data.userinfo.short_paragraph}
           </Typography>
         </Paper>
         <Paper variant="outlined">

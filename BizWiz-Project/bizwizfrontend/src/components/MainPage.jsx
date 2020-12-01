@@ -93,9 +93,7 @@ function MainPage() {
 
       <Grid container align="center" style={{ padding: 20 }}>
         <Grid className={classes.pic2}>
-          <img src={community} alt="" className={classes.pic}>
-            {" "}
-          </img>
+          <img src={community} alt="" className={classes.pic}></img>
         </Grid>
         <Grid className={classes.pic2}>
           <img src={financial} alt="" className={classes.pic}></img>

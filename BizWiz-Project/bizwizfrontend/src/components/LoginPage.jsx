@@ -85,7 +85,7 @@ export default function LoginPage() {
   };
 
   const handleSignUp = () => {
-    history.push("/sign-up");
+    history.push("/portal");
   };
 
   const handleSignInSuccess = () => {
@@ -94,6 +94,10 @@ export default function LoginPage() {
 
   const handleChangeForm = (name) => (event) => {
     setValues({ ...values, [name]: event.target.value });
+  };
+
+  const handleClickGuest = () => {
+    history.push("/pages/profilepage");
   };
 
   return (
@@ -148,6 +152,18 @@ export default function LoginPage() {
               }}
             >
               {values.authenticated ? "Continue" : "Sign In"}
+            </Button>
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              onClick={handleClickGuest}
+              className={classes.submit}
+              style={{
+                background: "linear-gradient(45deg, #2979ff 30%, #2196f3 90%)",
+              }}
+            >
+              Sign in as guest
             </Button>
 
             <Grid container>

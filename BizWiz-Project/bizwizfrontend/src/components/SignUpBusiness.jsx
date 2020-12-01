@@ -104,6 +104,10 @@ export default function SignUpPage() {
     })();
   }, []);
 
+  if (options.cities == []) {
+    return <div> loading</div>;
+  }
+
   return (
     <div className="container">
       <div className={classes.title}>Biz-Wiz Account Registration</div>

@@ -34,41 +34,40 @@ const useStyles = makeStyles((theme) => ({
 
 export default function EditProfile() {
   const classes = useStyles();
-
+  const username = useSelector((state) => state.userinfo.username);
   const [values, setValues] = useState({
     first_name: "",
     last_name: "",
-    email: "",
     address: "",
     city: "",
     postal_code: "",
     website: "",
-    username: "",
+    username: username,
+    short_paragraph: "",
   });
 
   const handleChangeForm = (name) => (event) => {
     setValues({ ...values, [name]: event.target.value });
   };
-  const username = useSelector((state) => state.userinfo.username);
 
   const handleSave = () => {
-    setValues({ ...values, username: username });
-
     const url = "http://localhost:8000/api/profile";
 
+    setValues({ ...values, username: username });
+
     console.log(values);
+
     axios({
       method: "post",
       url: url,
       data: values,
     })
       .then((res) => {
-        if (res.status === 200) {
-          console.log("success");
-          alert("Success");
+        if ("error" in res.data) {
+          alert(res.data["error"]);
         } else {
           console.log(res.status);
-          alert("Failed");
+          alert("Success");
         }
       })
       .catch((e) => {
@@ -128,18 +127,6 @@ export default function EditProfile() {
             </Grid>
             <Grid item md={8} sm={12} xs={12}>
               <TextField
-                name="Email"
-                label="Your Email"
-                variant="outlined"
-                defaultValue={""}
-                className={classes.postingtitle}
-                onChange={handleChangeForm("email")}
-                fullWidth
-                required
-              ></TextField>
-            </Grid>
-            <Grid item md={8} sm={12} xs={12}>
-              <TextField
                 name="Address"
                 label="Your Address"
                 variant="outlined"
@@ -170,6 +157,18 @@ export default function EditProfile() {
                 defaultValue={""}
                 className={classes.postingtitle}
                 onChange={handleChangeForm("postal_code")}
+                fullWidth
+                required
+              ></TextField>
+            </Grid>
+            <Grid item md={8} sm={12} xs={12}>
+              <TextField
+                name="Short Description"
+                label="Short Company Description"
+                variant="outlined"
+                defaultValue={""}
+                className={classes.postingtitle}
+                onChange={handleChangeForm("short_paragraph")}
                 fullWidth
                 required
               ></TextField>

@@ -69,7 +69,7 @@ export default function TopBar() {
     history.push("/");
   };
   const handleClickSignin = () => {
-    history.push("/portal");
+    history.push("/login");
   };
   const handleClickStart = () => {
     history.push("/start");

@@ -50,8 +50,11 @@ const myStyles = makeStyles((theme) => ({
 function PortalPage() {
   const classes = myStyles();
   const history = useHistory();
-  const handleClickVisit = () => {
-    history.push("/login");
+  const handleClickBusiness = () => {
+    history.push("/sign-up-business");
+  };
+  const handleClickIndividual = () => {
+    history.push("/sign-up-individual");
   };
   const handleClickGuest = () => {
     history.push("/pages/profilepage");
@@ -67,14 +70,11 @@ function PortalPage() {
         <Typography variant="h6" className={classes.text}>
           ● I am A
         </Typography>
-        <Button className={classes.buttons} onClick={handleClickVisit}>
+        <Button className={classes.buttons} onClick={handleClickBusiness}>
           Business owner
         </Button>
-        <Button className={classes.buttons} onClick={handleClickVisit}>
+        <Button className={classes.buttons} onClick={handleClickIndividual}>
           Individual searching for work
-        </Button>
-        <Button className={classes.buttons} onClick={handleClickGuest}>
-          Guest user
         </Button>
       </Paper>
     </div>
