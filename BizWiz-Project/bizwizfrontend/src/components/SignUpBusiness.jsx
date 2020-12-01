@@ -99,14 +99,10 @@ export default function SignUpPage() {
 
       updateOptionData({
         cities: response.data.cities,
-        types: response.data.types,
+        industries: response.data.types,
       });
     })();
   }, []);
-
-  if (options.cities == []) {
-    return <div> loading</div>;
-  }
 
   return (
     <div className="container">
@@ -324,5 +320,5 @@ function getEntries(typeData) {
       </option>
     );
   }
-  return options;
+  return null;
 }

@@ -13,26 +13,27 @@ const myStyles = makeStyles((theme) => ({
 
   paperbutton: {
     width: 300,
-    height: 640,
+    height: 500,
     position: "absolute",
     padding: "8px",
     top: "20%",
     left: "50%",
     marginLeft: -150,
     margin: "20px",
-    background: "linear-gradient(45deg, #2979ff 30%, #2196f3 90%)",
+    background: "#f1c418",
   },
   buttons: {
-    background: "rgba(67, 129, 168,0.5)",
+    background: "white",
     border: 0,
     borderRadius: 10,
-    color: "white",
+    color: "#f1c418",
+    fontFamily: "Acumin Variable Concept",
     height: 80,
     width: 200,
     margin: 36,
   },
   text: {
-    color: "white",
+    color: "#f1c418",
     margin: 20,
   },
   image: {
@@ -56,9 +57,7 @@ function PortalPage() {
   const handleClickIndividual = () => {
     history.push("/sign-up-individual");
   };
-  const handleClickGuest = () => {
-    history.push("/pages/profilepage");
-  };
+
   return (
     <div>
       <Grid container className={classes.root} direction="column">
