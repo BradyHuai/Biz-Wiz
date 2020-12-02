@@ -26,13 +26,12 @@ export default function EditApplication() {
   const classes = useStyles();
 
   const [values, setValues] = useState({
-    id: 2,
     num_questions: 5,
-    q1: "hello",
-    q2: "hey",
-    q3: "hi",
-    q4: "hew",
-    q5: "hua",
+    q1: "",
+    q2: "",
+    q3: "",
+    q4: "",
+    q5: "",
     post: 1
   });
 
@@ -40,7 +39,25 @@ export default function EditApplication() {
     setValues({ ...values, [name]: event.target.value });
   };
   
-//   this function is not working rn
+
+  // want to get the application from api then update
+  const getApplication = () => {
+    // axios({
+    //     method: 'get',
+    //     url:'http://localhost:8000/api/application-detail/2'  
+    //  })
+    //  .then(res => {console.log(res)})
+    //  .catch(err => console.error(err))
+    fetch('http://localhost:8000/api/application-detail/2')
+    .then(res => res.json())
+    .then(data =>
+        console.log(data)
+        )
+    
+  }
+  
+
+//   update the application (not working rn)
   const handleSave = () => {
     const url = "http://localhost:8000/api/application-update/2";
 
@@ -70,7 +87,7 @@ export default function EditApplication() {
       <Paper className={classes.paper}>
         <Paper variant="outlined" style={{ padding: 10 }}>
           <Typography variant="h4" className={classes.postingtitle}>
-            Edit Questions
+            Edit Screening Questions
           </Typography>
         </Paper>
         <Paper variant="outlined" style={{ padding: 10 }}>
@@ -141,7 +158,7 @@ export default function EditApplication() {
           <Button
             className={classes.postingtitle}
             style={{ backgroundColor: "#e3f2fd", margin: 20, width: 200 }}
-            onClick={handleSave}
+            onClick={getApplication }
           >
             Save
           </Button>
