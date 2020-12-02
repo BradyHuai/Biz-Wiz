@@ -42,15 +42,15 @@ class LoginAPI(generics.GenericAPIView):
         user_profile, user = serializer.validated_data
         _, token = AuthToken.objects.create(user_profile)
         if user_profile.is_Business:
-            return Response({
-            "user": BusinessUserSerializer(user, context=self.get_serializer_context()).data,
-            "token": token
-            })
+            user_data = BusinessUserSerializer(user, context=self.get_serializer_context()).data
+            user_data['user-type'] = 'business'
         else:
-            return Response({
-            "user": UserSerializer(user_profile, context=self.get_serializer_context()).data,
-            "token": token
-            })
+            user_data = UserSerializer(user_profile, context=self.get_serializer_context()).data
+            user_data['user-type'] = 'individual'
+        return Response({
+        "user": user_data,
+        "token": token
+        })
 
 # GetUser API
 class UserAPI(generics.RetrieveAPIView):
