@@ -123,34 +123,7 @@ export default function PostPage() {
     return <span>waiting... </span>;
   }
 
-  const routeChange = () =>{ 
-    const url = "http://localhost:8000/api/application-create";
-    const data = {
-      q1: "qwe",
-      q2: "qwe",
-      q3: "qwe",
-      q4: "qwe",
-      q5: "qwe"}
-    axios({
-      method: "post",
-      url: url,
-      data: data,
-    })
-      .then((res) => {
-        if (res.status === 200) {
-          console.log("success");
-          alert("Application created!")
-        } else {
-          alert("Invalid input, please check your inputs.")
-          console.log(res.status);
-        }
-      })
-      .catch((e) => {
-        alert("Invalid input, please check your inputs.")
-        console.log(e);
-      });
-  
-
+  const routeChange = () =>{
     let path = '/pages/edit-application'; 
     history.push(path);
   }

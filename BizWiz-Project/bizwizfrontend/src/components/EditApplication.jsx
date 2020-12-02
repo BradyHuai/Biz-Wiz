@@ -26,14 +26,41 @@ export default function EditApplication() {
   const classes = useStyles();
 
   const [values, setValues] = useState({
-    num_questions: 5,
+    id: "",
     q1: "",
     q2: "",
     q3: "",
     q4: "",
-    q5: "",
-    post: 1
+    q5: ""
   });
+
+  const createApplication = () => {
+    const url = "http://localhost:8000/api/application-create";
+    const data = {
+        q1: "qwe",
+        q2: "qwe",
+        q3: "qwe",
+        q4: "qwe",
+        q5: "qwe"}
+    axios({
+        method: "post",
+        url: url,
+        data: data,
+    })
+        .then((res) => {
+        if (res.status === 200) {
+            console.log("success");
+            alert("Application created!")
+        } else {
+            alert("Invalid input, please check your inputs.")
+            console.log(res.status);
+        }
+        })
+        .catch((e) => {
+        alert("Invalid input, please check your inputs.")
+        console.log(e);
+        });
+  }
 
   const handleChangeForm = (name) => (event) => {
     setValues({ ...values, [name]: event.target.value });
@@ -92,6 +119,17 @@ export default function EditApplication() {
         </Paper>
         <Paper variant="outlined" style={{ padding: 10 }}>
           <Grid container spacing={3}>
+            <Grid item md={8} sm={12} xs={12}>
+              <TextField
+                name="id"
+                label="Application ID"
+                variant="outlined"
+                className={classes.postingtitle}
+                onChange={handleChangeForm("id")}
+                fullWidth
+                required
+              ></TextField>
+            </Grid>
             <Grid item md={8} sm={12} xs={12}>
               <TextField
                 name="q1"
@@ -158,7 +196,7 @@ export default function EditApplication() {
           <Button
             className={classes.postingtitle}
             style={{ backgroundColor: "#e3f2fd", margin: 20, width: 200 }}
-            onClick={getApplication }
+            onClick={}
           >
             Save
           </Button>
