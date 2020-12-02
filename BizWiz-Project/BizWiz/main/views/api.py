@@ -20,6 +20,18 @@ class RegisterBusinessAPI(generics.GenericAPIView):
             "token": AuthToken.objects.create(user)[1]
         })
 
+class RegisterIndividualAPI(generics.GenericAPIView):
+    serializer_class = IndividualRegisterSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        return Response({
+            "user": UserSerializer(user, context=self.get_serializer_context()).data,
+            "token": AuthToken.objects.create(user)[1]
+        })
+
 # Login API
 class LoginAPI(generics.GenericAPIView):
     serializer_class = LoginSerializer
@@ -29,10 +41,16 @@ class LoginAPI(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         user_profile, user = serializer.validated_data
         _, token = AuthToken.objects.create(user_profile)
-        return Response({
-        "user": BusinessUserSerializer(user, context=self.get_serializer_context()).data,
-        "token": token
-        })
+        if user_profile.is_Business:
+            return Response({
+            "user": BusinessUserSerializer(user, context=self.get_serializer_context()).data,
+            "token": token
+            })
+        else:
+            return Response({
+            "user": UserSerializer(user_profile, context=self.get_serializer_context()).data,
+            "token": token
+            })
 
 # GetUser API
 class UserAPI(generics.RetrieveAPIView):
