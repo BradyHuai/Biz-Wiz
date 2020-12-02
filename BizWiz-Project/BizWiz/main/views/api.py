@@ -181,23 +181,31 @@ class ProfileView(APIView):
                 if "%40" in username:
                     username.replace("%40", "@")
                 user = UserProfile.objects.get(username=username)
-                business = Business.objects.get(user_profile=user)
-                posts = Post.objects.all()
-                posts = posts.filter(business=business)
+                user_info = {
+                    'user-type': "business" if user.is_Business else "individual",
+                    'first_name': user.first_name,
+                    'last_name': user.last_name,
+                    'id': user.pk,
+                    'email': user.email,
+                    'address': str(user.location),
+                }
+                if user.is_Business:
+                    business = Business.objects.get(user_profile=user)
+                    user_info['website'] = business.website
+                    user_info['short_paragraph'] = business.short_paragraph
+                    posts = Post.objects.all()
+                    posts = posts.filter(business=business)
 
-                return Response({
-                    "posts": [{'title':post.post_title, 'desc':post.description, 'id':post.pk} for post in posts], 
-                    "userinfo": {
-                        'first_name': business.user_profile.first_name,
-                        'last_name': business.user_profile.last_name,
-                        'id': business.pk,
-                        'email': business.user_profile.email,
-                        'address': str(business.user_profile.location),
-                        'website': business.website,
-                        'short_paragraph': business.short_paragraph,
-                    }
-                })
-            except Exception:
+                    return Response({
+                        "posts": [{'title':post.post_title, 'desc':post.description, 'id':post.pk} for post in posts], 
+                        "userinfo": user_info
+                    })
+                else:
+                    return Response({ 
+                        "userinfo": user_info
+                    })
+            except Exception as e:
+                print(str(e))
                 return Response({
                     'error' : "User not found..."
                 })
