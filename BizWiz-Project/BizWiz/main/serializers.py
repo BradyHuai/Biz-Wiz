@@ -14,7 +14,8 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserProfile
-        fields = ('id', 'email', 'first_name', 'last_name', 'username', 'location')
+        fields = ('id', 'is_Business', 'email', 'first_name', 'last_name', 'username', 'location')
+
 
 class BusinessUserSerializer(serializers.ModelSerializer):
     user_profile = UserSerializer(read_only=True)
@@ -36,6 +37,25 @@ class UserRegisterSerializer(serializers.ModelSerializer):
             'email': {'validators': [EmailValidator,]},
             }
 
+class IndividualRegisterSerializer(UserRegisterSerializer):
+    class Meta(UserRegisterSerializer.Meta):
+        fields = ('id', "username", "email", "first_name", "last_name", "industry", "password", "address", "zip_code", "city")
+
+    def create(self, validated_data):
+        user = UserProfile.objects.create_user(username=validated_data['username'], email=validated_data['email'], password=validated_data['password'])
+        user.first_name = validated_data['first_name']
+        user.last_name = validated_data['last_name']
+        user.industry = validated_data['industry']
+        user.is_Individual = True
+        user.username = validated_data['email']
+        location = Location.objects.create(address=validated_data['address'],
+                                           zip_code=validated_data['zip_code'],
+                                           city=validated_data['city'])
+        user.location = location
+        user.save()
+        individual = Individual.objects.create(user_profile=user)
+        individual.save()
+        return user
 
 class BusinessRegisterSerializer(UserRegisterSerializer):
     business_name = serializers.CharField(max_length=80, required=True)
@@ -63,6 +83,7 @@ class BusinessRegisterSerializer(UserRegisterSerializer):
        # business.image = validated_data['image']
         business.save()
         return user
+
 
 # Login Serializer
 class LoginSerializer(serializers.Serializer):

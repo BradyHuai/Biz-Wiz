@@ -5,7 +5,7 @@ import { Typography, Paper, TextField, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useState } from "react";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,53 +22,52 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "left",
     fontSize: "1.8em",
     fontWeight: "bold",
-    fontFamily: 'Acumin Variable Concept'
+    fontFamily: "Acumin Variable Concept",
   },
   button: {
-    margin: theme.spacing(1),
     textAlign: "left",
     backgroundColor: "#f1c418",
-    margin: 20, 
+    margin: 20,
     width: 200,
   },
 }));
 
 export default function EditProfile() {
   const classes = useStyles();
-
+  const username = useSelector((state) => state.userinfo.username);
   const [values, setValues] = useState({
     first_name: "",
     last_name: "",
-    email: "",
-    phone: "",
     address: "",
     city: "",
     postal_code: "",
     website: "",
-    username: "",
+    username: username,
+    short_paragraph: "",
   });
 
   const handleChangeForm = (name) => (event) => {
     setValues({ ...values, [name]: event.target.value });
   };
-  const username = useSelector((state) => state.userinfo.username);
 
   const handleSave = () => {
     const url = "http://localhost:8000/api/profile";
 
+    setValues({ ...values, username: username });
+
     console.log(values);
+
     axios({
       method: "post",
       url: url,
-      data: { ...values, username: username },
+      data: values,
     })
       .then((res) => {
-        if (res.status === 200) {
-          console.log("success");
-          alert("Success");
+        if ("error" in res.data) {
+          alert(res.data["error"]);
         } else {
           console.log(res.status);
-          alert("Failed");
+          alert("Success");
         }
       })
       .catch((e) => {
@@ -128,18 +127,6 @@ export default function EditProfile() {
             </Grid>
             <Grid item md={8} sm={12} xs={12}>
               <TextField
-                name="Email"
-                label="Your Email"
-                variant="outlined"
-                defaultValue={""}
-                className={classes.postingtitle}
-                onChange={handleChangeForm("email")}
-                fullWidth
-                required
-              ></TextField>
-            </Grid>
-            <Grid item md={8} sm={12} xs={12}>
-              <TextField
                 name="Address"
                 label="Your Address"
                 variant="outlined"
@@ -176,12 +163,12 @@ export default function EditProfile() {
             </Grid>
             <Grid item md={8} sm={12} xs={12}>
               <TextField
-                name="Phone"
-                label="Your Contact Phone Number"
+                name="Short Description"
+                label="Short Company Description"
                 variant="outlined"
                 defaultValue={""}
                 className={classes.postingtitle}
-                onChange={handleChangeForm("phone")}
+                onChange={handleChangeForm("short_paragraph")}
                 fullWidth
                 required
               ></TextField>
@@ -189,10 +176,7 @@ export default function EditProfile() {
           </Grid>
         </Paper>
         <Paper>
-          <Button
-            className={classes.button}
-            onClick={handleSave}
-          >
+          <Button className={classes.button} onClick={handleSave}>
             Save
           </Button>
         </Paper>

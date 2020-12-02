@@ -11,7 +11,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import bwlogo from "../Images/bwlogo.png";
 
 const useStyles = makeStyles((theme) => ({
@@ -54,15 +54,14 @@ const userinfo = {
   last_name: "",
   username: "",
   email: "",
-  phone: "",
+  postal_code: "",
   address: "",
-  website: "",
+  short_paragraph: "",
 };
 
 export default function ProfilePage() {
   const classes = useStyles();
   const history = useHistory();
-  const dispatch = useDispatch();
   const username = useSelector((state) => state.userinfo.username);
   const handleViewPost = (post_id) => () => {
     history.push({
@@ -71,6 +70,14 @@ export default function ProfilePage() {
       state: { id: post_id },
     });
   };
+
+  const handleEditPost = (post_id) => () => {
+    history.push({
+      pathname: "/pages/post-job",
+      search: "?the=search",
+      state: { id: post_id },
+    });
+  }
 
   const handleInputId = (event) => {
     setData({
@@ -112,7 +119,7 @@ export default function ProfilePage() {
   useEffect(() => {
     (async () => {
       const posts_url = "http://localhost:8000/api/profile";
-      console.log(username);
+
       const profile = await axios.get(posts_url, {
         params: { username: username },
       });
@@ -125,7 +132,6 @@ export default function ProfilePage() {
           posts: profile.data.posts,
           userinfo: profile.data.userinfo,
         });
-        console.log(data);
       }
     })();
     // eslint-disable-next-line
@@ -141,12 +147,6 @@ export default function ProfilePage() {
         <Paper variant="outlined">
           <img src={bwlogo} style={{ margin: 10 }} alt=""></img>
         </Paper>
-
-        <Paper variant="outlined">
-          <Typography variant="subtitle1" className={classes.postingtitle}>
-            Website: {data.userinfo.website}
-          </Typography>
-        </Paper>
         <Paper variant="outlined">
           <Typography variant="subtitle1" className={classes.postingtitle}>
             Email: {data.userinfo.email}
@@ -159,7 +159,17 @@ export default function ProfilePage() {
         </Paper>
         <Paper variant="outlined">
           <Typography variant="subtitle1" className={classes.postingtitle}>
-            Contact: {data.userinfo.first_name} {userinfo.last_name}
+            Website: {data.userinfo.website}
+          </Typography>
+        </Paper>
+        <Paper variant="outlined">
+          <Typography variant="subtitle1" className={classes.postingtitle}>
+            Contact Person: {data.userinfo.first_name} {data.userinfo.last_name}
+          </Typography>
+        </Paper>
+        <Paper variant="outlined">
+          <Typography variant="subtitle1" className={classes.postingtitle}>
+            Company Description: {data.userinfo.short_paragraph}
           </Typography>
         </Paper>
         <Paper variant="outlined">
@@ -221,7 +231,11 @@ export default function ProfilePage() {
                   >
                     View
                   </Button>
-                  <Button size="small" color="primary">
+                  <Button 
+                    size="small" 
+                    color="primary"
+                    onClick={handleEditPost(card.id)}
+                  >
                     Edit
                   </Button>
                 </CardActions>

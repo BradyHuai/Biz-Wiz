@@ -20,6 +20,18 @@ class RegisterBusinessAPI(generics.GenericAPIView):
             "token": AuthToken.objects.create(user)[1]
         })
 
+class RegisterIndividualAPI(generics.GenericAPIView):
+    serializer_class = IndividualRegisterSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        return Response({
+            "user": UserSerializer(user, context=self.get_serializer_context()).data,
+            "token": AuthToken.objects.create(user)[1]
+        })
+
 # Login API
 class LoginAPI(generics.GenericAPIView):
     serializer_class = LoginSerializer
@@ -29,10 +41,16 @@ class LoginAPI(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         user_profile, user = serializer.validated_data
         _, token = AuthToken.objects.create(user_profile)
-        return Response({
-        "user": BusinessUserSerializer(user, context=self.get_serializer_context()).data,
-        "token": token
-        })
+        if user_profile.is_Business:
+            return Response({
+            "user": BusinessUserSerializer(user, context=self.get_serializer_context()).data,
+            "token": token
+            })
+        else:
+            return Response({
+            "user": UserSerializer(user_profile, context=self.get_serializer_context()).data,
+            "token": token
+            })
 
 # GetUser API
 class UserAPI(generics.RetrieveAPIView):
@@ -163,23 +181,31 @@ class ProfileView(APIView):
                 if "%40" in username:
                     username.replace("%40", "@")
                 user = UserProfile.objects.get(username=username)
-                business = Business.objects.get(user_profile=user)
-                posts = Post.objects.all()
-                posts = posts.filter(business=business)
+                user_info = {
+                    'user-type': "business" if user.is_Business else "individual",
+                    'first_name': user.first_name,
+                    'last_name': user.last_name,
+                    'id': user.pk,
+                    'email': user.email,
+                    'address': str(user.location),
+                }
+                if user.is_Business:
+                    business = Business.objects.get(user_profile=user)
+                    user_info['website'] = business.website
+                    user_info['short_paragraph'] = business.short_paragraph
+                    posts = Post.objects.all()
+                    posts = posts.filter(business=business)
 
-                return Response({
-                    "posts": [{'title':post.post_title, 'desc':post.description, 'id':post.pk} for post in posts], 
-                    "userinfo": {
-                        'first_name': business.user_profile.first_name,
-                        'last_name': business.user_profile.last_name,
-                        'id': business.pk,
-                        'email': business.user_profile.email,
-                        'phone': "",
-                        'address': str(business.user_profile.location),
-                        'website': business.website,
-                    }
-                })
-            except Exception:
+                    return Response({
+                        "posts": [{'title':post.post_title, 'desc':post.description, 'id':post.pk} for post in posts], 
+                        "userinfo": user_info
+                    })
+                else:
+                    return Response({ 
+                        "userinfo": user_info
+                    })
+            except Exception as e:
+                print(str(e))
                 return Response({
                     'error' : "User not found..."
                 })
@@ -189,7 +215,7 @@ class ProfileView(APIView):
             })
     
     def post(self, request):
-        username = self.request.data("username")
+        username = self.request.data["username"]
         if username:
             try:
                 user = UserProfile.objects.get(username=username)
@@ -199,45 +225,20 @@ class ProfileView(APIView):
                 business.user_profile.location.city = request.data['city']
                 business.user_profile.first_name = request.data['first_name']
                 business.user_profile.last_name = request.data['last_name']
-                business.user_profile.email = request.data['email']
                 business.user_profile.location.save()
+                business.short_paragraph = request.data['short_paragraph']
                 business.user_profile.save()
                 business.website = request.data['website']
                 business.save()
                 return Response({"username": business.user_profile.username})
 
             except Exception:
-                try:
-                    location = Location.objects.create(
-                        address=request.data['address'],
-                        zip_code=request.data['postal_code'],
-                        city=request.data['city']
-                    )
-                    location.save()
-                    user = UserProfile.objects.create(
-                        industry="IT",
-                        is_Business=True,
-                        first_name=request.data['first_name'],
-                        last_name=request.data['last_name'],
-                        location=location,
-                        email=request.data['email'],
-                        username=username
-                    )
-                    user.save()
-                    business = Business.objects.create(
-                        user_profile=user,
-                        business_name='temp',
-                        website=request.data['website'],
-                    )
-                    business.save()
-                    return Response({"username":business.user_profile.username})
-                except Exception:
-                    return Response({
-                        'error' : "Business could not be modified..."
-                    })
+                return Response({
+                    'error': "Business could not be modified..."
+                })
         else:
             return Response({
-                'error' : "Id not provided"
+                'error' : "Username not provided"
             })
 
 class ApplicationView(APIView):    

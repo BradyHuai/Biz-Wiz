@@ -1,12 +1,11 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router";
-import "./SignUp.css"
+import "./SignUp.css";
 import { useState } from "react";
 import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
-
   title: {
     height: "100px",
     width: "70%",
@@ -18,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     color: "white",
     borderRadius: "25px",
     marginTop: "100px",
-    fontSize: "200%"
+    fontSize: "200%",
   },
 
   signUp: {
@@ -27,14 +26,14 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#eaeaea",
     margin: "auto",
     color: "black",
-    marginTop: "25px"
+    marginTop: "25px",
   },
 
   label: {
     paddingRight: "50%",
     float: "left",
     paddingLeft: "5%",
-    fontSize: "1.75em"
+    fontSize: "1.75em",
   },
 
   input: {
@@ -46,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     borderWidth: "0px",
     borderRadius: "40px",
     boxSizing: "border-box",
-    fontSize: "large"
+    fontSize: "large",
   },
 
   submitSignup: {
@@ -58,11 +57,9 @@ const useStyles = makeStyles((theme) => ({
     cursor: "pointer",
     border: "none",
     borderRadius: "4px",
-    fontSize: "large"
-  }
-
+    fontSize: "large",
+  },
 }));
-
 
 export default function SignUpPage() {
   const classes = useStyles();
@@ -72,61 +69,137 @@ export default function SignUpPage() {
   };
 
   const [values, setValues] = useState({
-    "username": "",
-    "email": "",
-    "first_name": "",
-    "last_name": "",
-    "password": "",
-    "short_paragraph": ""
+    username: "",
+    email: "",
+    first_name: "",
+    last_name: "",
+    password: "",
+    short_paragraph: "",
   });
-  
-  return <div className="container">
-    <div className={classes.title}>
-      Biz-Wiz Account Registration
+
+  return (
+    <div className="container">
+      <div className={classes.title}>Biz-Wiz Account Registration</div>
+
+      <div className={classes.signUp}>
+        <h1 className={classes.label} style={{ paddingBottom: "1%" }}>
+          Individual Account
+        </h1>
+
+        <form
+          style={{ padding: "10px" }}
+          onSubmit={(e) => {
+            axios
+              .post("http://localhost:8000/accounts/signup/individual/", values) //TODO ask backend peeps to implement individual signup
+              .then((res) => {
+                if (res.status === 200) {
+                  console.log("success");
+                  alert("Success");
+                } else {
+                  console.log(res.status);
+                  alert("Failed");
+                }
+              })
+              .catch((err) => console.log(err));
+            e.preventDefault();
+          }}
+        >
+          <label className={classes.label} for="user">
+            User Name:
+          </label>
+          <input
+            className={classes.input}
+            id="user"
+            type="text"
+            onChange={(e) => {
+              setValues((current) => ({
+                ...current,
+                username: e.target.value,
+              }));
+            }}
+          />
+
+          <label className={classes.label} for="email">
+            Email Address:
+          </label>
+          <input
+            className={classes.input}
+            id="email"
+            type="text"
+            onChange={(e) => {
+              setValues((current) => ({ ...current, email: e.target.value }));
+            }}
+          />
+
+          <label className={classes.label} for="fname">
+            First Name:
+          </label>
+          <input
+            className={classes.input}
+            id="fname"
+            type="text"
+            onChange={(e) => {
+              setValues((current) => ({
+                ...current,
+                first_name: e.target.value,
+              }));
+            }}
+          />
+
+          <label className={classes.label} for="lname">
+            Last Name:
+          </label>
+          <input
+            className={classes.input}
+            id="lname"
+            type="text"
+            onChange={(e) => {
+              setValues((current) => ({
+                ...current,
+                last_name: e.target.value,
+              }));
+            }}
+          />
+
+          <label className={classes.label} for="password">
+            Password:
+          </label>
+          <input
+            className={classes.input}
+            id="password"
+            type="password"
+            onChange={(e) => {
+              setValues((current) => ({
+                ...current,
+                password: e.target.value,
+              }));
+            }}
+          />
+
+          <label className={classes.label} for="description">
+            Short description about yourself:
+          </label>
+          <textarea
+            className={classes.input}
+            id="description"
+            maxLength="400"
+            rows="4"
+            cols="50"
+            onChange={(e) => {
+              setValues((current) => ({
+                ...current,
+                short_paragraph: e.target.value,
+              }));
+            }}
+          />
+
+          <input
+            className={classes.submitSignup}
+            type="submit"
+            value="Sign Me Up!"
+          />
+        </form>
+      </div>
     </div>
-    
-    <div className={classes.signUp}>
-
-      <h1 className={classes.label} style={{paddingBottom: "1%"}}>Individual Account</h1>
-
-      <form style={{padding: "10px"}} onSubmit={(e) => {
-
-        axios
-        .post("http://localhost:8000/accounts/signup/individual/", values)        //TODO ask backend peeps to implement individual signup
-        .then((res) => {
-          if (res.status === 200) {
-            console.log("success");
-            alert("Success");
-          } else {
-            console.log(res.status);
-            alert("Failed");
-          }
-        })
-        .catch(err => console.log(err));
-        e.preventDefault();
-        }}>
-
-        <label className={classes.label} for="user">User Name:</label>
-        <input className={classes.input} id="user" type="text" onChange={(e) => {setValues((current) => ({...current, "username": e.target.value}));}}/>
-
-        <label className={classes.label} for="email">Email Address:</label>
-        <input className={classes.input} id="email" type="text" onChange={(e) => {setValues((current) => ({...current, "email": e.target.value}));}}/>
-
-        <label className={classes.label} for="fname">First Name:</label>
-        <input className={classes.input} id="fname" type="text" onChange={(e) => {setValues((current) => ({...current, "first_name": e.target.value}));}}/>
-
-        <label className={classes.label} for="lname">Last Name:</label>
-        <input className={classes.input} id="lname" type="text" onChange={(e) => {setValues((current) => ({...current, "last_name": e.target.value}));}}/>
-
-        <label className={classes.label} for="password">Password:</label>
-        <input className={classes.input} id="password" type="password" onChange={(e) => {setValues((current) => ({...current, "password": e.target.value}));}}/>
-
-        <label className={classes.label} for="description">Short description about yourself:</label>
-        <textarea className={classes.input} id="description" maxLength="400" rows="4" cols="50" onChange={(e) => {setValues((current) => ({...current, "short_paragraph": e.target.value}));}}/>
-
-        <input className={classes.submitSignup} type="submit" value="Sign Me Up!"/>
-      </form>
-    </div>
-  </div>
-
+  );
 }
