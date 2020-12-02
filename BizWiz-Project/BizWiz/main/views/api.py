@@ -4,7 +4,7 @@ from knox.models import AuthToken
 from rest_framework.views import APIView
 from ..serializers import *
 from ..industries import Industries
-from ..models import Location, Post, Business, Application, UserProfile
+from ..models import Location, Post, Business, Application, UserProfile, Individual
 import requests
 
 # Register API
@@ -189,11 +189,11 @@ class ProfileView(APIView):
                     'email': user.email,
                     'address': str(user.location),
                 }
+                posts = Post.objects.all()
                 if user.is_Business:
                     business = Business.objects.get(user_profile=user)
                     user_info['website'] = business.website
                     user_info['short_paragraph'] = business.short_paragraph
-                    posts = Post.objects.all()
                     posts = posts.filter(business=business)
 
                     return Response({
@@ -201,7 +201,11 @@ class ProfileView(APIView):
                         "userinfo": user_info
                     })
                 else:
+                    individual = Individual.objects.get(user_profile=user)
+                    posts = individual.post_set.all()
+
                     return Response({ 
+                        "posts": [{'title':post.post_title, 'desc':post.description, 'id':post.pk} for post in posts],
                         "userinfo": user_info
                     })
             except Exception as e:
@@ -240,6 +244,35 @@ class ProfileView(APIView):
             return Response({
                 'error' : "Username not provided"
             })
+
+class SavePostView(APIView):
+    def post(self, request):
+        username = self.request.data["username"]
+        post_id = self.request.data["post_id"]
+        if username:
+            try:
+                user = UserProfile.objects.get(username=username)
+                individual = Individual.objects.get(user_profile=user)
+            except Exception:
+                return Response({
+                    'error': "User not found..."
+                }, status=404)
+            try:
+                post = Post.objects.get(pk=post_id)
+            except Exception:
+                return Response({
+                    'error': "Post not found..."
+                }, status=404)
+
+            post.individuals.add(individual)
+            return Response({
+                'success' : "success"
+            })
+        else:
+            return Response({
+                'error' : "Username not provided"
+            }, status=404)
+
 
 class ApplicationView(APIView):    
     def get(self, request):
