@@ -31,5 +31,7 @@ urlpatterns = [
     path('accounts/signup/individual/', api.RegisterIndividualAPI.as_view(), name='individual_signup'),
     path('view_business/<str:business_name>', business.display_business, name='display_business'),
     # path('map/<str:business_name>', business.map_detail_view, name='map'),
+    path('create-application', business.application_create_view),
+    path('view-application/<str:id>', business.application_detail_view)
 
 ]

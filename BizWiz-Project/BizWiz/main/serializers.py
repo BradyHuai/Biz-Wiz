@@ -1,5 +1,7 @@
 from rest_framework import serializers
-from main.models import UserProfile, Business, Individual, Location
+
+from main.models import UserProfile, Business, Individual, Location, Application
+from django.contrib.auth import authenticate
 from django.contrib.auth.models import auth
 from django.core.validators import EmailValidator
 
@@ -7,6 +9,7 @@ class LocationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Location
         fields = ("address", "zip_code", "city")
+
 
 # User Serializer
 class UserSerializer(serializers.ModelSerializer):
@@ -99,6 +102,8 @@ class LoginSerializer(serializers.Serializer):
         user = auth.authenticate(username=data['email'], password=data['password'])
 
         if user and user.is_active:
+            return user
+        raise serializers.ValidationError("Incorrect Credentials")
             if user.is_Business:
                 business = Business.objects.get(user_profile=user)
                 return user, business
@@ -107,3 +112,9 @@ class LoginSerializer(serializers.Serializer):
                 return user, individual
 
         raise serializers.ValidationError("Incorrect Credentials")
+
+
+class ApplicationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Application
+        fields = '__all__'

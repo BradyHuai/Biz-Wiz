@@ -130,6 +130,12 @@ export default function PostPage() {
     return <span>waiting... </span>;
   }
 
+
+  const routeChange = () =>{
+    let path = '/pages/edit-application'; 
+    history.push(path);
+  }
+
   const handleSavePost = (event) => {
     const save_url = "http://localhost:8000/api/save_post";
     axios
@@ -148,6 +154,7 @@ export default function PostPage() {
         console.log(e);
       });
   };
+
 
   return (
     <div className={classes.root}>
@@ -252,7 +259,19 @@ export default function PostPage() {
         >
           SAVE
         </Button>
+        <Button
+          variant="contained"
+          color="secondary"
+          className={classes.button}
+          startIcon={<ExitToAppIcon />}
+          onClick={routeChange}
+        >
+          APPLY NOW
+        </Button>
+        
       </div>
     </div>
   );
+
+  
 }
