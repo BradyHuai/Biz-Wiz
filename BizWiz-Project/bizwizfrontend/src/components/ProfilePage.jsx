@@ -226,7 +226,7 @@ export default function ProfilePage() {
       </Paper>
 
       <Paper className={classes.paper}>
-        {username == data.userinfo.email ? (
+        {username === data.userinfo.email ? (
           <>
             {usertype === "business" ? (
               <Typography variant="h4" className={classes.postingtitle}>

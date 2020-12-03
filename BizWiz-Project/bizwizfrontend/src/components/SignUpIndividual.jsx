@@ -97,7 +97,7 @@ export default function SignUpPage() {
               .then((res) => {
                 if (res.status === 200) {
                   console.log("success");
-                  alert("Success");
+                  handleSignIn();
                 } else {
                   console.log(res.status);
                   alert("Failed");
