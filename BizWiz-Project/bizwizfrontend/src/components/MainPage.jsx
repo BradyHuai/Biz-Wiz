@@ -43,21 +43,36 @@ const myStyles = makeStyles((theme) => ({
   text: {
     color: "white",
     padding: 50,
-    fontSize: 24,
+    fontSize: "2vw",
     fontFamily: "Acumin Variable Concept",
   },
+
+  text0: {
+    color: "black",
+    padding: 50,
+    fontSize: "3vw",
+    fontFamily: "Acumin Variable Concept",
+  },
+
   text2: {
     color: "black",
-    fontSize: 24,
+    fontSize: "1.5vw",
     padding: 10,
     fontFamily: "Acumin Variable Concept",
   },
 
   text3: {
     color: "black",
-    fontSize: 36,
+    fontSize: "2vw",
     fontFamily: "Acumin Variable Concept",
   },
+
+  text4: {
+    color: "black",
+    fontSize: "1vw",
+    fontFamily: "Acumin Variable Concept",
+  },
+
   image: {
     backgroundImage: `url(${image})`,
     backgroundSize: "cover",
@@ -81,9 +96,10 @@ const myStyles = makeStyles((theme) => ({
     borderRadius: 10,
     color: "white",
     fontFamily: "Acumin Variable Concept",
-    height: 80,
-    width: 200,
-    margin: 36,
+    height: "6.5vh",
+    width: "10vw",
+    margin: "2vw",
+    fontSize: "0.75vw",
   },
 }));
 
@@ -111,7 +127,7 @@ function MainPage() {
       </Grid>
 
       <Paper className={classes.paper4}>
-        <Typography variant="body1" className={classes.text3}>
+        <Typography variant="body1" className={classes.text0}>
           Biz-Wiz is your ultimate resource for entrepreneurship
         </Typography>
       </Paper>
@@ -164,7 +180,10 @@ function MainPage() {
       </Grid>
       <Paper className={classes.paper4}>
         <Typography variant="body1" className={classes.text3}>
-          Let us help you find what you are looking for. <br></br> I am a...
+          Let us help you find what you are looking for. <br></br>
+        </Typography>
+        <Typography variant="body1" className={classes.text4}>
+          I am a...
         </Typography>
         <Button className={classes.buttons} onClick={handleClickBusiness}>
           {" "}

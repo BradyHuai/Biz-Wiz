@@ -13,6 +13,7 @@ import axios from "axios";
 import { useHistory } from "react-router";
 import { useSelector } from "react-redux";
 import bwlogo from "../Images/bwlogo.png";
+import post_image from "../Images/post-image.jpg";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,12 +39,16 @@ const useStyles = makeStyles((theme) => ({
   },
 
   card: {
-    height: "100%",
+    height: 400,
+    width: 300,
     display: "flex",
     flexDirection: "column",
   },
   cardMedia: {
     paddingTop: "56.25%", // 16:9
+  },
+  card_text: {
+    height: 60,
   },
 }));
 
@@ -57,6 +62,7 @@ const userinfo = {
   postal_code: "",
   address: "",
   short_paragraph: "",
+  social: "",
 };
 
 export default function ProfilePage() {
@@ -174,6 +180,11 @@ export default function ProfilePage() {
           </Typography>
         </Paper>
         <Paper variant="outlined">
+          <Typography variant="subtitle1" className={classes.postingtitle}>
+            Social Media: {data.userinfo.social}
+          </Typography>
+        </Paper>
+        <Paper variant="outlined">
           <TextField
             name="profile"
             label="Business/Email"
@@ -188,8 +199,9 @@ export default function ProfilePage() {
           <Button
             style={{
               textAlign: "left",
-              backgroundColor: "#e3f2fd",
+              backgroundColor: "#f1c418",
               margin: 10,
+              height: 55,
             }}
             onClick={handleChangeProfile}
           >
@@ -213,25 +225,25 @@ export default function ProfilePage() {
           
         <Grid container className={classes.cardGrid}>
           {data.posts.map((card) => (
-            <Grid
-              item
-              className={classes.item}
-              xs={2}
-              sm={2}
-              md={2}
-              key={card.id}
-            >
+            <Grid item className={classes.item} key={card.id}>
               <Card className={classes.card}>
                 <CardMedia
                   className={classes.cardMedia}
-                  image="https://source.unsplash.com/random"
+                  image={post_image}
                   title="Image title"
                 />
                 <CardContent className={classes.cardContent}>
-                  <Typography gutterBottom variant="h5" component="h2">
+                  <Typography
+                    gutterBottom
+                    variant="h5"
+                    component="h2"
+                    className={classes.card_text}
+                  >
                     {card.title}
                   </Typography>
-                  <Typography>{card.desc}</Typography>
+                  <Typography className={classes.card_text}>
+                    {card.desc}
+                  </Typography>
                 </CardContent>
                 <CardActions>
                   <Button
@@ -241,8 +253,8 @@ export default function ProfilePage() {
                   >
                     View
                   </Button>
-                  {/* <Button 
-                    size="small" 
+                  {/* <Button
+                    size="small"
                     color="primary"
                     onClick={handleEditPost(card.id)}
                   >

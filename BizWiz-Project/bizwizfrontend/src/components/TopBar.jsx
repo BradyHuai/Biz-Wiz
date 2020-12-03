@@ -8,7 +8,7 @@ import { useHistory } from "react-router";
 import { Button } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import image from "../Images/bwlogo.png";
-import { updateInfo } from "../redux/ducks/userinfo";
+import { updateInfo, updateType } from "../redux/ducks/userinfo";
 import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
@@ -78,6 +78,7 @@ export default function TopBar() {
   const handleClickSignOut = () => {
     history.push("/login");
     dispatch(updateInfo(""));
+    dispatch(updateType(""));
   };
 
   const handleClickStart = () => {

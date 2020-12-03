@@ -4,6 +4,8 @@ from knox.models import AuthToken
 from rest_framework.views import APIView
 from ..serializers import *
 from ..industries import Industries
+from ..keywords import Keywords
+from ..cities import Cities
 from ..models import Location, Post, Business, Application, UserProfile, Individual
 import requests
 
@@ -37,20 +39,27 @@ class LoginAPI(generics.GenericAPIView):
     serializer_class = LoginSerializer
 
     def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user_profile, user = serializer.validated_data
-        _, token = AuthToken.objects.create(user_profile)
-        if user_profile.is_Business:
-            user_data = BusinessUserSerializer(user, context=self.get_serializer_context()).data
-            user_data['user-type'] = 'business'
-        else:
-            user_data = UserSerializer(user_profile, context=self.get_serializer_context()).data
-            user_data['user-type'] = 'individual'
-        return Response({
-        "user": user_data,
-        "token": token
-        })
+        try:
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            user_profile, user = serializer.validated_data
+            _, token = AuthToken.objects.create(user_profile)
+            if user_profile.is_Business:
+                user_data = BusinessUserSerializer(user, context=self.get_serializer_context()).data
+                user_data['user-type'] = 'business'
+            else:
+                user_data = UserSerializer(user_profile, context=self.get_serializer_context()).data
+                user_data['user-type'] = 'individual'
+            return Response({
+            "user": user_data,
+            "token": token
+            })
+        
+        except:
+            return Response({
+            "error": "Invalid username password combination",
+            })
+        
 
 # GetUser API
 class UserAPI(generics.RetrieveAPIView):
@@ -64,9 +73,9 @@ class UserAPI(generics.RetrieveAPIView):
 class OptionsView(APIView):
     def get(self, request):
         return Response({
-            'cities' : list({location.city for location in Location.objects.all()}),
+            'cities' : Cities.get(),
             'industry' : list({industry[1] for industry in Industries.get()}),
-            "keyword" : ["artist", "chef", "software engineer"]
+            "keyword" : Keywords.get()
         })
 
 
@@ -228,25 +237,38 @@ class ProfileView(APIView):
                 user = UserProfile.objects.get(username=username)
                 if user.is_Business:
                     business = Business.objects.get(user_profile=user)
-                    business.user_profile.location.address = request.data['address']
-                    business.user_profile.location.zip_code = request.data['postal_code']
-                    business.user_profile.location.city = request.data['city']
-                    business.user_profile.first_name = request.data['first_name']
-                    business.user_profile.last_name = request.data['last_name']
+                    if request.data['address']:
+                        business.user_profile.location.address = request.data['address']
+                    if request.data['postal_code']:
+                        business.user_profile.location.zip_code = request.data['postal_code']
+                    if request.data['city']:
+                        business.user_profile.location.city = request.data['city']
+                    if request.data['first_name']:
+                        business.user_profile.first_name = request.data['first_name']
+                    if request.data['last_name']:
+                        business.user_profile.last_name = request.data['last_name']
                     business.user_profile.location.save()
-                    business.short_paragraph = request.data['short_paragraph']
+                    if request.data['short_paragraph']:
+                        business.short_paragraph = request.data['short_paragraph']
                     business.user_profile.save()
-                    business.website = request.data['website']
-                    business.social = request.data['social']
+                    if request.data['website']:
+                        business.website = request.data['website']
+                    if request.data['social']:
+                        business.social = request.data['social']
                     business.save()
                     return Response({"username": business.user_profile.username})
                 elif user.is_Individual:
                     individual = Individual.objects.get(user_profile=user)
-                    individual.user_profile.location.address = request.data['address']
-                    individual.user_profile.location.zip_code = request.data['postal_code']
-                    individual.user_profile.location.city = request.data['city']
-                    individual.user_profile.first_name = request.data['first_name']
-                    individual.user_profile.last_name = request.data['last_name']
+                    if request.data['address']:
+                        individual.user_profile.location.address = request.data['address']
+                    if request.data['postal_code']:
+                        individual.user_profile.location.zip_code = request.data['postal_code']
+                    if request.data['city']:
+                        individual.user_profile.location.city = request.data['city']
+                    if request.data['first_name']:
+                        individual.user_profile.first_name = request.data['first_name']
+                    if request.data['last_name']:
+                        individual.user_profile.last_name = request.data['last_name']
                     individual.user_profile.location.save()
                     individual.user_profile.save()
                     return Response({"username": individual.user_profile.username})

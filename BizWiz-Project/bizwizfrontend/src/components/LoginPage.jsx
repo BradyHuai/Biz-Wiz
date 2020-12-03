@@ -14,7 +14,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router";
 import { useState } from "react";
 import axios from "axios";
-import { updateInfo } from "../redux/ducks/userinfo";
+import { updateInfo, updateType } from "../redux/ducks/userinfo";
 import { useDispatch } from "react-redux";
 import image from "../Images/main-page-background.jpg";
 const useStyles = makeStyles((theme) => ({
@@ -53,7 +53,6 @@ export default function LoginPage() {
   const [values, setValues] = useState({
     username: "",
     password: "",
-    authenticated: false,
   });
 
   const handleSignIn = () => {
@@ -71,8 +70,9 @@ export default function LoginPage() {
       console.log(login_request.status);
 
       if ("token" in login_request.data) {
-        setValues({ ...values, authenticated: true });
         dispatch(updateInfo(values.username));
+        dispatch(updateType(login_request.data.user["user-type"]));
+        console.log(login_request);
         handleSignInSuccess();
       } else {
         alert("Invalid username or password.");

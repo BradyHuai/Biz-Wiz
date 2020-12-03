@@ -8,6 +8,7 @@ import BarChartIcon from "@material-ui/icons/BarChart";
 import SearchIcon from "@material-ui/icons/Search";
 import { useHistory } from "react-router";
 import { makeStyles } from "@material-ui/core/styles";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   listItemText: {
@@ -18,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function MainListItems() {
+  const user_type = useSelector((state) => state.userinfo.user_type);
   const classes = useStyles();
 
   const history = useHistory();
@@ -51,26 +53,51 @@ export default function MainListItems() {
         <ListItemIcon>
           <SearchIcon />
         </ListItemIcon>
-        <ListItemText disableTypography className={classes.listItemText} primary="Search Jobs" />
+        <ListItemText
+          disableTypography
+          className={classes.listItemText}
+          primary="Search Jobs"
+        />
       </ListItem>
       <ListItem button onClick={handleClickProfile}>
         <ListItemIcon>
           <PeopleIcon />
         </ListItemIcon>
-        <ListItemText disableTypography className={classes.listItemText} primary="Profile" />
+        <ListItemText
+          disableTypography
+          className={classes.listItemText}
+          primary="Profile"
+        />
       </ListItem>
-      <ListItem button onClick={handleClickEditProfile}>
-        <ListItemIcon>
-          <BarChartIcon />
-        </ListItemIcon>
-        <ListItemText disableTypography className={classes.listItemText} primary="Edit Profile" />
-      </ListItem>
-      <ListItem button onClick={handleClickAddPost}>
-        <ListItemIcon>
-          <DashboardIcon />
-        </ListItemIcon>
-        <ListItemText disableTypography className={classes.listItemText} primary="Add Job Posting" />
-      </ListItem>
+
+      {user_type === "business" ? (
+        <ListItem button onClick={handleClickEditProfile}>
+          <ListItemIcon>
+            <BarChartIcon />
+          </ListItemIcon>
+          <ListItemText
+            disableTypography
+            className={classes.listItemText}
+            primary="Edit Profile"
+          />
+        </ListItem>
+      ) : (
+        <></>
+      )}
+      {user_type === "business" ? (
+        <ListItem button onClick={handleClickAddPost}>
+          <ListItemIcon>
+            <DashboardIcon />
+          </ListItemIcon>
+          <ListItemText
+            disableTypography
+            className={classes.listItemText}
+            primary="Add Job Posting"
+          />
+        </ListItem>
+      ) : (
+        <></>
+      )}
     </div>
   );
 }
