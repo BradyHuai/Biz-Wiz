@@ -66,6 +66,7 @@ class OptionsView(APIView):
         return Response({
             'cities' : list({location.city for location in Location.objects.all()}),
             'industry' : list({industry[1] for industry in Industries.get()}),
+            "keyword" : ["artist", "chef", "software engineer"]
         })
 
 
