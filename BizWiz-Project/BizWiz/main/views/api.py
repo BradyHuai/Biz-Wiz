@@ -287,17 +287,29 @@ class ApplicationView(APIView):
         print(app_id)
 
         if app_id:
-
-            app = Application.objects.get(id=app_id)
-        
-            return Response({
-                'id' : app.id,
-                'q1' : app.q1,
-                'q2' : app.q2,
-                'q3' : app.q3,
-                'q4' : app.q4,
-                'q5' : app.q5
-            })
+            try: 
+                app = Application.objects.get(id=app_id)
+            
+                return Response({
+                    'id' : app.id,
+                    'q1' : app.q1,
+                    'q2' : app.q2,
+                    'q3' : app.q3,
+                    'q4' : app.q4,
+                    'q5' : app.q5
+                })
+            except Exception:
+                # return Response({
+                #         'id' : app_id,
+                #         'q1': "Are you interested in working remotely?",
+                #         'q2': "When are you able to start working?",
+                #         'q3': "How much would you like to earn in this position?",
+                #         'q4': "How would you like to communicate with us?",
+                #         'q5': "Do you have any specific questions about this role?"
+                #     })
+                return Response({
+                'error' : "Application not found..."
+                })  
         else:
             return Response({
                 'error' : "Application not found..."

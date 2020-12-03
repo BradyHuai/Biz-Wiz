@@ -25,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function EditApplication() {
   const classes = useStyles();
-  const history = useHistory();
 
   const [values, setValues] = useState({
     id: "",
@@ -84,15 +83,10 @@ export default function EditApplication() {
     setValues({ ...values, [name]: event.target.value });
   };
 
-//   const handleChangeID = (name) => (event) => {
-//     setID({ ...id, [name]: event.target.value });
-//   };
-  
-
   // want to get the application from api then update
   const getApplication = () => {
-    console.log(values.id)
-    console.log(values)
+    // console.log(values.id)
+    // console.log(values)
     axios({
         method: 'get',
         url:'http://localhost:8000/api/application' ,
@@ -109,12 +103,28 @@ export default function EditApplication() {
             q4: res.data.q4,
             q5: res.data.q5
           });
-        //   window.location.reload();
+          console.log(res.data.error)
+            if(res.data.error == "Application not found...") {
+                console.log("helos")
+                setDefault()
+            }
         })
      .catch(err => console.error(err))
   }
   
-//   update the application (not working rn)
+  const setDefault = () => {
+    console.log("setting to default")
+    setValues({
+        id: values.id,
+        q1: "Are you interested in working remotely?",
+        q2: "When are you able to start working?",
+        q3: "How much would you like to earn in this position?",
+        q4: "How would you like to communicate with us?",
+        q5: "Do you have any specific questions about this role?"
+    });
+  }
+
+//   update the application 
   const handleSave = () => {
     const url = "http://localhost:8000/api/application";
 
@@ -138,7 +148,6 @@ export default function EditApplication() {
       .catch((e) => {
         console.log(e);
       });
-    //   window.location.reload();
   };
 
   return (
@@ -157,6 +166,7 @@ export default function EditApplication() {
                 name="id"
                 label="Application ID"
                 variant="outlined"
+                value={values.id}
                 className={classes.postingtitle}
                 onChange={handleChangeForm("id")}
                 fullWidth
