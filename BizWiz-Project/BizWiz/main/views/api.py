@@ -203,6 +203,7 @@ class ProfileView(APIView):
                 posts = Post.objects.all()
                 if user.is_Business:
                     business = Business.objects.get(user_profile=user)
+                    user_info['business_name'] = business.business_name
                     user_info['website'] = business.website
                     user_info['social'] = business.social
                     user_info['short_paragraph'] = business.short_paragraph
