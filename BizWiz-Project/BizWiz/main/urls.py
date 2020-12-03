@@ -8,7 +8,6 @@ urlpatterns = [
     path('api/listings', api.PostingList.as_view()),
     path('api/post', api.PostView.as_view()),
     path('api/profile', api.ProfileView.as_view()),
-    path('api/industry', api.IndustryView.as_view()),
     path('api/save_post', api.SavePostView.as_view())
     # path('api/auth', include('knox.urls')),
     # path('api/auth/register/business', business.BusinessSignUpView.as_view(), name='business_signup'),
