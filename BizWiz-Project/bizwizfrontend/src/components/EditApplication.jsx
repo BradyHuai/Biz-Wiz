@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState, useEffect }from "react";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { Typography, Paper, TextField, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { useState } from "react";
 import axios from "axios";
+import { useHistory } from "react-router";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,70 +25,100 @@ const useStyles = makeStyles((theme) => ({
 
 export default function EditApplication() {
   const classes = useStyles();
+  const history = useHistory();
 
   const [values, setValues] = useState({
     id: "",
-    q1: "",
-    q2: "",
-    q3: "",
-    q4: "",
-    q5: ""
+    q1: "Are you interested in working remotely?",
+    q2: "When are you able to start working?",
+    q3: "How much would you like to earn in this position?",
+    q4: "How would you like to communicate with us?",
+    q5: "Do you have any specific questions about this role?"
   });
 
-  const createApplication = () => {
-    const url = "http://localhost:8000/api/application-create";
-    const data = {
-        q1: "qwe",
-        q2: "qwe",
-        q3: "qwe",
-        q4: "qwe",
-        q5: "qwe"}
-    axios({
-        method: "post",
-        url: url,
-        data: data,
-    })
-        .then((res) => {
-        if (res.status === 200) {
-            console.log("success");
-            alert("Application created!")
-        } else {
-            alert("Invalid input, please check your inputs.")
-            console.log(res.status);
-        }
-        })
-        .catch((e) => {
-        alert("Invalid input, please check your inputs.")
-        console.log(e);
-        });
-  }
+//   const [id, setID] = useState({id: ""})
+
+//   const id = history.location.state.id;
+
+//   useEffect(() => {
+//     (async () => {
+//       const posting_url = "http://localhost:8000/api/application";
+//       const app = await axios.get(posting_url, {params: {id: id}});
+
+//       console.log(app.data)
+//       setValues({
+//         q1: app.data.q1,
+//       });
+//     })();
+//   }, []);
+
+//   const createApplication = () => {
+//     const url = "http://localhost:8000/api/application";
+//     const data = {
+//         q1: "Are you interested in working remotely?",
+//         q2: "When are you able to start working?",
+//         q3: "How much would you like to earn in this position?",
+//         q4: "How would you like to communicate with us?",
+//         q5: "Do you have any specific questions about this role?"}
+//     axios({
+//         method: "post",
+//         url: url,
+//         data: data,
+//     })
+//         .then((res) => {
+//         if (res.status === 200) {
+//             console.log("success");
+//             alert("Application created!")
+//         } else {
+//             alert("Invalid input, please check your inputs.")
+//             console.log(res.status);
+//         }
+//         })
+//         .catch((e) => {
+//         alert("Invalid input, please check your inputs.")
+//         console.log(e);
+//         });
+//   }
 
   const handleChangeForm = (name) => (event) => {
     setValues({ ...values, [name]: event.target.value });
   };
+
+//   const handleChangeID = (name) => (event) => {
+//     setID({ ...id, [name]: event.target.value });
+//   };
   
 
   // want to get the application from api then update
   const getApplication = () => {
-    // axios({
-    //     method: 'get',
-    //     url:'http://localhost:8000/api/application-detail/2'  
-    //  })
-    //  .then(res => {console.log(res)})
-    //  .catch(err => console.error(err))
-    fetch('http://localhost:8000/api/application-detail/2')
-    .then(res => res.json())
-    .then(data =>
-        console.log(data)
-        )
-    
+    console.log(values.id)
+    console.log(values)
+    axios({
+        method: 'get',
+        url:'http://localhost:8000/api/application' ,
+        params: {id: values.id}
+     })
+     .then(res => {
+         console.log("heres the res data")
+         console.log(res.data)
+         setValues({
+            id: res.data.id,
+            q1: res.data.q1,
+            q2: res.data.q2,
+            q3: res.data.q3,
+            q4: res.data.q4,
+            q5: res.data.q5
+          });
+        //   window.location.reload();
+        })
+     .catch(err => console.error(err))
   }
   
-
 //   update the application (not working rn)
   const handleSave = () => {
-    const url = "http://localhost:8000/api/application-update/2";
+    const url = "http://localhost:8000/api/application";
 
+    console.log(values.id)
     console.log(values);
     axios({
       method: "post",
@@ -97,7 +128,8 @@ export default function EditApplication() {
       .then((res) => {
         if (res.status === 200) {
           console.log("success");
-          alert("Success");
+          console.log(res.data)
+        //   alert("Success");
         } else {
           console.log(res.status);
           alert("Failed");
@@ -106,6 +138,7 @@ export default function EditApplication() {
       .catch((e) => {
         console.log(e);
       });
+    //   window.location.reload();
   };
 
   return (
@@ -135,7 +168,7 @@ export default function EditApplication() {
                 name="q1"
                 label="The First Question"
                 variant="outlined"
-                defaultValue={values.q1}
+                value={values.q1}
                 className={classes.postingtitle}
                 onChange={handleChangeForm("q1")}
                 fullWidth
@@ -147,7 +180,7 @@ export default function EditApplication() {
                 name="q2"
                 label="The Second Question"
                 variant="outlined"
-                defaultValue={values.q2}
+                value={values.q2}
                 className={classes.postingtitle}
                 onChange={handleChangeForm("q2")}
                 fullWidth
@@ -159,7 +192,7 @@ export default function EditApplication() {
                 name="q3"
                 label="The Third Question"
                 variant="outlined"
-                defaultValue={values.q3}
+                value={values.q3}
                 className={classes.postingtitle}
                 onChange={handleChangeForm("q3")}
                 fullWidth
@@ -171,7 +204,7 @@ export default function EditApplication() {
                 name="q4"
                 label="The Fourth Question"
                 variant="outlined"
-                defaultValue={values.q4}
+                value={values.q4}
                 className={classes.postingtitle}
                 onChange={handleChangeForm("q4")}
                 fullWidth
@@ -183,7 +216,7 @@ export default function EditApplication() {
                 name="q5"
                 label="The Fifth Question"
                 variant="outlined"
-                defaultValue={values.q5}
+                value={values.q5}
                 className={classes.postingtitle}
                 onChange={handleChangeForm("q5")}
                 fullWidth
@@ -193,10 +226,17 @@ export default function EditApplication() {
           </Grid>
         </Paper>
         <Paper>
+        <Button
+            className={classes.postingtitle}
+            style={{ backgroundColor: "#e3f2fd", margin: 20, width: 200 }}
+            onClick={getApplication}
+          >
+            View
+          </Button>
           <Button
             className={classes.postingtitle}
             style={{ backgroundColor: "#e3f2fd", margin: 20, width: 200 }}
-            onClick={}
+            onClick={handleSave}
           >
             Save
           </Button>

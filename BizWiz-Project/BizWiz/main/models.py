@@ -57,8 +57,8 @@ class Post(models.Model):
         return self.post_title
 
 class Application(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    num_questions = models.IntegerField(default=10)
+    # post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    # num_questions = models.IntegerField(default=10)
     q1 = models.TextField(blank=True, null=True)
     q2 = models.TextField(blank=True, null=True)
     q3 = models.TextField(blank=True, null=True)

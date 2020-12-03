@@ -13,6 +13,7 @@ urlpatterns = [
     # path('api/auth/login', api.LoginAPI.as_view()),
     # path('api/auth/user', api.UserAPI.as_view()),
     # path('api/auth/logout', knox_views.LogoutView.as_view(), name='knox_logout')
+    path('api/application', api.ApplicationView.as_view()),
     path('api/application-list/', api.applicationList),
     path('api/application-detail/<str:pk>/', api.applicationDetail),
     path('api/application-create/', api.applicationCreate),

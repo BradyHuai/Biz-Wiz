@@ -283,43 +283,67 @@ def applicationDelete(request, pk):
 
 class ApplicationView(APIView):    
     def get(self, request):
-        data_id = self.request.query_params.get("id")
-        print(data_id)
+        app_id = self.request.query_params.get("id")
+        print(app_id)
 
-        if data_id:
-            app = Application.objects.get(pk=data_id)
+        if app_id:
+
+            app = Application.objects.get(id=app_id)
         
             return Response({
-                'business_name' : app.business_name,
-                'application_name' : app.application_name,
-                'num_questions' : app.num_questions, 
+                'id' : app.id,
                 'q1' : app.q1,
                 'q2' : app.q2,
                 'q3' : app.q3,
-                'email' : app.email,
+                'q4' : app.q4,
+                'q5' : app.q5
             })
         else:
             return Response({
-                'error' : "Post not found..."
+                'error' : "Application not found..."
             })
 
     # this is not working yet
     def post(self, request):
-        post_id = request.data['post']
-        try:
-            post = Post.objects.get(pk=post_id)
+        print(request.data)
+        app_id = request.data['id']
+        print("hello?")
+        if app_id:
+            try:
+                app = Application.objects.get(id=app_id)
+                app.q1 = request.data['q1']
+                app.q2 = request.data['q2']
+                app.q3 = request.data['q3']
+                app.q4 = request.data['q4']
+                app.q5 = request.data['q5']
+                app.save()
+                print("app.pk1-------")
+                print(app.pk)
+                return Response({'id': app.pk})
 
-            new_app = Application.objects.create(
-                post=post,
-                questions=request.data['questions'],
-                email=request.data['email']
-            )
-            new_app.save()
+            except Exception:
+                try:
+                    new_app = Application.objects.create(
+                        id=app_id,
+                        q1=request.data['q1'],
+                        q2=request.data['q2'],
+                        q3=request.data['q3'],
+                        q4=request.data['q4'],
+                        q5=request.data['q5'],)
+                    new_app.save()
+                    print("app.pk2----------")
+                    print(new_app.pk)
+                    
+                    return Response({'id':new_app.pk})
 
-            return Response({"id":new_app.pk})
-        except Exception:
+                except Exception:
+                    print("error")
+                    return Response({
+                        'error' : "Application could not be created..."
+                    })
+        else:
             return Response({
-                'error' : "Application could not be created..."
+                'error' : "Id not provided"
             })
 
     
