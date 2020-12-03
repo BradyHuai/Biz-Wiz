@@ -13,6 +13,7 @@ import axios from "axios";
 import { useHistory } from "react-router";
 import { useSelector } from "react-redux";
 import bwlogo from "../Images/bwlogo.png";
+import post_image from "../Images/post-image.jpg";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -61,6 +62,7 @@ const userinfo = {
   postal_code: "",
   address: "",
   short_paragraph: "",
+  social: "",
 };
 
 export default function ProfilePage() {
@@ -177,6 +179,11 @@ export default function ProfilePage() {
           </Typography>
         </Paper>
         <Paper variant="outlined">
+          <Typography variant="subtitle1" className={classes.postingtitle}>
+            Social Media: {data.userinfo.social}
+          </Typography>
+        </Paper>
+        <Paper variant="outlined">
           <TextField
             name="profile"
             label="Business/Email"
@@ -212,7 +219,7 @@ export default function ProfilePage() {
               <Card className={classes.card}>
                 <CardMedia
                   className={classes.cardMedia}
-                  image="https://source.unsplash.com/random"
+                  image={post_image}
                   title="Image title"
                 />
                 <CardContent className={classes.cardContent}>

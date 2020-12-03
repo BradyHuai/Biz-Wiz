@@ -56,6 +56,7 @@ export default function EditProfile() {
     website: "",
     username: username,
     short_paragraph: "",
+    social: "",
   });
 
   const handleChangeForm = (name) => (event) => {
@@ -181,6 +182,18 @@ export default function EditProfile() {
                 defaultValue={""}
                 className={classes.postingtitle}
                 onChange={handleChangeForm("short_paragraph")}
+                fullWidth
+                required
+              ></TextField>
+            </Grid>
+            <Grid item md={8} sm={12} xs={12}>
+              <TextField
+                name="Social Media"
+                label="Social Media"
+                variant="outlined"
+                defaultValue={""}
+                className={classes.postingtitle}
+                onChange={handleChangeForm("social")}
                 fullWidth
                 required
               ></TextField>

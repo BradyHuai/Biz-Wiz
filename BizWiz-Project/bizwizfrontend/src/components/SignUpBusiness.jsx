@@ -85,7 +85,7 @@ export default function SignUpPage() {
   //data states
   const [options, updateOptionData] = React.useState({
     cities: [],
-    industries: [],
+    industry: [],
   });
 
   //get the option information regarding the different industries
@@ -99,7 +99,7 @@ export default function SignUpPage() {
 
       updateOptionData({
         cities: response.data.cities,
-        industries: response.data.types,
+        industry: response.data.industry,
       });
     })();
   }, []);
@@ -220,7 +220,7 @@ export default function SignUpPage() {
               Select an Industry
             </option>
             <option value="IT">IT</option>
-            {getEntries(options.industries)}
+            {getEntries(options.industry)}
           </select>
 
           <label className={classes.label} for="password">
