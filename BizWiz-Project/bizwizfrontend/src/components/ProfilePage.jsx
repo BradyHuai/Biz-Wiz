@@ -63,6 +63,7 @@ const userinfo = {
   address: "",
   short_paragraph: "",
   social: "",
+  business_name: "",
 };
 
 export default function ProfilePage() {
@@ -153,6 +154,11 @@ export default function ProfilePage() {
       <Paper className={classes.paper}>
         <Paper variant="outlined">
           <img src={bwlogo} style={{ margin: 10 }} alt=""></img>
+        </Paper>
+        <Paper variant="outlined">
+          <Typography variant="subtitle1" className={classes.postingtitle}>
+            Business Name: {data.userinfo.business_name}
+          </Typography>
         </Paper>
         <Paper variant="outlined">
           <Typography variant="subtitle1" className={classes.postingtitle}>
