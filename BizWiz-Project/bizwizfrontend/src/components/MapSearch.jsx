@@ -7,11 +7,80 @@ import {
     InfoWindow
 } from "@react-google-maps/api";
 import axios from "axios";
+import { makeStyles } from "@material-ui/core/styles";
+import image from "../Images/biz-wiz-map.jpg";
+import userImage from "../Images/user_yellow.png";
+
+const useStyles = makeStyles((theme) => ({
+    
+    inputField: {
+        width: "100%",
+        top: "3rem",
+        position: "absolute",
+        zIndex: "10",
+        borderRadius: "5px",
+        padding: "20px",
+        boxSizing: "border-box"
+    },
+
+    input: { 
+        
+        marginLeft: "2%", 
+        marginRight: "2%", 
+        borderRadius: "10px", 
+        width: "16%", 
+        boxSizing: "border-box",
+        height: "40px", 
+        fontSize: "24px",
+        padding: "5px"
+        
+    },
+
+    sideList: {
+
+        height: "80vh", 
+        width: "29%", 
+        float: "left", 
+        marginTop: "20px", 
+        backgroundColor: "#eaeced",
+        boxSizing: "border-box",
+        overflowY: "scroll"
+
+    },
+
+    listingBox: {
+
+        borderRadius: "25px",
+        wordWrap: "break-word",
+        backgroundColor: "white", 
+        width: "80%", 
+        height: "25%", 
+        margin: "0 auto", 
+        marginTop: "25px",
+        marginBottom: "25px"
+    },
+
+    button: {
+        height: "30px", 
+        width: "30%", 
+        marginRight: "5%", 
+        borderRadius: "15px"
+    },
+
+    icon: {
+      height: "70px",
+      width: "70px"
+    }
+
+  }));
 
 
 //Function to return jsx to render map onto website screen
 function MapSearch() {
-    
+
+    //use react's special local css styling
+    const classes = useStyles();
+
     //load in api key for google maps
     const {isLoaded, loadError} = useLoadScript({
             googleMapsApiKey: "AIzaSyBTqSHfkmVBJ2A5TwE7szjjd4pTd9CCfVo", //my personal key for building this application, need partner to provide their own later 
@@ -25,19 +94,22 @@ function MapSearch() {
     const [selected, setSelected] = React.useState(null);
 
     //input states
-    const [input, updateInput] = React.useState({city: "", keyword: "", type: ""});
+    const [input, updateInput] = React.useState({city: "", keyword: "", industry: ""});
 
     //data states
-    const [optionData, updateOptionData] = React.useState({cities: [], types: []});
+    const [optionData, updateOptionData] = React.useState({cities: [], industry: [], keyword: []});
 
     //listing states
     const [listings, updateListings] = React.useState([]);
+
+    //map focus states
+    const [focus, updateFocus] = React.useState({lat: 44.0384, lng: -79.2000, zoom: 9});        //TODO after searching city return coords of city, also after clicking marker focus onto marker
 
     //get the option information regarding the available cities and different types of listings
     React.useEffect(() => {
         (async () => {
             
-          const get_url = "http://localhost:8000/api/options";
+          const get_url = "http://localhost:8000/api/options";              //TODO need backend team to change types to industries, and give keywords
           const response = await axios({
             method: "get",
             url: get_url,
@@ -45,7 +117,8 @@ function MapSearch() {
 
           updateOptionData({
             cities: response.data.cities,
-            types: response.data.types
+            industry: response.data.industry,
+            keyword: response.data.keyword
           });
         })();
       }, []);
@@ -56,102 +129,108 @@ function MapSearch() {
 
     //return map rendering
     return <div>
+        <div style={{backgroundSize: "cover", width: "100%", height: "750px", backgroundImage: `url(${image})`}}>
+            
+            <div>
+                <p style={{fontWeight: "bold", color: "white", fontSize: "200%", paddingTop: "375px", textAlign: "center"}}>Get matched with businesses in</p>
+                <p style={{fontWeight: "bold", color: "white", fontSize: "200%", textAlign: "center"}}>your community.</p>
 
-        <div className="inputField">
-            <form onSubmit={(e) => {
+                <form className="form" style={{paddingTop: "175px", width: "100%"}} onSubmit={(e) => {
+                    console.log(input);
+                    axios
+                    .post("http://localhost:8000/api/listings", {keyword: input.keyword, city: input.city, type: input.industry})
+                    .then(
+                        response => {
+                            updateListings(response.data);
+                            setMarkers(response.data);
+                            console.log(response.data);
+                    })
+                    .catch(err => console.log(err));
+                    
+                    e.preventDefault();
+                    }}>
 
-                axios
-                .post("http://localhost:8000/api/listings", {keyword: input.keyword, city: input.city, type: input.type})
-                .then(
-                    response => {
-                        updateListings(response.data);
-                        setMarkers(response.data);
-                })
-                .catch(err => console.log(err));
-                e.preventDefault();
-            }}>
-
-                <div style={{float: "left", margin: 10, marginLeft: "0%"}}>
-                    <input style={{padding: "10px"}} className="input" type="text" placeholder="Search Keywords..." value={input.keyword} onChange={(e) => {
+                    <input className={classes.input} list="data" type="text" placeholder="Search Keywords..." onChange={(e) => {
                         updateInput((current) => ({...current, keyword: e.target.value}));
                     }}/>
-                </div>
+                        <datalist id="data">
+                            {getKeywords(optionData.keyword)}
+                        </datalist>
 
-                <div style={{float: "left", margin: 10, marginLeft: "10%"}}>
-                    <select style={{padding: "10px"}} className="input" onChange={(e) => {
+                    <select className={classes.input} onChange={(e) => {
                         updateInput((current) => ({...current, city: e.target.value}))
                     }}>
-
-                        <option value="" disabled selected>Select a city...</option>
+                        <option value="" disabled selected>Location</option>
                         <option value="">Any</option>
-                        {getCities(optionData.cities)}
-
+                        {getData(optionData.cities)}
                     </select>
-                </div>
-
-                <div style={{float: "left", margin: 10, marginLeft: "10%"}}>
-                    <select style={{padding: "10px"}} className="input" onChange={(e) => {
-                        updateInput((current) => ({...current, type: e.target.value}));
+                    
+                    <select className={classes.input} className={classes.input} onChange={(e) => {
+                        updateInput((current) => ({...current, industry: e.target.value}));
                     }}>
-
-                        <option value="" disabled selected>Select opportunity type...</option>
+                        <option value="" disabled selected>Industry</option>
                         <option value="">Any</option>
-                        {getTypes(optionData.types)}
-
+                        {getData(optionData.industry)}
                     </select>
-                </div>
+  
+                    <input className={classes.input} style={{width: "10%"}} type="submit" value="Submit"/>
 
-                <div style={{float: "left", margin: 10, marginLeft: "10%"}}>
-                <input className="submit" type="submit" value="Submit"/>
-                </div>
-
-            </form>
+                </form>
+            </div>
         </div>
-        
 
-        <div className="sideList">
+        <div>
 
-            {createListings(listings)}
+            <div className={classes.sideList}>
+
+                {createListings(listings, classes)}
+
+            </div>
+
+            <div style={{marginTop: "20px", width: "70%", height: "80vh", float: "right"}}>
+                <GoogleMap 
+                mapContainerStyle={{width: "100%", height: "80vh"}} 
+                zoom={focus.zoom} 
+                center={{lat: focus.lat, lng: focus.lng}}
+                options={{disableDefaultUI: true, zoomControl: true}}
+                >
+                    {markers.map(marker => <Marker 
+                        position={{lat: marker.lat, lng: marker.lng}} 
+                        onClick={() => {
+                            setSelected(marker);
+                            updateFocus({lat: marker.lat, lng: marker.lng, zoom: 15});}}/>)}
+                    
+                    {selected ? (<InfoWindow 
+                        position={{lat: selected.lat, lng: selected.lng}}
+                        onCloseClick={() => {setSelected(null);}}>
+                        <div style={{width: "300px", height: "150px"}}>
+
+                            <div style={{width: "100%", height: "70%"}}>
+                              <div style={{float: "left", width: "10%", height: "100%"}}>
+                                <img className={classes.icon} src={userImage} alt="user_yellow"></img>
+                              </div>
+                              <div style={{float: "right", width: "90%", height: "100%"}}>
+                                <h3>{selected.companyName}</h3>
+                                <p>{selected.description}</p>
+                              </div>
+                            </div>
+
+                            <div>
+                                <button className={classes.button} type="button">Save</button>
+                                <button className={classes.button} type="button">Learn More</button>
+                            </div>
+                        </div>
+                    </InfoWindow>) : null}
+                </GoogleMap>
+            </div>
 
         </div>
-        
-        <div className="map">
-            <GoogleMap 
-            mapContainerStyle={{width: "100vw", height: "100vh"}} 
-            zoom={11} 
-            center={{lat: 43.662891, lng: -79.395653}}
-            options={{disableDefaultUI: true, zoomControl: true}}
-            >
-                {markers.map(marker => <Marker 
-                    position={{lat: marker.lat, lng: marker.lng}} 
-                    onClick={() => {setSelected(marker);}}/>)}
-                
-                {selected ? (<InfoWindow 
-                    position={{lat: selected.lat, lng: selected.lng}}
-                    onCloseClick={() => {setSelected(null);}}>
-                    <div style={{width: "150px", height: "100px"}}>
-                        <h3>{selected.companyName}</h3>
-                        <p>{selected.description}</p>
-                        <a href={selected.hyperlink}>View Listing</a>
-                    </div>
-                </InfoWindow>) : null}
-            </GoogleMap>
-        </div>
+
     </div>
 }
 
-//return jsx html with options for dropdown regarding cities
-function getCities(cityData) {
-
-    const options = [];
-    for (let i = 0; i < cityData.length; i++) {
-        options.push(<option key={"city" + i} value={cityData[i]}>{cityData[i]}</option>);
-    }
-    return options;
-}
-
-//return jsx html with options for dropdown regarding opportunity types
-function getTypes(typeData) {
+//return jsx html with options for dropdown regarding cities or industries
+function getData(typeData) {
 
     const options = [];
     for (let i = 0; i < typeData.length; i++) {
@@ -160,18 +239,34 @@ function getTypes(typeData) {
     return options;
 }
 
+//retrun jsx html with options for special datalist input
+function getKeywords(typeData) {
+
+    const options = [];
+    for (let i = 0; i < typeData.length; i++) {
+        options.push(<option key={"type" + i} value={typeData[i]}/>);
+    }
+    return options;
+}
+
 //return jsx elements to populate the side list of the map with opportunities
-function createListings(data) {
+function createListings(data, classes) {
 
     const listings = [];
     for (let i = 0; i < data.length; i++) {
         listings.push(
-            <div className="listingBox" style={{backgroundColor: "white", width: "100%", height: "30%"}}>
+            <div className={classes.listingBox}>
                 <div style={{height: "100%", width: "100%"}}>
-                <b>{data[i].companyName}</b>
-                <p>{data[i].description}</p>
-                <p>{data[i].address}</p>
-                <a href={data[i].hyperlink}>View Listing</a>
+
+                  <div style={{width: "20%", height: "100%", float: "left"}}>
+                    <img style={{padding: "40px 0", marginLeft: "25px"}}className={classes.icon} src={userImage} alt="user_yellow"></img>
+                  </div>
+                  
+                  <div style={{width: "70%", height: "100%", float: "right", marginTop: "30px"}}>
+                    <b>{data[i].companyName}</b>
+                    <p>{data[i].description}</p>
+                  </div>
+
                 </div>
             </div>
         );
