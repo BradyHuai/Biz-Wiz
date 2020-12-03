@@ -9,7 +9,7 @@ import {
 import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import image from "../Images/biz-wiz-map.jpg";
-
+import userImage from "../Images/user_yellow.png";
 
 const useStyles = makeStyles((theme) => ({
     
@@ -65,6 +65,11 @@ const useStyles = makeStyles((theme) => ({
         width: "30%", 
         marginRight: "5%", 
         borderRadius: "15px"
+    },
+
+    icon: {
+      height: "70px",
+      width: "70px"
     }
 
   }));
@@ -138,7 +143,7 @@ function MapSearch() {
                         response => {
                             updateListings(response.data);
                             setMarkers(response.data);
-                            setMarkers([{lat: 43.65858, lng: -79.37913}]);
+                            console.log(response.data);
                     })
                     .catch(err => console.log(err));
                     
@@ -198,9 +203,18 @@ function MapSearch() {
                     {selected ? (<InfoWindow 
                         position={{lat: selected.lat, lng: selected.lng}}
                         onCloseClick={() => {setSelected(null);}}>
-                        <div style={{width: "300px", height: "125px"}}>
-                            <h3 style={{float: "left"}}>{selected.companyName}</h3>
-                            <p>{selected.description}</p>
+                        <div style={{width: "300px", height: "150px"}}>
+
+                            <div style={{width: "100%", height: "70%"}}>
+                              <div style={{float: "left", width: "10%", height: "100%"}}>
+                                <img className={classes.icon} src={userImage} alt="user_yellow"></img>
+                              </div>
+                              <div style={{float: "right", width: "90%", height: "100%"}}>
+                                <h3>{selected.companyName}</h3>
+                                <p>{selected.description}</p>
+                              </div>
+                            </div>
+
                             <div>
                                 <button className={classes.button} type="button">Save</button>
                                 <button className={classes.button} type="button">Learn More</button>
@@ -243,10 +257,16 @@ function createListings(data, classes) {
         listings.push(
             <div className={classes.listingBox}>
                 <div style={{height: "100%", width: "100%"}}>
-                <b>{data[i].companyName}</b>
-                <p>{data[i].description}</p>
-                <p>{data[i].address}</p>
-                <a href={data[i].hyperlink}>View Listing</a>
+
+                  <div style={{width: "20%", height: "100%", float: "left"}}>
+                    <img style={{padding: "40px 0", marginLeft: "25px"}}className={classes.icon} src={userImage} alt="user_yellow"></img>
+                  </div>
+                  
+                  <div style={{width: "70%", height: "100%", float: "right", marginTop: "30px"}}>
+                    <b>{data[i].companyName}</b>
+                    <p>{data[i].description}</p>
+                  </div>
+
                 </div>
             </div>
         );
