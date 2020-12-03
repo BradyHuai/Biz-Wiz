@@ -39,20 +39,27 @@ class LoginAPI(generics.GenericAPIView):
     serializer_class = LoginSerializer
 
     def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user_profile, user = serializer.validated_data
-        _, token = AuthToken.objects.create(user_profile)
-        if user_profile.is_Business:
-            user_data = BusinessUserSerializer(user, context=self.get_serializer_context()).data
-            user_data['user-type'] = 'business'
-        else:
-            user_data = UserSerializer(user_profile, context=self.get_serializer_context()).data
-            user_data['user-type'] = 'individual'
-        return Response({
-        "user": user_data,
-        "token": token
-        })
+        try:
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            user_profile, user = serializer.validated_data
+            _, token = AuthToken.objects.create(user_profile)
+            if user_profile.is_Business:
+                user_data = BusinessUserSerializer(user, context=self.get_serializer_context()).data
+                user_data['user-type'] = 'business'
+            else:
+                user_data = UserSerializer(user_profile, context=self.get_serializer_context()).data
+                user_data['user-type'] = 'individual'
+            return Response({
+            "user": user_data,
+            "token": token
+            })
+        
+        except:
+            return Response({
+            "error": "Invalid username password combination",
+            })
+        
 
 # GetUser API
 class UserAPI(generics.RetrieveAPIView):
