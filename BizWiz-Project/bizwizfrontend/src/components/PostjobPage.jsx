@@ -122,28 +122,25 @@ export default function Postjob() {
 
   // }, []);
 
-  export const isEqual = (str1, str2) => {
+  const isEqual = (str1, str2) => {
     return str1 === str2;
   };
 
   const handleSubmit = (e) => {
-
     if (
-        isEqual(data.position, "") ||
-        isEqual(data.post_title, "") ||
-        isEqual(data.salary, "") ||
-        isEqual(data.city, "") ||
-        isEqual(data.zip_code, "") ||
-        isEqual(data.address, "") ||
-        isEqual(data.small_description, "") ||
-        data.small_description.length > 50 ||
-        data.post_title.length > 50
-      ) {
-        alert("Invalid Input");
-      } else {
-
-      }
-
+      isEqual(data.position, "") ||
+      isEqual(data.post_title, "") ||
+      isEqual(data.salary, "") ||
+      isEqual(data.city, "") ||
+      isEqual(data.zip_code, "") ||
+      isEqual(data.address, "") ||
+      isEqual(data.small_description, "") ||
+      data.small_description.length > 50 ||
+      data.post_title.length > 50
+    ) {
+      alert("Invalid Input");
+    } else {
+    }
 
     const url = "http://localhost:8000/api/post";
 
@@ -193,8 +190,10 @@ export default function Postjob() {
     window.location.reload(false);
   };
 
-  const titleError = isEqual(data.post_title, "") || data.post_title.length > 50;
-  const descError = isEqual(data.small_description, "") || data.small_description.length > 50;
+  const titleError =
+    isEqual(data.post_title, "") || data.post_title.length > 50;
+  const descError =
+    isEqual(data.small_description, "") || data.small_description.length > 50;
 
   if (titleError) {
     var lineTooLong1 = "Line too Long";
@@ -309,7 +308,7 @@ export default function Postjob() {
               fullWidth
               required
               error={descError}
-              helperText={lineTooLong1}
+              helperText={lineTooLong2}
             />
           </Grid>
         </Grid>
