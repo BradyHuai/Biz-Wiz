@@ -65,5 +65,5 @@ class Application(models.Model):
     q4 = models.TextField(blank=True, null=True)
     q5 = models.TextField(blank=True, null=True)
 
-    def __str__(self):
-        return self.post.post_title
+    # def __str__(self):
+    #     return self.id

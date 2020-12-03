@@ -87,6 +87,10 @@ export default function EditApplication() {
   const getApplication = () => {
     // console.log(values.id)
     // console.log(values)
+    if (values.id == ""){
+        alert("Please enter an Application ID")
+        return
+    }
     axios({
         method: 'get',
         url:'http://localhost:8000/api/application' ,
@@ -103,9 +107,9 @@ export default function EditApplication() {
             q4: res.data.q4,
             q5: res.data.q5
           });
-          console.log(res.data.error)
+        //   console.log(res.data.error)
             if(res.data.error == "Application not found...") {
-                console.log("helos")
+                // console.log("helos")
                 setDefault()
             }
         })
@@ -126,6 +130,10 @@ export default function EditApplication() {
 
 //   update the application 
   const handleSave = () => {
+    if (values.id == ""){
+        alert("Please enter an Application ID")
+        return
+    }
     const url = "http://localhost:8000/api/application";
 
     // console.log(values.id)
@@ -137,8 +145,8 @@ export default function EditApplication() {
     })
       .then((res) => {
         if (res.status === 200) {
-          console.log("success");
-          console.log(res.data)
+          console.log("save success");
+        //   console.log(res.data)
         //   alert("Success");
         } else {
           console.log(res.status);
