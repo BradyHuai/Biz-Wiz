@@ -299,14 +299,6 @@ class ApplicationView(APIView):
                     'q5' : app.q5
                 })
             except Exception:
-                # return Response({
-                #         'id' : app_id,
-                #         'q1': "Are you interested in working remotely?",
-                #         'q2': "When are you able to start working?",
-                #         'q3': "How much would you like to earn in this position?",
-                #         'q4': "How would you like to communicate with us?",
-                #         'q5': "Do you have any specific questions about this role?"
-                #     })
                 return Response({
                 'error' : "Application not found..."
                 })  

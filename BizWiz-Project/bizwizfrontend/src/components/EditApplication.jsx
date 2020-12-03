@@ -93,8 +93,8 @@ export default function EditApplication() {
         params: {id: values.id}
      })
      .then(res => {
-         console.log("heres the res data")
-         console.log(res.data)
+        //  console.log("heres the res data")
+        //  console.log(res.data)
          setValues({
             id: res.data.id,
             q1: res.data.q1,
@@ -128,8 +128,8 @@ export default function EditApplication() {
   const handleSave = () => {
     const url = "http://localhost:8000/api/application";
 
-    console.log(values.id)
-    console.log(values);
+    // console.log(values.id)
+    // console.log(values);
     axios({
       method: "post",
       url: url,
