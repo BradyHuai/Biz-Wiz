@@ -195,13 +195,13 @@ export default function Postjob() {
   const descError =
     isEqual(data.small_description, "") || data.small_description.length > 50;
 
-  if (titleError) {
+  if (data.post_title.length > 50) {
     var lineTooLong1 = "Line too Long";
   } else {
     lineTooLong1 = "";
   }
 
-  if (descError) {
+  if (data.small_description.length > 50) {
     var lineTooLong2 = "Line too Long";
   } else {
     lineTooLong2 = "";
