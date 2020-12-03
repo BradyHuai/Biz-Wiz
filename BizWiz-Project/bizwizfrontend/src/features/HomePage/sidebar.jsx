@@ -70,7 +70,7 @@ export default function MainListItems() {
         />
       </ListItem>
 
-      {user_type === "business" ? (
+      {user_type === "business" || user_type === "individual" ? (
         <ListItem button onClick={handleClickEditProfile}>
           <ListItemIcon>
             <BarChartIcon />

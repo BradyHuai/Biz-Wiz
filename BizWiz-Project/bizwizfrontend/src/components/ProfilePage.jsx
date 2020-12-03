@@ -69,7 +69,7 @@ export default function ProfilePage() {
   const classes = useStyles();
   const history = useHistory();
   const username = useSelector((state) => state.userinfo.username);
-  const usertype = useSelector((state) => state.userinfo.type);
+  const usertype = useSelector((state) => state.userinfo.user_type);
   const handleViewPost = (post_id) => () => {
     history.push({
       pathname: "/pages/post",
@@ -166,12 +166,21 @@ export default function ProfilePage() {
         </Paper>
         <Paper variant="outlined">
           <Typography variant="subtitle1" className={classes.postingtitle}>
-            Website: {data.userinfo.website}
+            Contact Person: {data.userinfo.first_name} {data.userinfo.last_name}
+          </Typography>
+        </Paper>
+        <Paper variant="outlined">
+          <Typography
+            variant="subtitle1"
+            className={classes.postingtitle}
+            style={{ fontWeight: "bold" }}
+          >
+            Below are for businesses only
           </Typography>
         </Paper>
         <Paper variant="outlined">
           <Typography variant="subtitle1" className={classes.postingtitle}>
-            Contact Person: {data.userinfo.first_name} {data.userinfo.last_name}
+            Website: {data.userinfo.website}
           </Typography>
         </Paper>
         <Paper variant="outlined">
@@ -211,18 +220,10 @@ export default function ProfilePage() {
       </Paper>
 
       <Paper className={classes.paper}>
-        {username === "" ? (
-          <div></div>
-        ) : (
-          <div>
-            {usertype === "business" ? (
-              <Typography variant="h4" className={classes.postingtitle} >Postings</Typography>
-            ) : (
-              <Typography variant="h4" className={classes.postingtitle} >Saved Postings</Typography>
-            )}
-          </div>
-        )}
-          
+        <Typography variant="h4" className={classes.postingtitle}>
+          Postings
+        </Typography>
+
         <Grid container className={classes.cardGrid}>
           {data.posts.map((card) => (
             <Grid item className={classes.item} key={card.id}>

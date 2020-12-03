@@ -174,18 +174,23 @@ export default function EditProfile() {
                 required
               ></TextField>
             </Grid>
-            <Grid item md={8} sm={12} xs={12}>
-              <TextField
-                name="Short Description"
-                label="Short Company Description"
-                variant="outlined"
-                defaultValue={""}
-                className={classes.postingtitle}
-                onChange={handleChangeForm("short_paragraph")}
-                fullWidth
-                required
-              ></TextField>
-            </Grid>
+            {user_type === "business" ? (
+              <Grid item md={8} sm={12} xs={12}>
+                <TextField
+                  name="Short Description"
+                  label="Short Company Description"
+                  variant="outlined"
+                  defaultValue={""}
+                  className={classes.postingtitle}
+                  onChange={handleChangeForm("short_paragraph")}
+                  fullWidth
+                  required
+                ></TextField>
+              </Grid>
+            ) : (
+              <></>
+            )}
+
             <Grid item md={8} sm={12} xs={12}>
               <TextField
                 name="Social Media"

@@ -74,7 +74,10 @@ export default function SignUpPage() {
     first_name: "",
     last_name: "",
     password: "",
-    short_paragraph: "",
+    address: "",
+    zip_code: "",
+    city: "",
+    industry: "",
   });
 
   return (
@@ -100,7 +103,10 @@ export default function SignUpPage() {
                   alert("Failed");
                 }
               })
-              .catch((err) => console.log(err));
+              .catch((err) => {
+                console.log(err);
+                alert("Failed");
+              });
             e.preventDefault();
           }}
         >
@@ -176,7 +182,66 @@ export default function SignUpPage() {
             }}
           />
 
-          <label className={classes.label} for="description">
+          <label className={classes.label} for="address">
+            Address:
+          </label>
+          <input
+            className={classes.input}
+            id="address"
+            type="address"
+            onChange={(e) => {
+              setValues((current) => ({
+                ...current,
+                address: e.target.value,
+              }));
+            }}
+          />
+          <label className={classes.label} for="city">
+            City:
+          </label>
+          <input
+            className={classes.input}
+            id="city"
+            type="city"
+            onChange={(e) => {
+              setValues((current) => ({
+                ...current,
+                city: e.target.value,
+              }));
+            }}
+          />
+
+          <label className={classes.label} for="zip_code">
+            Zip Code:
+          </label>
+          <input
+            className={classes.input}
+            id="zip_code"
+            type="zip_code"
+            onChange={(e) => {
+              setValues((current) => ({
+                ...current,
+                zip_code: e.target.value,
+              }));
+            }}
+          />
+
+          <label className={classes.label} for="industry">
+            Industry:
+          </label>
+          <input
+            className={classes.input}
+            id="industry"
+            type="industry"
+            onChange={(e) => {
+              setValues((current) => ({
+                ...current,
+                industry: e.target.value,
+              }));
+            }}
+          />
+
+          {/* <label className={classes.label} for="description">
             Short description about yourself:
           </label>
           <textarea
@@ -191,7 +256,7 @@ export default function SignUpPage() {
                 short_paragraph: e.target.value,
               }));
             }}
-          />
+          /> */}
 
           <input
             className={classes.submitSignup}

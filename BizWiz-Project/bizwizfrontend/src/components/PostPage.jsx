@@ -131,23 +131,22 @@ export default function PostPage() {
   }
 
   const handleSavePost = (event) => {
-      const save_url = "http://localhost:8000/api/save_post";
-      axios.post(save_url, {
-        params: { username: username, post_id: id },
-      })
+    const save_url = "http://localhost:8000/api/save_post";
+    axios
+      .post(save_url, { username: username, post_id: id })
       .then((res) => {
         if (res.status === 200) {
           console.log("success");
-          alert("Posting saved!")
+          alert("Posting saved!");
         } else {
-            alert("Saving failed")
+          alert("Saving failed");
           console.log(res.status);
         }
       })
       .catch((e) => {
-        alert("Internal Error...")
+        alert("Internal Error...");
         console.log(e);
-      });;
+      });
   };
 
   return (
