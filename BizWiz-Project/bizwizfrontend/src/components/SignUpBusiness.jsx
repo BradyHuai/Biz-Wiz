@@ -80,6 +80,8 @@ export default function SignUpPage() {
     zip_code: "",
     city: "",
     short_paragraph: "",
+    website: "",
+    socail: "",
   });
 
   //data states
@@ -204,11 +206,12 @@ export default function SignUpPage() {
           />
 
           <label className={classes.label} for="industry">
-            Industry:{" "}
+            Industry:
           </label>
-          <select
+          <input
             className={classes.input}
             id="industry"
+            type="text"
             onChange={(e) => {
               setValues((current) => ({
                 ...current,
@@ -216,12 +219,12 @@ export default function SignUpPage() {
               }));
             }}
           >
-            <option value="" disabled selected>
+            {/* <option value="" disabled selected>
               Select an Industry
             </option>
             <option value="IT">IT</option>
-            {getEntries(options.industry)}
-          </select>
+            {getEntries(options.industry)} */}
+          </input>
 
           <label className={classes.label} for="password">
             Password:
@@ -261,6 +264,35 @@ export default function SignUpPage() {
               setValues((current) => ({
                 ...current,
                 zip_code: e.target.value,
+              }));
+            }}
+          />
+          <label className={classes.label} for="website">
+            Website:
+          </label>
+          <input
+            className={classes.input}
+            id="website"
+            type="text"
+            onChange={(e) => {
+              setValues((current) => ({
+                ...current,
+                website: e.target.value,
+              }));
+            }}
+          />
+
+          <label className={classes.label} for="social">
+            Social Media:
+          </label>
+          <input
+            className={classes.input}
+            id="social"
+            type="text"
+            onChange={(e) => {
+              setValues((current) => ({
+                ...current,
+                social: e.target.value,
               }));
             }}
           />
