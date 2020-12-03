@@ -296,10 +296,7 @@ function MapSearch() {
                       }}
                     >
                       <h3>{selected.companyName}</h3>
-                      <p>
-                        {selected.description +
-                          "We want an excellent boi who can do lots of our work for free and stuff"}
-                      </p>
+                      <p>{selected.description}</p>
                     </div>
                   </div>
 
