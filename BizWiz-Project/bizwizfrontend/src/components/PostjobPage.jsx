@@ -197,9 +197,13 @@ export default function Postjob() {
 
   if (titleError) {
     var lineTooLong1 = "Line too Long";
-    var lineTooLong2 = "Line too Long";
   } else {
     lineTooLong1 = "";
+  }
+
+  if (descError) {
+    var lineTooLong2 = "Line too Long";
+  } else {
     lineTooLong2 = "";
   }
 

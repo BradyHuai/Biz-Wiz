@@ -62,10 +62,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "15px",
   },
 
-  icon: {
-    height: "70px",
-    width: "70px",
-  },
+  icon: { width: "115%", height: "100%" },
 }));
 
 //Function to return jsx to render map onto website screen
@@ -131,11 +128,11 @@ function MapSearch() {
   if (!isLoaded) return "Loading Maps";
 
   //post onclick function
-    const handleViewPost = (post_id) => () => {
-        history.push({
-            pathname: "/pages/post",
-            search: "?the=search",
-            state: { id: post_id },
+  const handleViewPost = (post_id) => () => {
+    history.push({
+      pathname: "/pages/post",
+      search: "?the=search",
+      state: { id: post_id },
     });
   };
 
@@ -312,7 +309,13 @@ function MapSearch() {
                   </div>
 
                   <div>
-                    <button className={classes.button} type="button" onClick={handleViewPost(selected.id)}>Learn More</button>
+                    <button
+                      className={classes.button}
+                      type="button"
+                      onClick={handleViewPost(selected.id)}
+                    >
+                      Learn More
+                    </button>
                   </div>
                 </div>
               </InfoWindow>
