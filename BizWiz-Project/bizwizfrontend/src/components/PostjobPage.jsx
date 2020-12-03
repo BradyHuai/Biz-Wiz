@@ -122,7 +122,29 @@ export default function Postjob() {
 
   // }, []);
 
+  export const isEqual = (str1, str2) => {
+    return str1 === str2;
+  };
+
   const handleSubmit = (e) => {
+
+    if (
+        isEqual(data.position, "") ||
+        isEqual(data.post_title, "") ||
+        isEqual(data.salary, "") ||
+        isEqual(data.city, "") ||
+        isEqual(data.zip_code, "") ||
+        isEqual(data.address, "") ||
+        isEqual(data.small_description, "") ||
+        data.small_description.length > 50 ||
+        data.post_title.length > 50
+      ) {
+        alert("Invalid Input");
+      } else {
+
+      }
+
+
     const url = "http://localhost:8000/api/post";
 
     axios({
@@ -171,6 +193,17 @@ export default function Postjob() {
     window.location.reload(false);
   };
 
+  const titleError = isEqual(data.post_title, "") || data.post_title.length > 50;
+  const descError = isEqual(data.small_description, "") || data.small_description.length > 50;
+
+  if (titleError) {
+    var lineTooLong1 = "Line too Long";
+    var lineTooLong2 = "Line too Long";
+  } else {
+    lineTooLong1 = "";
+    lineTooLong2 = "";
+  }
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -199,6 +232,7 @@ export default function Postjob() {
               onChange={handleChange}
               fullWidth
               required
+              error={isEqual(data.position, "")}
               // defaultValue={initialData.position}
             />
           </Grid>
@@ -211,6 +245,8 @@ export default function Postjob() {
               onChange={handleChange}
               fullWidth
               required
+              error={titleError}
+              helperText={lineTooLong1}
               // defaultValue={initialData.post_title}
             />
           </Grid>
@@ -223,6 +259,7 @@ export default function Postjob() {
               onChange={handleChange}
               fullWidth
               required
+              error={isEqual(data.address, "")}
               // defaultValue={initialData.address}
             />
           </Grid>
@@ -235,6 +272,7 @@ export default function Postjob() {
               onChange={handleChange}
               fullWidth
               required
+              error={isEqual(data.zip_code, "")}
               // defaultValue={initialData.zip_code}
             />
           </Grid>
@@ -246,6 +284,7 @@ export default function Postjob() {
               onChange={handleChange}
               fullWidth
               required
+              error={isEqual(data.city, "")}
               // defaultValue={initialData.city}
             />
           </Grid>
@@ -257,6 +296,7 @@ export default function Postjob() {
               onChange={handleChange}
               fullWidth
               required
+              error={isEqual(data.salary, "")}
               // defaultValue={initialData.salary}
             />
           </Grid>
@@ -268,6 +308,8 @@ export default function Postjob() {
               onChange={handleChange}
               fullWidth
               required
+              error={descError}
+              helperText={lineTooLong1}
             />
           </Grid>
         </Grid>
@@ -281,7 +323,6 @@ export default function Postjob() {
               variant="outlined"
               onChange={handleChange}
               fullWidth
-              required
               // defaultValue={initialData.deadline}
             />
           </Grid>
@@ -292,7 +333,6 @@ export default function Postjob() {
               variant="outlined"
               onChange={handleChange}
               fullWidth
-              required
             />
           </Grid>
         </Grid>
