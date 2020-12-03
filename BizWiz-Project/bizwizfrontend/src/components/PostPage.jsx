@@ -6,6 +6,7 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import axios from "axios";
 import { useHistory } from "react-router";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -98,6 +99,7 @@ export default function PostPage() {
   });
 
   const id = history.location.state.id;
+  const username = useSelector((state) => state.userinfo.username);
 
   useEffect(() => {
     (async () => {
@@ -127,6 +129,26 @@ export default function PostPage() {
   if (data === {}) {
     return <span>waiting... </span>;
   }
+
+  const handleSavePost = (event) => {
+      const save_url = "http://localhost:8000/api/save_post";
+      await axios.post(save_url, {
+        params: { username: username, post_id: id },
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          console.log("success");
+          alert("Posting saved!")
+        } else {
+            alert("Saving failed")
+          console.log(res.status);
+        }
+      })
+      .catch((e) => {
+        alert("Internal Error...")
+        console.log(e);
+      });;
+  };
 
   return (
     <div className={classes.root}>
@@ -227,6 +249,7 @@ export default function PostPage() {
           variant="contained"
           className={classes.button}
           startIcon={<FavoriteIcon />}
+          onClick={handleSavePost}
         >
           SAVE
         </Button>

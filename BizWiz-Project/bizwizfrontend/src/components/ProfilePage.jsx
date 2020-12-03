@@ -71,13 +71,13 @@ export default function ProfilePage() {
     });
   };
 
-  const handleEditPost = (post_id) => () => {
-    history.push({
-      pathname: "/pages/post-job",
-      search: "?the=search",
-      state: { id: post_id },
-    });
-  }
+  // const handleEditPost = (post_id) => () => {
+  //   history.push({
+  //     pathname: "/pages/post-job",
+  //     search: "?the=search",
+  //     state: { id: post_id },
+  //   });
+  // }
 
   const handleInputId = (event) => {
     setData({
