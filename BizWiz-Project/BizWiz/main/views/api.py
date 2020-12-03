@@ -5,6 +5,7 @@ from rest_framework.views import APIView
 from ..serializers import *
 from ..industries import Industries
 from ..keywords import Keywords
+from ..cities import Cities
 from ..models import Location, Post, Business, Application, UserProfile, Individual
 import requests
 
@@ -65,7 +66,7 @@ class UserAPI(generics.RetrieveAPIView):
 class OptionsView(APIView):
     def get(self, request):
         return Response({
-            'cities' : list({location.city for location in Location.objects.all()}),
+            'cities' : Cities.get(),
             'industry' : list({industry[1] for industry in Industries.get()}),
             "keyword" : Keywords.get()
         })
