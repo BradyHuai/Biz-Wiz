@@ -65,7 +65,7 @@ class OptionsView(APIView):
     def get(self, request):
         return Response({
             'cities' : list({location.city for location in Location.objects.all()}),
-            'types' : list({industry[1] for industry in Industries.get()}),
+            'industry' : list({industry[1] for industry in Industries.get()}),
         })
 
 
@@ -326,9 +326,3 @@ class ApplicationView(APIView):
             return Response({
                 'error' : "Application could not be created..."
             })
-
-class IndustryView(APIView):
-    def get(self, requests):
-        return Response({
-            "industries": Industries.get().keys()
-        })
