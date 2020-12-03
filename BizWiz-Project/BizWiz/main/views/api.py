@@ -71,6 +71,7 @@ class PostView(APIView):
                 post_title=request.data['post_title'],
                 location=location,
                 salary=request.data['salary'],
+                link=request.data['link'],
                 deadline=request.data['deadline'],
                 small_description=request.data['small_description'],
                 description=request.data['description'],
@@ -99,12 +100,12 @@ class PostView(APIView):
                 'salary' : post.salary,
                 'about' : post.business.short_paragraph, 
                 'deadline' : post.deadline,
-                'link' : "",
+                'link' : post.link,
                 'description' : post.description,
                 'requirements' : post.requirements,
                 'notes' : post.notes,
                 'company' : post.business.business_name,
-                'website': "",
+                'website': post.business.website,
             })
         else:
             return Response({

@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Postjob() {
     const classes = useStyles();
-    const history = useHistory();
+    // const history = useHistory();
 
     const initialData = {
         "position": "",
@@ -62,6 +62,7 @@ export default function Postjob() {
         "salary": "",
         "link": "",
         "deadline": "",
+        "small_description": "",
         "description": "",
         "requirements": "",
         "notes": "",
@@ -74,36 +75,52 @@ export default function Postjob() {
             [name]: value
         }));
     }
+    
+    // Potential edit post function
 
-    const [otherData, setOtherData] = useState("");
+    // const [otherData, setOtherData] = useState("");
+    // let id = -1;
+
+    // useEffect(() => {
+    //   (async () => {
+    //       try {
+    //             id = history.location.state.id;
+    //             const posting_url = "http://localhost:8000/api/post";
+    //             const post = await axios.get(posting_url, { params: { id: id } });
+        
+    //             setdata({
+    //             position: post.data.position,
+    //             post_title: post.data.title,
+    //             address: post.data.location,
+    //             zip_code: post.data.zip_code,
+    //             city: post.data.city,
+    //             salary: post.data.salary,
+    //             link: post.data.link,
+    //             deadline: post.data.deadline,
+    //             description: post.data.description,
+    //             requirements: post.data.requirements,
+    //             notes: post.data.notes,
+    //             });
+    //             setOtherData(post.data.company);
+    //       } catch (error) {
+              
+    //       }
+        
+    //   })();
+
+    // }, []);
 
     useEffect(() => {
       (async () => {
           try {
-              const id = history.location.state.id;
+                id = history.location.state.id;
                 const posting_url = "http://localhost:8000/api/post";
                 const post = await axios.get(posting_url, { params: { id: id } });
         
-                setdata({
-                position: post.data.position,
-                post_title: post.data.title,
-                address: post.data.location,
-                zip_code: post.data.zip_code,
-                city: post.data.city,
-                salary: post.data.salary,
-                link: post.data.link,
-                deadline: post.data.deadline,
-                description: post.data.description,
-                requirements: post.data.requirements,
-                notes: post.data.notes,
-                });
                 setOtherData(post.data.company);
           } catch (error) {
-              
           }
-        
       })();
-
     }, []);
   
     console.log(data);
@@ -133,6 +150,24 @@ export default function Postjob() {
             alert("Invalid input, please check your inputs.")
             console.log(e);
           });
+
+        //   if (id != -1) {
+        //     axios({
+        //         method: "delete",
+        //         url: url,
+        //         data: id,
+        //       })
+        //         .then((res) => {
+        //           if (res.status !== 200) {
+        //             alert("Invalid input, please check your inputs.")
+        //             console.log(res.status);
+        //           }
+        //         })
+        //         .catch((e) => {
+        //           alert("Internal server error.")
+        //           console.log(e);
+        //         });
+        // }
     }
 
     const handleDelete = (e) => {
@@ -140,7 +175,7 @@ export default function Postjob() {
             ...previousData,
             ...initialData
         }));
-        // go back
+        window.location.reload(false);
     }
 
     return (
@@ -173,7 +208,7 @@ export default function Postjob() {
                             onChange={handleChange} 
                             fullWidth 
                             required 
-                            defaultValue={initialData.position}
+                            // defaultValue={initialData.position}
                             />
                     </Grid>
                     <Grid item md={6} sm={12} xs={12}>
@@ -185,7 +220,7 @@ export default function Postjob() {
                             onChange={handleChange} 
                             fullWidth 
                             required 
-                            defaultValue={initialData.post_title}
+                            // defaultValue={initialData.post_title}
                             />
                     </Grid>
                     <Grid item md={6} sm={12} xs={12}>
@@ -197,7 +232,7 @@ export default function Postjob() {
                             onChange={handleChange} 
                             fullWidth 
                             required 
-                            defaultValue={initialData.address}
+                            // defaultValue={initialData.address}
                             />
                     </Grid>
                     <Grid item md={6} sm={12} xs={12}>
@@ -209,7 +244,7 @@ export default function Postjob() {
                             onChange={handleChange} 
                             fullWidth 
                             required 
-                            defaultValue={initialData.zip_code}
+                            // defaultValue={initialData.zip_code}
                             />
                     </Grid>
                     <Grid item md={6} sm={12} xs={12}>
@@ -220,7 +255,7 @@ export default function Postjob() {
                             onChange={handleChange} 
                             fullWidth 
                             required 
-                            defaultValue={initialData.city}
+                            // defaultValue={initialData.city}
                             />
                     </Grid>
                     <Grid item md={6} sm={12} xs={12}>
@@ -231,7 +266,17 @@ export default function Postjob() {
                             onChange={handleChange} 
                             fullWidth 
                             required 
-                            defaultValue={initialData.salary}
+                            // defaultValue={initialData.salary}
+                            />
+                    </Grid>
+                    <Grid item md={6} sm={12} xs={12}>
+                        <TextField 
+                            name="small_description" 
+                            label="Short Description about this position" 
+                            variant="outlined" 
+                            onChange={handleChange} 
+                            fullWidth 
+                            required 
                             />
                     </Grid>
                 </Grid>
@@ -248,7 +293,7 @@ export default function Postjob() {
                             onChange={handleChange} 
                             fullWidth 
                             required 
-                            defaultValue={initialData.deadline}
+                            // defaultValue={initialData.deadline}
                             />
                     </Grid>
                     <Grid item md={6} sm={12} xs={12}>
@@ -271,7 +316,7 @@ export default function Postjob() {
                     fullWidth 
                     multiline 
                     rows={8}
-                    defaultValue={initialData.description}
+                    // defaultValue={initialData.description}
                     />
                 <TextField 
                     name="requirements" 
@@ -282,7 +327,7 @@ export default function Postjob() {
                     fullWidth 
                     multiline 
                     rows={8}
-                    defaultValue={initialData.requirements}
+                    // defaultValue={initialData.requirements}
                     />
                 <TextField 
                     name="notes" 
@@ -293,7 +338,7 @@ export default function Postjob() {
                     fullWidth 
                     multiline 
                     rows={8}
-                    defaultValue={initialData.notes}
+                    // defaultValue={initialData.notes}
                     />
                 <Button
                     variant="contained"

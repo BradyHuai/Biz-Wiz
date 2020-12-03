@@ -231,13 +231,13 @@ export default function ProfilePage() {
                   >
                     View
                   </Button>
-                  <Button 
+                  {/* <Button 
                     size="small" 
                     color="primary"
                     onClick={handleEditPost(card.id)}
                   >
                     Edit
-                  </Button>
+                  </Button> */}
                 </CardActions>
               </Card>
             </Grid>
