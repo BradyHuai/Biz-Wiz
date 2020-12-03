@@ -140,29 +140,27 @@ export default function Postjob() {
     ) {
       alert("Invalid Input");
     } else {
-    }
+      const url = "http://localhost:8000/api/post";
 
-    const url = "http://localhost:8000/api/post";
-
-    axios({
-      method: "post",
-      url: url,
-      data: data,
-    })
-      .then((res) => {
-        if (res.status === 200) {
-          console.log("success");
-          alert("Posting submitted!");
-        } else {
-          alert("Invalid input, please check your inputs.");
-          console.log(res.status);
-        }
+      axios({
+        method: "post",
+        url: url,
+        data: data,
       })
-      .catch((e) => {
-        alert("Invalid input, please check your inputs.");
-        console.log(e);
-      });
-
+        .then((res) => {
+          if (res.status === 200) {
+            console.log("success");
+            alert("Posting submitted!");
+          } else {
+            alert("Invalid input, please check your inputs.");
+            console.log(res.status);
+          }
+        })
+        .catch((e) => {
+          alert("Invalid input, please check your inputs.");
+          console.log(e);
+        });
+    }
     //   if (id != -1) {
     //     axios({
     //         method: "delete",
