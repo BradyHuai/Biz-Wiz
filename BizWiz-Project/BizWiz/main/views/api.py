@@ -210,7 +210,7 @@ class ProfileView(APIView):
                     posts = posts.filter(business=business)
 
                     return Response({
-                        "posts": [{'title':post.post_title, 'desc':post.description, 'id':post.pk} for post in posts], 
+                        "posts": [{'title':post.post_title, 'desc':post.small_description, 'id':post.pk} for post in posts], 
                         "userinfo": user_info
                     })
                 else:
@@ -218,7 +218,7 @@ class ProfileView(APIView):
                     posts = individual.post_set.all()
 
                     return Response({ 
-                        "posts": [{'title':post.post_title, 'desc':post.description, 'id':post.pk} for post in posts],
+                        "posts": [{'title':post.post_title, 'desc':post.small_description, 'id':post.pk} for post in posts],
                         "userinfo": user_info
                     })
             except Exception as e:
