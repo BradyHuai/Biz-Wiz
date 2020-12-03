@@ -203,6 +203,7 @@ class ProfileView(APIView):
                 posts = Post.objects.all()
                 if user.is_Business:
                     business = Business.objects.get(user_profile=user)
+                    user_info['business_name'] = business.business_name
                     user_info['website'] = business.website
                     user_info['social'] = business.social
                     user_info['short_paragraph'] = business.short_paragraph
@@ -247,14 +248,18 @@ class ProfileView(APIView):
                         business.user_profile.first_name = request.data['first_name']
                     if request.data['last_name']:
                         business.user_profile.last_name = request.data['last_name']
+                    if request.data['industry']:
+                        business.user_profile.industry = request.data['industry']
                     business.user_profile.location.save()
+                    business.user_profile.save()
                     if request.data['short_paragraph']:
                         business.short_paragraph = request.data['short_paragraph']
-                    business.user_profile.save()
                     if request.data['website']:
                         business.website = request.data['website']
                     if request.data['social']:
                         business.social = request.data['social']
+                    if request.data['business_name']:
+                        business.business_name = request.data['business_name']
                     business.save()
                     return Response({"username": business.user_profile.username})
                 elif user.is_Individual:
@@ -269,6 +274,8 @@ class ProfileView(APIView):
                         individual.user_profile.first_name = request.data['first_name']
                     if request.data['last_name']:
                         individual.user_profile.last_name = request.data['last_name']
+                    if request.data['industry']:
+                        individual.user_profile.industry = request.data['industry']
                     individual.user_profile.location.save()
                     individual.user_profile.save()
                     return Response({"username": individual.user_profile.username})

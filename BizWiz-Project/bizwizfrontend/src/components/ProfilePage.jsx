@@ -63,6 +63,7 @@ const userinfo = {
   address: "",
   short_paragraph: "",
   social: "",
+  business_name: "",
 };
 
 export default function ProfilePage() {
@@ -156,6 +157,11 @@ export default function ProfilePage() {
         </Paper>
         <Paper variant="outlined">
           <Typography variant="subtitle1" className={classes.postingtitle}>
+            Business Name: {data.userinfo.business_name}
+          </Typography>
+        </Paper>
+        <Paper variant="outlined">
+          <Typography variant="subtitle1" className={classes.postingtitle}>
             Email: {data.userinfo.email}
           </Typography>
         </Paper>
@@ -214,15 +220,29 @@ export default function ProfilePage() {
             }}
             onClick={handleChangeProfile}
           >
-            View A Company Profile
+            View another Profile
           </Button>
         </Paper>
       </Paper>
 
       <Paper className={classes.paper}>
-        <Typography variant="h4" className={classes.postingtitle}>
-          Postings
-        </Typography>
+        {username == data.userinfo.email ? (
+          <>
+            {usertype === "business" ? (
+              <Typography variant="h4" className={classes.postingtitle}>
+                Postings
+              </Typography>
+            ) : (
+              <Typography variant="h4" className={classes.postingtitle}>
+                Saved Postings
+              </Typography>
+            )}
+          </>
+        ) : (
+          <Typography variant="h4" className={classes.postingtitle}>
+            Their Postings
+          </Typography>
+        )}
 
         <Grid container className={classes.cardGrid}>
           {data.posts.map((card) => (

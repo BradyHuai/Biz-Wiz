@@ -53,10 +53,13 @@ export default function EditProfile() {
     address: "",
     city: "",
     postal_code: "",
-    website: "",
     username: username,
+    industry: "",
+
     short_paragraph: "",
     social: "",
+    business_name: "",
+    website: "",
   });
 
   const handleChangeForm = (name) => (event) => {
@@ -126,18 +129,7 @@ export default function EditProfile() {
                 required
               ></TextField>
             </Grid>
-            <Grid item md={8} sm={12} xs={12}>
-              <TextField
-                name="Website"
-                label="Your Website"
-                variant="outlined"
-                defaultValue={""}
-                className={classes.postingtitle}
-                onChange={handleChangeForm("website")}
-                fullWidth
-                required
-              ></TextField>
-            </Grid>
+
             <Grid item md={8} sm={12} xs={12}>
               <TextField
                 name="Address"
@@ -174,6 +166,71 @@ export default function EditProfile() {
                 required
               ></TextField>
             </Grid>
+
+            <Grid item md={8} sm={12} xs={12}>
+              <TextField
+                name="Industry"
+                label="Industry"
+                variant="outlined"
+                defaultValue={""}
+                className={classes.postingtitle}
+                onChange={handleChangeForm("industry")}
+                fullWidth
+                required
+              ></TextField>
+            </Grid>
+
+            {user_type === "business" ? (
+              <Grid item md={8} sm={12} xs={12}>
+                <TextField
+                  name="Business name"
+                  label="Business name"
+                  variant="outlined"
+                  defaultValue={""}
+                  className={classes.postingtitle}
+                  onChange={handleChangeForm("business_name")}
+                  fullWidth
+                  required
+                ></TextField>
+              </Grid>
+            ) : (
+              <></>
+            )}
+
+            {user_type === "business" ? (
+              <Grid item md={8} sm={12} xs={12}>
+                <TextField
+                  name="Social Media"
+                  label="Social Media"
+                  variant="outlined"
+                  defaultValue={""}
+                  className={classes.postingtitle}
+                  onChange={handleChangeForm("social")}
+                  fullWidth
+                  required
+                ></TextField>
+              </Grid>
+            ) : (
+              <></>
+            )}
+
+            {user_type === "business" ? (
+              <Grid item md={8} sm={12} xs={12}>
+                <TextField
+                  name="Website"
+                  label="Your Website"
+                  variant="outlined"
+                  defaultValue={""}
+                  className={classes.postingtitle}
+                  onChange={handleChangeForm("website")}
+                  fullWidth
+                  required
+                ></TextField>
+              </Grid>
+            ) : (
+              <></>
+            )}
+
             {user_type === "business" ? (
               <Grid item md={8} sm={12} xs={12}>
                 <TextField
@@ -190,19 +247,6 @@ export default function EditProfile() {
             ) : (
               <></>
             )}
-
-            <Grid item md={8} sm={12} xs={12}>
-              <TextField
-                name="Social Media"
-                label="Social Media"
-                variant="outlined"
-                defaultValue={""}
-                className={classes.postingtitle}
-                onChange={handleChangeForm("social")}
-                fullWidth
-                required
-              ></TextField>
-            </Grid>
           </Grid>
         </Paper>
         <Paper>
