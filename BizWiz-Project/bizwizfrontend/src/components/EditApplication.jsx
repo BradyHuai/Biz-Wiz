@@ -1,11 +1,9 @@
-import React, { useState, useEffect }from "react";
+import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { Typography, Paper, TextField, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
-import { useHistory } from "react-router";
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,52 +30,52 @@ export default function EditApplication() {
     q2: "When are you able to start working?",
     q3: "How much would you like to earn in this position?",
     q4: "How would you like to communicate with us?",
-    q5: "Do you have any specific questions about this role?"
+    q5: "Do you have any specific questions about this role?",
   });
 
-//   const [id, setID] = useState({id: ""})
+  //   const [id, setID] = useState({id: ""})
 
-//   const id = history.location.state.id;
+  //   const id = history.location.state.id;
 
-//   useEffect(() => {
-//     (async () => {
-//       const posting_url = "http://localhost:8000/api/application";
-//       const app = await axios.get(posting_url, {params: {id: id}});
+  //   useEffect(() => {
+  //     (async () => {
+  //       const posting_url = "http://localhost:8000/api/application";
+  //       const app = await axios.get(posting_url, {params: {id: id}});
 
-//       console.log(app.data)
-//       setValues({
-//         q1: app.data.q1,
-//       });
-//     })();
-//   }, []);
+  //       console.log(app.data)
+  //       setValues({
+  //         q1: app.data.q1,
+  //       });
+  //     })();
+  //   }, []);
 
-//   const createApplication = () => {
-//     const url = "http://localhost:8000/api/application";
-//     const data = {
-//         q1: "Are you interested in working remotely?",
-//         q2: "When are you able to start working?",
-//         q3: "How much would you like to earn in this position?",
-//         q4: "How would you like to communicate with us?",
-//         q5: "Do you have any specific questions about this role?"}
-//     axios({
-//         method: "post",
-//         url: url,
-//         data: data,
-//     })
-//         .then((res) => {
-//         if (res.status === 200) {
-//             console.log("success");
-//             alert("Application created!")
-//         } else {
-//             alert("Invalid input, please check your inputs.")
-//             console.log(res.status);
-//         }
-//         })
-//         .catch((e) => {
-//         alert("Invalid input, please check your inputs.")
-//         console.log(e);
-//         });
-//   }
+  //   const createApplication = () => {
+  //     const url = "http://localhost:8000/api/application";
+  //     const data = {
+  //         q1: "Are you interested in working remotely?",
+  //         q2: "When are you able to start working?",
+  //         q3: "How much would you like to earn in this position?",
+  //         q4: "How would you like to communicate with us?",
+  //         q5: "Do you have any specific questions about this role?"}
+  //     axios({
+  //         method: "post",
+  //         url: url,
+  //         data: data,
+  //     })
+  //         .then((res) => {
+  //         if (res.status === 200) {
+  //             console.log("success");
+  //             alert("Application created!")
+  //         } else {
+  //             alert("Invalid input, please check your inputs.")
+  //             console.log(res.status);
+  //         }
+  //         })
+  //         .catch((e) => {
+  //         alert("Invalid input, please check your inputs.")
+  //         console.log(e);
+  //         });
+  //   }
 
   const handleChangeForm = (name) => (event) => {
     setValues({ ...values, [name]: event.target.value });
@@ -87,52 +85,52 @@ export default function EditApplication() {
   const getApplication = () => {
     // console.log(values.id)
     // console.log(values)
-    if (values.id == ""){
-        alert("Please enter an Application ID")
-        return
+    if (values.id === "") {
+      alert("Please enter an Application ID");
+      return;
     }
     axios({
-        method: 'get',
-        url:'http://localhost:8000/api/application' ,
-        params: {id: values.id}
-     })
-     .then(res => {
+      method: "get",
+      url: "http://localhost:8000/api/application",
+      params: { id: values.id },
+    })
+      .then((res) => {
         //  console.log("heres the res data")
         //  console.log(res.data)
-         setValues({
-            id: res.data.id,
-            q1: res.data.q1,
-            q2: res.data.q2,
-            q3: res.data.q3,
-            q4: res.data.q4,
-            q5: res.data.q5
-          });
+        setValues({
+          id: res.data.id,
+          q1: res.data.q1,
+          q2: res.data.q2,
+          q3: res.data.q3,
+          q4: res.data.q4,
+          q5: res.data.q5,
+        });
         //   console.log(res.data.error)
-            if(res.data.error == "Application not found...") {
-                // console.log("helos")
-                setDefault()
-            }
-        })
-     .catch(err => console.error(err))
-  }
-  
-  const setDefault = () => {
-    console.log("setting to default")
-    setValues({
-        id: values.id,
-        q1: "Are you interested in working remotely?",
-        q2: "When are you able to start working?",
-        q3: "How much would you like to earn in this position?",
-        q4: "How would you like to communicate with us?",
-        q5: "Do you have any specific questions about this role?"
-    });
-  }
+        if (res.data.error === "Application not found...") {
+          // console.log("helos")
+          setDefault();
+        }
+      })
+      .catch((err) => console.error(err));
+  };
 
-//   update the application 
+  const setDefault = () => {
+    console.log("setting to default");
+    setValues({
+      id: values.id,
+      q1: "Are you interested in working remotely?",
+      q2: "When are you able to start working?",
+      q3: "How much would you like to earn in this position?",
+      q4: "How would you like to communicate with us?",
+      q5: "Do you have any specific questions about this role?",
+    });
+  };
+
+  //   update the application
   const handleSave = () => {
-    if (values.id == ""){
-        alert("Please enter an Application ID")
-        return
+    if (values.id === "") {
+      alert("Please enter an Application ID");
+      return;
     }
     const url = "http://localhost:8000/api/application";
 
@@ -146,8 +144,8 @@ export default function EditApplication() {
       .then((res) => {
         if (res.status === 200) {
           console.log("save success");
-        //   console.log(res.data)
-        //   alert("Success");
+          //   console.log(res.data)
+          //   alert("Success");
         } else {
           console.log(res.status);
           alert("Failed");
@@ -216,7 +214,7 @@ export default function EditApplication() {
                 fullWidth
                 required
               ></TextField>
-            </Grid> 
+            </Grid>
             <Grid item md={8} sm={12} xs={12}>
               <TextField
                 name="q4"
@@ -228,7 +226,7 @@ export default function EditApplication() {
                 fullWidth
                 required
               ></TextField>
-            </Grid> 
+            </Grid>
             <Grid item md={8} sm={12} xs={12}>
               <TextField
                 name="q5"
@@ -240,11 +238,11 @@ export default function EditApplication() {
                 fullWidth
                 required
               ></TextField>
-            </Grid>            
+            </Grid>
           </Grid>
         </Paper>
         <Paper>
-        <Button
+          <Button
             className={classes.postingtitle}
             style={{ backgroundColor: "#e3f2fd", margin: 20, width: 200 }}
             onClick={getApplication}

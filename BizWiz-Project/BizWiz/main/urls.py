@@ -21,5 +21,4 @@ urlpatterns = [
     path('api/application-create/', api.applicationCreate),
     path('api/application-update/<str:pk>/', api.applicationUpdate),
     path('api/application-delete/<str:pk>/', api.applicationDelete)
-    
 ]
