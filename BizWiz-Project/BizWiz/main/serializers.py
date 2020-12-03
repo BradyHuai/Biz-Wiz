@@ -102,14 +102,12 @@ class LoginSerializer(serializers.Serializer):
         user = auth.authenticate(username=data['email'], password=data['password'])
 
         if user and user.is_active:
-            return user
-        raise serializers.ValidationError("Incorrect Credentials")
-        if user.is_Business:
-            business = Business.objects.get(user_profile=user)
-            return user, business
-        if user.is_Individual:
-            individual = Individual.objects.get(user_profile=user)
-            return user, individual
+            if user.is_Business:
+                business = Business.objects.get(user_profile=user)
+                return user, business
+            if user.is_Individual:
+                individual = Individual.objects.get(user_profile=user)
+                return user, individual
 
         raise serializers.ValidationError("Incorrect Credentials")
 

@@ -130,11 +130,10 @@ export default function PostPage() {
     return <span>waiting... </span>;
   }
 
-
-  const routeChange = () =>{
-    let path = '/pages/edit-application'; 
-    history.push(path);
-  }
+  // const routeChange = () => {
+  //   let path = "/pages/edit-application";
+  //   history.push(path);
+  // };
 
   const handleSavePost = (event) => {
     const save_url = "http://localhost:8000/api/save_post";
@@ -154,7 +153,6 @@ export default function PostPage() {
         console.log(e);
       });
   };
-
 
   return (
     <div className={classes.root}>
@@ -259,7 +257,7 @@ export default function PostPage() {
         >
           SAVE
         </Button>
-        <Button
+        {/* <Button
           variant="contained"
           color="secondary"
           className={classes.button}
@@ -267,11 +265,8 @@ export default function PostPage() {
           onClick={routeChange}
         >
           APPLY NOW
-        </Button>
-        
+        </Button> */}
       </div>
     </div>
   );
-
-  
 }

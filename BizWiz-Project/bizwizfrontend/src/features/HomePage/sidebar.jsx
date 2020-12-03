@@ -6,6 +6,7 @@ import DashboardIcon from "@material-ui/icons/Dashboard";
 import PeopleIcon from "@material-ui/icons/People";
 import BarChartIcon from "@material-ui/icons/BarChart";
 import SearchIcon from "@material-ui/icons/Search";
+import QuestionAnswerIcon from "@material-ui/icons/QuestionAnswer";
 import { useHistory } from "react-router";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector } from "react-redux";
@@ -40,6 +41,10 @@ export default function MainListItems() {
 
   const handleClickAddPost = () => {
     history.push("/pages/post-job");
+  };
+
+  const handleEditQuestions = () => {
+    history.push("/pages/edit-application");
   };
   return (
     <div>
@@ -85,16 +90,29 @@ export default function MainListItems() {
         <></>
       )}
       {user_type === "business" ? (
-        <ListItem button onClick={handleClickAddPost}>
-          <ListItemIcon>
-            <DashboardIcon />
-          </ListItemIcon>
-          <ListItemText
-            disableTypography
-            className={classes.listItemText}
-            primary="Add Job Posting"
-          />
-        </ListItem>
+        <>
+          <ListItem button onClick={handleClickAddPost}>
+            <ListItemIcon>
+              <DashboardIcon />
+            </ListItemIcon>
+            <ListItemText
+              disableTypography
+              className={classes.listItemText}
+              primary="Add Job Posting"
+            />
+          </ListItem>
+
+          <ListItem button onClick={handleEditQuestions}>
+            <ListItemIcon>
+              <QuestionAnswerIcon />
+            </ListItemIcon>
+            <ListItemText
+              disableTypography
+              className={classes.listItemText}
+              primary="Edit Screening Questions"
+            />
+          </ListItem>
+        </>
       ) : (
         <></>
       )}
