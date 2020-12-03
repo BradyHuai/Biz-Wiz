@@ -206,12 +206,12 @@ function MapSearch() {
                         <div style={{width: "300px", height: "150px"}}>
 
                             <div style={{width: "100%", height: "70%"}}>
-                              <div style={{float: "left", width: "10%", height: "100%"}}>
-                                <img className={classes.icon} src={userImage} alt="user_yellow"></img>
+                              <div style={{float: "left", width: "25%", height: "100%"}}>
+                                <img style={{float: "left"}} className={classes.icon} src={userImage} alt="user_yellow"></img>
                               </div>
-                              <div style={{float: "right", width: "90%", height: "100%"}}>
+                              <div style={{float: "right", width: "75%", height: "100%", wordWrap: "break-word"}}>
                                 <h3>{selected.companyName}</h3>
-                                <p>{selected.description}</p>
+                                <p>{selected.description + "We want an excellent boi who can do lots of our work for free and stuff"}</p>
                               </div>
                             </div>
 
