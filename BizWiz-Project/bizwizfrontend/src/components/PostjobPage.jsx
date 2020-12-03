@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
         root: {
@@ -52,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Postjob() {
     const classes = useStyles();
     // const history = useHistory();
+    const username = useSelector((state) => state.userinfo.username);
 
     const initialData = {
         "position": "",
@@ -78,7 +80,6 @@ export default function Postjob() {
     
     // Potential edit post function
 
-    // const [otherData, setOtherData] = useState("");
     // let id = -1;
 
     // useEffect(() => {
@@ -109,25 +110,6 @@ export default function Postjob() {
     //   })();
 
     // }, []);
-
-    useEffect(() => {
-      (async () => {
-          try {
-                id = history.location.state.id;
-                const posting_url = "http://localhost:8000/api/post";
-                const post = await axios.get(posting_url, { params: { id: id } });
-        
-                setOtherData(post.data.company);
-          } catch (error) {
-          }
-      })();
-    }, []);
-  
-    console.log(data);
-  
-    if (data === {}) {
-      return <span>waiting... </span>;
-    }
 
     const handleSubmit = (e) => {
         const url = "http://localhost:8000/api/post";
@@ -196,7 +178,7 @@ export default function Postjob() {
                             fullWidth 
                             required
                             disabled
-                            defaultValue={otherData}
+                            defaultValue={username}
                             />
                     </Grid>
                     <Grid item md={6} sm={12} xs={12}>

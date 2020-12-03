@@ -132,7 +132,7 @@ export default function PostPage() {
 
   const handleSavePost = (event) => {
       const save_url = "http://localhost:8000/api/save_post";
-      await axios.post(save_url, {
+      axios.post(save_url, {
         params: { username: username, post_id: id },
       })
       .then((res) => {

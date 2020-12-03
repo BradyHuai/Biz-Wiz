@@ -63,6 +63,7 @@ export default function ProfilePage() {
   const classes = useStyles();
   const history = useHistory();
   const username = useSelector((state) => state.userinfo.username);
+  const usertype = useSelector((state) => state.userinfo.type);
   const handleViewPost = (post_id) => () => {
     history.push({
       pathname: "/pages/post",
@@ -198,9 +199,18 @@ export default function ProfilePage() {
       </Paper>
 
       <Paper className={classes.paper}>
-        <Typography variant="h4" className={classes.postingtitle}>
-          Postings
-        </Typography>
+        {username === "" ? (
+          <div></div>
+        ) : (
+          <div>
+            {usertype === "business" ? (
+              <Typography variant="h4" className={classes.postingtitle} >Postings</Typography>
+            ) : (
+              <Typography variant="h4" className={classes.postingtitle} >Saved Postings</Typography>
+            )}
+          </div>
+        )}
+          
         <Grid container className={classes.cardGrid}>
           {data.posts.map((card) => (
             <Grid
