@@ -228,25 +228,38 @@ class ProfileView(APIView):
                 user = UserProfile.objects.get(username=username)
                 if user.is_Business:
                     business = Business.objects.get(user_profile=user)
-                    business.user_profile.location.address = request.data['address']
-                    business.user_profile.location.zip_code = request.data['postal_code']
-                    business.user_profile.location.city = request.data['city']
-                    business.user_profile.first_name = request.data['first_name']
-                    business.user_profile.last_name = request.data['last_name']
+                    if request.data['address']:
+                        business.user_profile.location.address = request.data['address']
+                    if request.data['postal_code']:
+                        business.user_profile.location.zip_code = request.data['postal_code']
+                    if request.data['city']:
+                        business.user_profile.location.city = request.data['city']
+                    if request.data['first_name']:
+                        business.user_profile.first_name = request.data['first_name']
+                    if request.data['last_name']:
+                        business.user_profile.last_name = request.data['last_name']
                     business.user_profile.location.save()
-                    business.short_paragraph = request.data['short_paragraph']
+                    if request.data['short_paragraph']:
+                        business.short_paragraph = request.data['short_paragraph']
                     business.user_profile.save()
-                    business.website = request.data['website']
-                    business.social = request.data['social']
+                    if request.data['website']:
+                        business.website = request.data['website']
+                    if request.data['social']:
+                        business.social = request.data['social']
                     business.save()
                     return Response({"username": business.user_profile.username})
                 elif user.is_Individual:
                     individual = Individual.objects.get(user_profile=user)
-                    individual.user_profile.location.address = request.data['address']
-                    individual.user_profile.location.zip_code = request.data['postal_code']
-                    individual.user_profile.location.city = request.data['city']
-                    individual.user_profile.first_name = request.data['first_name']
-                    individual.user_profile.last_name = request.data['last_name']
+                    if request.data['address']:
+                        individual.user_profile.location.address = request.data['address']
+                    if request.data['postal_code']:
+                        individual.user_profile.location.zip_code = request.data['postal_code']
+                    if request.data['city']:
+                        individual.user_profile.location.city = request.data['city']
+                    if request.data['first_name']:
+                        individual.user_profile.first_name = request.data['first_name']
+                    if request.data['last_name']:
+                        individual.user_profile.last_name = request.data['last_name']
                     individual.user_profile.location.save()
                     individual.user_profile.save()
                     return Response({"username": individual.user_profile.username})
