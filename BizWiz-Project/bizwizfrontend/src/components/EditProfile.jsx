@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { Typography, Paper, TextField, Grid } from "@material-ui/core";
@@ -6,6 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,6 +34,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function EditProfile() {
+  const history = useHistory();
+  const handleReject = () => {
+    history.push("/");
+  };
+  const user_type = useSelector((state) => state.userinfo.user_type);
+  useEffect(() => {
+    if (user_type !== "business" && user_type !== "individual") {
+      handleReject();
+    }
+  });
+
   const classes = useStyles();
   const username = useSelector((state) => state.userinfo.username);
   const [values, setValues] = useState({
@@ -64,7 +76,7 @@ export default function EditProfile() {
     })
       .then((res) => {
         if ("error" in res.data) {
-          alert(res.data["error"]);
+          alert("Not Logged In");
         } else {
           console.log(res.status);
           alert("Success");
