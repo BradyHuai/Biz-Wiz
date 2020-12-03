@@ -74,7 +74,7 @@ export default function SignUpPage() {
     email: "",
     first_name: "",
     last_name: "",
-    industry: null,
+    industry: "",
     password: "",
     address: "",
     zip_code: "",
@@ -93,7 +93,7 @@ export default function SignUpPage() {
   //get the option information regarding the different industries
   React.useEffect(() => {
     (async () => {
-      const get_url = "http://localhost:8000/api/options"; //TODO ask backend peeps for request url for different industries and cities
+      const get_url = "http://localhost:8000/api/options";
       const response = await axios({
         method: "get",
         url: get_url,
@@ -124,6 +124,7 @@ export default function SignUpPage() {
                 if (res.status === 200) {
                   console.log("success");
                   alert("Success");
+                  handleSignIn();
                 } else {
                   console.log(res.status);
                   alert("Failed");
@@ -208,23 +209,19 @@ export default function SignUpPage() {
           <label className={classes.label} for="industry">
             Industry:
           </label>
-          <input
+          <select
             className={classes.input}
-            id="industry"
-            type="text"
+            id="city"
             onChange={(e) => {
-              setValues((current) => ({
-                ...current,
-                industry: e.target.value,
-              }));
+              setValues((current) => ({ ...current, industry: e.target.value }));
             }}
           >
-            {/* <option value="" disabled selected>
+            <option value="" disabled selected>
               Select an Industry
             </option>
-            <option value="IT">IT</option>
-            {getEntries(options.industry)} */}
-          </input>
+            {getEntries(options.industry)}
+          </select>
+
 
           <label className={classes.label} for="password">
             Password:
@@ -352,5 +349,28 @@ function getEntries(typeData) {
       </option>
     );
   }
-  return null;
+  return options;
 }
+
+/*
+          <label className={classes.label} for="industry">
+            Industry:
+          </label>
+          <input
+            className={classes.input}
+            id="industry"
+            type="text"
+            onChange={(e) => {
+              setValues((current) => ({
+                ...current,
+                industry: e.target.value,
+              }));
+            }}
+          >
+            { <option value="" disabled selected>
+              Select an Industry
+            </option>
+            <option value="IT">IT</option>
+            {getEntries(options.industry)} }
+            </input>
+*/
