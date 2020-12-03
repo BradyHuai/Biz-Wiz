@@ -10,6 +10,7 @@ import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import image from "../Images/biz-wiz-map.jpg";
 import userImage from "../Images/user_yellow.png";
+import { useHistory } from "react-router";
 
 const useStyles = makeStyles((theme) => ({
     
@@ -81,6 +82,9 @@ function MapSearch() {
     //use react's special local css styling
     const classes = useStyles();
 
+    //react history
+    const history = useHistory();
+
     //load in api key for google maps
     const {isLoaded, loadError} = useLoadScript({
             googleMapsApiKey: "AIzaSyBTqSHfkmVBJ2A5TwE7szjjd4pTd9CCfVo", //my personal key for building this application, need partner to provide their own later 
@@ -104,6 +108,15 @@ function MapSearch() {
 
     //map focus states
     const [focus, updateFocus] = React.useState({lat: 44.0384, lng: -79.2000, zoom: 9});        //TODO after searching city return coords of city, also after clicking marker focus onto marker
+
+    //post onclick function
+    const handleViewPost = (post_id) => () => {
+        history.push({
+          pathname: "/pages/post",
+          search: "?the=search",
+          state: { id: post_id },
+        });
+      };
 
     //get the option information regarding the available cities and different types of listings
     React.useEffect(() => {
@@ -216,8 +229,7 @@ function MapSearch() {
                             </div>
 
                             <div>
-                                <button className={classes.button} type="button">Save</button>
-                                <button className={classes.button} type="button">Learn More</button>
+                                <button className={classes.button} type="button" onClick={handleViewPost(selected.id)}>Learn More</button>
                             </div>
                         </div>
                     </InfoWindow>) : null}
