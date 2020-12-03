@@ -38,10 +38,14 @@ def map_detail_view(request, business_name):
     }
     return render(request, "main/map/detail.html", detail)
 
-def application_detail_view(request, business_name):
-    application = get_object_or_404(Application, business_name=business_name)
+def application_detail_view(request, id):
+    # application = get_object_or_404(Application, id=id)
+    try:
+        app = Application.objects.get(id=id)
+    except Application.DoesNotExist:
+        return redirect('home')
     detail = {
-        "application": application
+        "application": app
     }
     return render(request, "main/Application/detail.html", detail)
 
