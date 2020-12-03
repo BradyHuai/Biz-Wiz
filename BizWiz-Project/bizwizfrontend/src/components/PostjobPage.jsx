@@ -50,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Postjob() {
+<<<<<<< HEAD
   const classes = useStyles();
   const history = useHistory();
 
@@ -76,6 +77,67 @@ export default function Postjob() {
   };
 
   const [otherData, setOtherData] = useState("");
+=======
+    const classes = useStyles();
+    // const history = useHistory();
+
+    const initialData = {
+        "position": "",
+        "post_title": "",
+        "address": "",
+        "zip_code": "",
+        "city": "",
+        "salary": "",
+        "link": "",
+        "deadline": "",
+        "small_description": "",
+        "description": "",
+        "requirements": "",
+        "notes": "",
+    };
+    const [data, setdata] = useState(initialData);
+    const handleChange = (e) => {
+        const {name, value} = e.target;
+        setdata(previousData =>({
+            ...previousData,
+            [name]: value
+        }));
+    }
+    
+    // Potential edit post function
+
+    // const [otherData, setOtherData] = useState("");
+    // let id = -1;
+
+    // useEffect(() => {
+    //   (async () => {
+    //       try {
+    //             id = history.location.state.id;
+    //             const posting_url = "http://localhost:8000/api/post";
+    //             const post = await axios.get(posting_url, { params: { id: id } });
+        
+    //             setdata({
+    //             position: post.data.position,
+    //             post_title: post.data.title,
+    //             address: post.data.location,
+    //             zip_code: post.data.zip_code,
+    //             city: post.data.city,
+    //             salary: post.data.salary,
+    //             link: post.data.link,
+    //             deadline: post.data.deadline,
+    //             description: post.data.description,
+    //             requirements: post.data.requirements,
+    //             notes: post.data.notes,
+    //             });
+    //             setOtherData(post.data.company);
+    //       } catch (error) {
+              
+    //       }
+        
+    //   })();
+
+    // }, []);
+>>>>>>> 335e39e3ae9fa0e4c3b50aa3a68fdfcd935c9caf
 
   const handleReject = () => {
     history.push("/");
@@ -87,6 +149,7 @@ export default function Postjob() {
       handleReject();
     } else {
       (async () => {
+<<<<<<< HEAD
         try {
           const id = history.location.state.id;
           const posting_url = "http://localhost:8000/api/post";
@@ -108,6 +171,23 @@ export default function Postjob() {
           setOtherData(post.data.company);
         } catch (error) {}
       })();
+=======
+          try {
+                id = history.location.state.id;
+                const posting_url = "http://localhost:8000/api/post";
+                const post = await axios.get(posting_url, { params: { id: id } });
+        
+                setOtherData(post.data.company);
+          } catch (error) {
+          }
+      })();
+    }, []);
+  
+    console.log(data);
+  
+    if (data === {}) {
+      return <span>waiting... </span>;
+>>>>>>> 335e39e3ae9fa0e4c3b50aa3a68fdfcd935c9caf
     }
   }, []);
 
@@ -115,6 +195,7 @@ export default function Postjob() {
     return <span>waiting... </span>;
   }
 
+<<<<<<< HEAD
   const handleSubmit = (e) => {
     const url = "http://localhost:8000/api/post";
 
@@ -314,3 +395,233 @@ export default function Postjob() {
     </div>
   );
 }
+=======
+        axios({
+          method: "post",
+          url: url,
+          data: data,
+        })
+          .then((res) => {
+            if (res.status === 200) {
+              console.log("success");
+              alert("Posting submitted!")
+            } else {
+                alert("Invalid input, please check your inputs.")
+              console.log(res.status);
+            }
+          })
+          .catch((e) => {
+            alert("Invalid input, please check your inputs.")
+            console.log(e);
+          });
+
+        //   if (id != -1) {
+        //     axios({
+        //         method: "delete",
+        //         url: url,
+        //         data: id,
+        //       })
+        //         .then((res) => {
+        //           if (res.status !== 200) {
+        //             alert("Invalid input, please check your inputs.")
+        //             console.log(res.status);
+        //           }
+        //         })
+        //         .catch((e) => {
+        //           alert("Internal server error.")
+        //           console.log(e);
+        //         });
+        // }
+    }
+
+    const handleDelete = (e) => {
+        setdata(previousData =>({
+            ...previousData,
+            ...initialData
+        }));
+        window.location.reload(false);
+    }
+
+    return (
+        <div className={classes.root}>
+            <CssBaseline />
+            <form autoComplete="off" className={classes.form}>
+                <Typography className={classes.titles} >
+                    BASIC INFORMATION
+                </Typography>
+                
+                <Grid container spacing={3}>
+                    <Grid item md={6} sm={12} xs={12}>
+                        <TextField 
+                            name="business" 
+                            label="Your Email" 
+                            variant="outlined" 
+                            onChange={handleChange} 
+                            fullWidth 
+                            required
+                            disabled
+                            defaultValue={otherData}
+                            />
+                    </Grid>
+                    <Grid item md={6} sm={12} xs={12}>
+                        <TextField 
+                            className={classes.textfield}
+                            name="position" 
+                            label="Position type" 
+                            variant="outlined" 
+                            onChange={handleChange} 
+                            fullWidth 
+                            required 
+                            // defaultValue={initialData.position}
+                            />
+                    </Grid>
+                    <Grid item md={6} sm={12} xs={12}>
+                        <TextField 
+                            className={classes.textfield}
+                            name="post_title" 
+                            label="Job Title" 
+                            variant="outlined" 
+                            onChange={handleChange} 
+                            fullWidth 
+                            required 
+                            // defaultValue={initialData.post_title}
+                            />
+                    </Grid>
+                    <Grid item md={6} sm={12} xs={12}>
+                        <TextField 
+                            className={classes.textfield}
+                            name="address" 
+                            label="address" 
+                            variant="outlined" 
+                            onChange={handleChange} 
+                            fullWidth 
+                            required 
+                            // defaultValue={initialData.address}
+                            />
+                    </Grid>
+                    <Grid item md={6} sm={12} xs={12}>
+                        <TextField 
+                            className={classes.textfield}
+                            name="zip_code" 
+                            label="zip code" 
+                            variant="outlined" 
+                            onChange={handleChange} 
+                            fullWidth 
+                            required 
+                            // defaultValue={initialData.zip_code}
+                            />
+                    </Grid>
+                    <Grid item md={6} sm={12} xs={12}>
+                        <TextField 
+                            name="city" 
+                            label="city" 
+                            variant="outlined" 
+                            onChange={handleChange} 
+                            fullWidth 
+                            required 
+                            // defaultValue={initialData.city}
+                            />
+                    </Grid>
+                    <Grid item md={6} sm={12} xs={12}>
+                        <TextField 
+                            name="salary" 
+                            label="Salary" 
+                            variant="outlined" 
+                            onChange={handleChange} 
+                            fullWidth 
+                            required 
+                            // defaultValue={initialData.salary}
+                            />
+                    </Grid>
+                    <Grid item md={6} sm={12} xs={12}>
+                        <TextField 
+                            name="small_description" 
+                            label="Short Description about this position" 
+                            variant="outlined" 
+                            onChange={handleChange} 
+                            fullWidth 
+                            required 
+                            />
+                    </Grid>
+                </Grid>
+                <br />
+                <Typography className={classes.titles}>
+                    MORE ABOUT THIS JOB
+                </Typography>
+                <Grid container spacing={3}>
+                    <Grid item md={6} sm={12} xs={12}>
+                        <TextField 
+                            name="deadline" 
+                            label="Deadline" 
+                            variant="outlined" 
+                            onChange={handleChange} 
+                            fullWidth 
+                            required 
+                            // defaultValue={initialData.deadline}
+                            />
+                    </Grid>
+                    <Grid item md={6} sm={12} xs={12}>
+                        <TextField 
+                            name="link" 
+                            label="Application link" 
+                            variant="outlined" 
+                            onChange={handleChange} 
+                            fullWidth 
+                            required 
+                            />
+                    </Grid>
+                </Grid>
+                <TextField 
+                    name="description" 
+                    className={classes.boxText} 
+                    label="Detailed description about this job" 
+                    variant="outlined" 
+                    onChange={handleChange} 
+                    fullWidth 
+                    multiline 
+                    rows={8}
+                    // defaultValue={initialData.description}
+                    />
+                <TextField 
+                    name="requirements" 
+                    className={classes.boxText} 
+                    label="Job requirements" 
+                    variant="outlined" 
+                    onChange={handleChange} 
+                    fullWidth 
+                    multiline 
+                    rows={8}
+                    // defaultValue={initialData.requirements}
+                    />
+                <TextField 
+                    name="notes" 
+                    className={classes.boxText} 
+                    label="Additional notes" 
+                    variant="outlined" 
+                    onChange={handleChange} 
+                    fullWidth 
+                    multiline 
+                    rows={8}
+                    // defaultValue={initialData.notes}
+                    />
+                <Button
+                    variant="contained"
+                    className={classes.buttondelete}
+                    startIcon={<DeleteIcon />}
+                    onClick={handleDelete} 
+                >
+                    Delete
+                </Button>
+                <Button
+                    variant="contained"
+                    className={classes.buttonsave}
+                    startIcon={<PostAddIcon />}
+                    onClick={handleSubmit} 
+                >
+                    POST
+                </Button>
+            </form>
+        </div>
+    );
+}
+>>>>>>> 335e39e3ae9fa0e4c3b50aa3a68fdfcd935c9caf

@@ -85,7 +85,7 @@ export default function PostPage() {
   const [data, setData] = useState({
     position: "",
     title: "",
-    address: "",
+    location: "",
     salary: "",
     about: "",
     deadline: "",
@@ -107,14 +107,14 @@ export default function PostPage() {
       setData({
         position: post.data.position,
         title: post.data.title,
-        address: post.data.location,
+        location: post.data.location,
         salary: post.data.salary,
+        about: post.data.about,
         deadline: post.data.deadline,
         link: post.data.link,
         description: post.data.description,
         requirements: post.data.requirements,
         notes: post.data.notes,
-        about: post.data.about,
         company: post.data.company,
         website: post.data.website,
       });
@@ -148,7 +148,7 @@ export default function PostPage() {
           </tr>
           <tr className={classes.row}>
             <th className={classes.cell1}>Job Location:</th>
-            <td className={classes.cell2}>{data.address}</td>
+            <td className={classes.cell2}>{data.location}</td>
           </tr>
           <tr className={classes.row}>
             <th className={classes.cell1}>Salary:</th>

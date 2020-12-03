@@ -49,6 +49,7 @@ class Post(models.Model):
     post_title = models.CharField(max_length=1024)
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
     salary = models.TextField(max_length=1024)
+    link = models.TextField(max_length=1024, null=True)
     deadline = models.TextField(max_length=1024)
     small_description = models.TextField(max_length=1024)
     description = models.TextField(max_length=1024, null=True)

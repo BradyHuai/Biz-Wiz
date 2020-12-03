@@ -4,6 +4,7 @@ from knox.models import AuthToken
 from rest_framework.views import APIView
 from ..serializers import *
 from ..industries import Industries
+from ..keywords import Keywords
 from ..models import Location, Post, Business, Application, UserProfile, Individual
 import requests
 
@@ -73,7 +74,7 @@ class OptionsView(APIView):
         return Response({
             'cities' : list({location.city for location in Location.objects.all()}),
             'industry' : list({industry[1] for industry in Industries.get()}),
-            "keyword" : ["artist", "chef", "software engineer"]
+            "keyword" : Keywords.get()
         })
 
 
@@ -97,6 +98,7 @@ class PostView(APIView):
                 post_title=request.data['post_title'],
                 location=location,
                 salary=request.data['salary'],
+                link=request.data['link'],
                 deadline=request.data['deadline'],
                 small_description=request.data['small_description'],
                 description=request.data['description'],
@@ -125,12 +127,12 @@ class PostView(APIView):
                 'salary' : post.salary,
                 'about' : post.business.short_paragraph, 
                 'deadline' : post.deadline,
-                'link' : "",
+                'link' : post.link,
                 'description' : post.description,
                 'requirements' : post.requirements,
                 'notes' : post.notes,
                 'company' : post.business.business_name,
-                'website': "",
+                'website': post.business.website,
             })
         else:
             return Response({
@@ -234,25 +236,38 @@ class ProfileView(APIView):
                 user = UserProfile.objects.get(username=username)
                 if user.is_Business:
                     business = Business.objects.get(user_profile=user)
-                    business.user_profile.location.address = request.data['address']
-                    business.user_profile.location.zip_code = request.data['postal_code']
-                    business.user_profile.location.city = request.data['city']
-                    business.user_profile.first_name = request.data['first_name']
-                    business.user_profile.last_name = request.data['last_name']
+                    if request.data['address']:
+                        business.user_profile.location.address = request.data['address']
+                    if request.data['postal_code']:
+                        business.user_profile.location.zip_code = request.data['postal_code']
+                    if request.data['city']:
+                        business.user_profile.location.city = request.data['city']
+                    if request.data['first_name']:
+                        business.user_profile.first_name = request.data['first_name']
+                    if request.data['last_name']:
+                        business.user_profile.last_name = request.data['last_name']
                     business.user_profile.location.save()
-                    business.short_paragraph = request.data['short_paragraph']
+                    if request.data['short_paragraph']:
+                        business.short_paragraph = request.data['short_paragraph']
                     business.user_profile.save()
-                    business.website = request.data['website']
-                    business.social = request.data['social']
+                    if request.data['website']:
+                        business.website = request.data['website']
+                    if request.data['social']:
+                        business.social = request.data['social']
                     business.save()
                     return Response({"username": business.user_profile.username})
                 elif user.is_Individual:
                     individual = Individual.objects.get(user_profile=user)
-                    individual.user_profile.location.address = request.data['address']
-                    individual.user_profile.location.zip_code = request.data['postal_code']
-                    individual.user_profile.location.city = request.data['city']
-                    individual.user_profile.first_name = request.data['first_name']
-                    individual.user_profile.last_name = request.data['last_name']
+                    if request.data['address']:
+                        individual.user_profile.location.address = request.data['address']
+                    if request.data['postal_code']:
+                        individual.user_profile.location.zip_code = request.data['postal_code']
+                    if request.data['city']:
+                        individual.user_profile.location.city = request.data['city']
+                    if request.data['first_name']:
+                        individual.user_profile.first_name = request.data['first_name']
+                    if request.data['last_name']:
+                        individual.user_profile.last_name = request.data['last_name']
                     individual.user_profile.location.save()
                     individual.user_profile.save()
                     return Response({"username": individual.user_profile.username})
