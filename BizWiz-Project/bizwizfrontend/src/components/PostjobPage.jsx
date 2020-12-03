@@ -50,34 +50,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Postjob() {
-<<<<<<< HEAD
-  const classes = useStyles();
-  const history = useHistory();
-
-  const initialData = {
-    position: "",
-    post_title: "",
-    address: "",
-    zip_code: "",
-    city: "",
-    salary: "",
-    link: "",
-    deadline: "",
-    description: "",
-    requirements: "",
-    notes: "",
-  };
-  const [data, setdata] = useState(initialData);
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setdata((previousData) => ({
-      ...previousData,
-      [name]: value,
-    }));
-  };
-
-  const [otherData, setOtherData] = useState("");
-=======
     const classes = useStyles();
     // const history = useHistory();
 
@@ -137,7 +109,6 @@ export default function Postjob() {
     //   })();
 
     // }, []);
->>>>>>> 335e39e3ae9fa0e4c3b50aa3a68fdfcd935c9caf
 
   const handleReject = () => {
     history.push("/");
