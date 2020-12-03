@@ -22,7 +22,7 @@ class BusinessUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Business
-        fields = ("short_paragraph", "business_name", "user_profile")
+        fields = ("short_paragraph", "business_name", "user_profile", "social", "website")
 
 # Register Serializer
 class UserRegisterSerializer(serializers.ModelSerializer):
@@ -60,10 +60,13 @@ class IndividualRegisterSerializer(UserRegisterSerializer):
 class BusinessRegisterSerializer(UserRegisterSerializer):
     business_name = serializers.CharField(max_length=80, required=True)
     short_paragraph = serializers.CharField(required=True)
+    social = serializers.CharField(max_length=200)
+    website = serializers.CharField(max_length=200)
     #image = serializers.ImageField(required=False) 
 
     class Meta(UserRegisterSerializer.Meta):
-        fields = ('id', "username", "email", "first_name", "last_name", "industry", "password", "address", "zip_code", "city", "short_paragraph", "business_name")#, "image")
+        fields = ('id', "username", "email", "first_name", "last_name", "industry", "password", "address", "zip_code",
+                  "city", "short_paragraph", "business_name", "social", "website")#, "image")
 
     def create(self, validated_data):            
         user = UserProfile.objects.create_user(username=validated_data['username'], email=validated_data['email'], password=validated_data['password'])
@@ -80,6 +83,8 @@ class BusinessRegisterSerializer(UserRegisterSerializer):
         business = Business.objects.create(user_profile=user)
         business.business_name = validated_data['business_name']
         business.short_paragraph = validated_data['short_paragraph']
+        business.social = validated_data['social']
+        business.website = validated_data['website']
        # business.image = validated_data['image']
         business.save()
         return user

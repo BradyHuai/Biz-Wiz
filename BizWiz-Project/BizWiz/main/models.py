@@ -27,6 +27,7 @@ class Business(models.Model):
     user_profile = models.OneToOneField(UserProfile, on_delete=models.CASCADE, primary_key=True)
     business_name = models.CharField(max_length=80)
     website = models.URLField(max_length=200, null=True)
+    social = models.URLField(max_length=200, null=True)
     short_paragraph = models.TextField()
     image = models.ImageField(upload_to="businessImages", blank=True, null=True) 
 

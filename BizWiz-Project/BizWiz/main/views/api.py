@@ -193,6 +193,7 @@ class ProfileView(APIView):
                 if user.is_Business:
                     business = Business.objects.get(user_profile=user)
                     user_info['website'] = business.website
+                    user_info['social'] = business.social
                     user_info['short_paragraph'] = business.short_paragraph
                     posts = posts.filter(business=business)
 
@@ -223,19 +224,30 @@ class ProfileView(APIView):
         if username:
             try:
                 user = UserProfile.objects.get(username=username)
-                business = Business.objects.get(user_profile=user)
-                business.user_profile.location.address = request.data['address']
-                business.user_profile.location.zip_code = request.data['postal_code']
-                business.user_profile.location.city = request.data['city']
-                business.user_profile.first_name = request.data['first_name']
-                business.user_profile.last_name = request.data['last_name']
-                business.user_profile.location.save()
-                business.short_paragraph = request.data['short_paragraph']
-                business.user_profile.save()
-                business.website = request.data['website']
-                business.save()
-                return Response({"username": business.user_profile.username})
-
+                if user.is_Business:
+                    business = Business.objects.get(user_profile=user)
+                    business.user_profile.location.address = request.data['address']
+                    business.user_profile.location.zip_code = request.data['postal_code']
+                    business.user_profile.location.city = request.data['city']
+                    business.user_profile.first_name = request.data['first_name']
+                    business.user_profile.last_name = request.data['last_name']
+                    business.user_profile.location.save()
+                    business.short_paragraph = request.data['short_paragraph']
+                    business.user_profile.save()
+                    business.website = request.data['website']
+                    business.social = request.data['social']
+                    business.save()
+                    return Response({"username": business.user_profile.username})
+                elif user.is_Individual:
+                    individual = Individual.objects.get(user_profile=user)
+                    individual.user_profile.location.address = request.data['address']
+                    individual.user_profile.location.zip_code = request.data['postal_code']
+                    individual.user_profile.location.city = request.data['city']
+                    individual.user_profile.first_name = request.data['first_name']
+                    individual.user_profile.last_name = request.data['last_name']
+                    individual.user_profile.location.save()
+                    individual.user_profile.save()
+                    return Response({"username": individual.user_profile.username})
             except Exception:
                 return Response({
                     'error': "Business could not be modified..."
