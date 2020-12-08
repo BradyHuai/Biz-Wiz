@@ -213,7 +213,10 @@ export default function SignUpPage() {
             className={classes.input}
             id="city"
             onChange={(e) => {
-              setValues((current) => ({ ...current, industry: e.target.value }));
+              setValues((current) => ({
+                ...current,
+                industry: e.target.value,
+              }));
             }}
           >
             <option value="" disabled selected>
@@ -221,7 +224,6 @@ export default function SignUpPage() {
             </option>
             {getEntries(options.industry)}
           </select>
-
 
           <label className={classes.label} for="password">
             Password:
@@ -307,7 +309,6 @@ export default function SignUpPage() {
             <option value="" disabled selected>
               Select a City
             </option>
-            <option value="IT">Toronto</option>
             {getEntries(options.cities)}
           </select>
 

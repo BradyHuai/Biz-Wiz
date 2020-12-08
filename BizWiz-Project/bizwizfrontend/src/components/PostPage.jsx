@@ -100,7 +100,7 @@ export default function PostPage() {
 
   const id = history.location.state.id;
   const username = useSelector((state) => state.userinfo.username);
-
+  const user_type = useSelector((state) => state.userinfo.user_type);
   useEffect(() => {
     (async () => {
       const posting_url = "http://localhost:8000/api/post";
@@ -249,14 +249,19 @@ export default function PostPage() {
         >
           BACK
         </Button>
-        <Button
-          variant="contained"
-          className={classes.button}
-          startIcon={<FavoriteIcon />}
-          onClick={handleSavePost}
-        >
-          SAVE
-        </Button>
+        {user_type === "individual" ? (
+          <Button
+            variant="contained"
+            className={classes.button}
+            startIcon={<FavoriteIcon />}
+            onClick={handleSavePost}
+          >
+            SAVE
+          </Button>
+        ) : (
+          <></>
+        )}
+
         {/* <Button
           variant="contained"
           color="secondary"

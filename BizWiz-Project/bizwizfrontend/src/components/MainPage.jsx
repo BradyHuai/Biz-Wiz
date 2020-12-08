@@ -43,34 +43,44 @@ const myStyles = makeStyles((theme) => ({
   text: {
     color: "white",
     padding: 50,
-    fontSize: "2vw",
-    fontFamily: "Acumin Variable Concept",
+    fontSize: "2.5vw",
+    fontFamily: "acumin-pro, sans-serif",
+    fontWeight: 400,
+    fontStyle: "normal",
   },
 
   text0: {
     color: "black",
     padding: 50,
     fontSize: "3vw",
-    fontFamily: "Acumin Variable Concept",
+    fontFamily: "acumin-pro, sans-serif",
+    fontWeight: 400,
+    fontStyle: "normal",
   },
 
   text2: {
     color: "black",
-    fontSize: "1.5vw",
-    padding: 10,
-    fontFamily: "Acumin Variable Concept",
+    fontSize: "2vw",
+    padding: 5,
+    fontFamily: "acumin-pro, sans-serif",
+    fontWeight: 400,
+    fontStyle: "normal",
   },
 
   text3: {
     color: "black",
-    fontSize: "2vw",
-    fontFamily: "Acumin Variable Concept",
+    fontSize: "2.2vw",
+    fontFamily: "acumin-pro, sans-serif",
+    fontWeight: 400,
+    fontStyle: "normal",
   },
 
   text4: {
     color: "black",
-    fontSize: "1vw",
-    fontFamily: "Acumin Variable Concept",
+    fontSize: "1.5vw",
+    fontFamily: "acumin-pro, sans-serif",
+    fontWeight: 400,
+    fontStyle: "normal",
   },
 
   image: {
@@ -95,11 +105,13 @@ const myStyles = makeStyles((theme) => ({
     border: 0,
     borderRadius: 10,
     color: "white",
-    fontFamily: "Acumin Variable Concept",
+    fontFamily: "acumin-pro, sans-serif",
+    fontWeight: 400,
+    fontStyle: "normal",
     height: "6.5vh",
-    width: "10vw",
+    width: "12vw",
     margin: "2vw",
-    fontSize: "0.75vw",
+    fontSize: "1vw",
   },
 }));
 
@@ -163,7 +175,7 @@ function MainPage() {
         </Grid>
         <Grid item className={classes.paper3}>
           <Typography variant="h6" className={classes.text2} align="left">
-            ● Why Biz-Wiz is right for you
+            <strong>Why Biz-Wiz is right for you</strong>
           </Typography>
           <Typography variant="body1" className={classes.text2} align="left">
             - We verify the small businesses so you don’t have to
@@ -186,14 +198,12 @@ function MainPage() {
           I am a...
         </Typography>
         <Button className={classes.buttons} onClick={handleClickBusiness}>
-          {" "}
           Business Owner
         </Button>
         <Button className={classes.buttons} onClick={handleClickIndividual}>
           Individual looking for work
         </Button>
         <Button className={classes.buttons} onClick={handleClickGuest}>
-          {" "}
           Guest User
         </Button>
       </Paper>

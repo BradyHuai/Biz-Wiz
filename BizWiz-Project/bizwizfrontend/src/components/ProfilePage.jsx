@@ -157,11 +157,6 @@ export default function ProfilePage() {
         </Paper>
         <Paper variant="outlined">
           <Typography variant="subtitle1" className={classes.postingtitle}>
-            Business Name: {data.userinfo.business_name}
-          </Typography>
-        </Paper>
-        <Paper variant="outlined">
-          <Typography variant="subtitle1" className={classes.postingtitle}>
             Email: {data.userinfo.email}
           </Typography>
         </Paper>
@@ -182,6 +177,11 @@ export default function ProfilePage() {
             style={{ fontWeight: "bold" }}
           >
             Below are for businesses only
+          </Typography>
+        </Paper>
+        <Paper variant="outlined">
+          <Typography variant="subtitle1" className={classes.postingtitle}>
+            Business Name: {data.userinfo.business_name}
           </Typography>
         </Paper>
         <Paper variant="outlined">

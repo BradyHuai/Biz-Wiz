@@ -45,7 +45,10 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 10,
     color: "#f1c418",
     marginLeft: 20,
-    fontFamily: "Acumin Variable Concept",
+    fontFamily: "acumin-pro, sans-serif",
+    fontWeight: 400,
+    fontStyle: "normal",
+    fontSize: 16,
   },
 }));
 
