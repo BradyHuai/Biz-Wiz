@@ -74,5 +74,5 @@ This project has been using a temporary free trial Google API key that allows th
 
 Once you locate these two files, the lines of code that must be changed are line 76 for 'MapSearch.jsx' and line 169 for 'api.py'. Simply replace the placeholder text YOUR_API_KEY_HERE with your own personal API key; do not modify any quotations. 
 
-To the future software developers working on this project, this key should not be kept visible in the locations they are coded in. They should be kept as a secret environment variable on GitHub, the reason why they are where they are is because of the specific local circumstances of this course.
+To the future software developers working on this project, this key should not be kept visible in the locations they are coded in. They should be kept as a secret environment variable on GitHub. The reason why they are where they are is because of the specific local circumstances of this course.
 
