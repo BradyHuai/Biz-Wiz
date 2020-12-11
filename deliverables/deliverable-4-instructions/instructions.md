@@ -6,6 +6,8 @@ First, clone this repository onto your computer.
 
 # Database
 
+
+
 # Back end
 To get the back end server running locally on your machine, you have to have the latest version of python, which can be downlaoded from https://www.python.org/downloads/.
 
@@ -61,3 +63,8 @@ In order to get the front end website working, you must have install the latest 
 After you have installed nodejs, navigate to the 'bizwizfrontend' folder from the path /BizWiz-Project/bizwizfrontend. Once you are in the folder, you must run the command `npm install` from your terminal. After that has finished, you can start the website by running `npm start`. A browser window should pop up automatically when running `npm start` and if not, simply follow the link given in the terminal.
 
 Note: In order for the website features to function, the backend server and database must be running.
+
+# Google maps API
+
+This project has been using a temporary free trial Google API key that allows the map to function. The key will be removed upon transfer of this repository. You can create an API key for this project from https://developers.google.com/maps/documentation/javascript/get-api-key. Once you have created/logged into your Google account, follow the steps to create and get an API key. The API key must have the following enabled: Geocoding API, Maps JavaScript API, and Places API. Once you have created an API key and enabled the proper services, you must put the key into two code files in this project. The two files can be traced from the paths: '/BizWiz-Project/bizwizfrontend/src/components/MapSearch.jsx' and '/BizWiz-Project/BizWiz/main/views/api.py'.
+
