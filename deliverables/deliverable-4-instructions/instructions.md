@@ -66,5 +66,13 @@ Note: In order for the website features to function, the backend server and data
 
 # Google maps API
 
-This project has been using a temporary free trial Google API key that allows the map to function. The key will be removed upon transfer of this repository. You can create an API key for this project from https://developers.google.com/maps/documentation/javascript/get-api-key. Once you have created/logged into your Google account, follow the steps to create and get an API key. The API key must have the following enabled: Geocoding API, Maps JavaScript API, and Places API. Once you have created an API key and enabled the proper services, you must put the key into two code files in this project. The two files can be traced from the paths: '/BizWiz-Project/bizwizfrontend/src/components/MapSearch.jsx' and '/BizWiz-Project/BizWiz/main/views/api.py'.
+This project has been using a temporary free trial Google API key that allows the map to function. The key will be removed upon transfer of this repository. You can create an API key for this project from https://developers.google.com/maps/documentation/javascript/get-api-key. Once you have created/logged into your Google account, follow the steps to create and get an API key. The API key must have the following enabled: Geocoding API, Maps JavaScript API, and Places API. Once you have created an API key and enabled the proper services, you must put the key into two code files in this project. The two files can be traced from the paths: 
+
+'/BizWiz-Project/bizwizfrontend/src/components/MapSearch.jsx' and 
+
+'/BizWiz-Project/BizWiz/main/views/api.py'.
+
+Once you locate these two files, the lines of code that must be changed are line 76 for 'MapSearch.jsx' and line 169 for 'api.py'. Simply replace the placeholder text YOUR_API_KEY_HERE with your own personal API key; do not modify any quotations. 
+
+To the future software developers working on this project, this key should not be kept visible in the locations they are coded in. They should be kept as a secret environment variable on GitHub, the reason why they are where they are is because of the specific local circumstances of this course.
 
