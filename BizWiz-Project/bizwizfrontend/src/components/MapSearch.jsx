@@ -73,7 +73,7 @@ function MapSearch() {
 
   //load in api key for google maps
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "AIzaSyBTqSHfkmVBJ2A5TwE7szjjd4pTd9CCfVo", //my personal key for building this application, need partner to provide their own later
+    googleMapsApiKey: "YOUR_API_KEY_HERE", //my personal key for building this application, need partner to provide their own later
   });
 
   //map states
