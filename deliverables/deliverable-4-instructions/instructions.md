@@ -2,6 +2,8 @@
 
 This application will require installing different packages, dependencies, and other applications.
 
+First, clone this repository onto your computer.
+
 # Database
 
 # Back end
