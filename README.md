@@ -8,7 +8,9 @@ This application will require installing different packages, dependencies, and o
 First, clone this repository onto your computer.
 
 # Database
+We have chosen PostgreSQL as our database. You can download the PostgreSQL server from https://www.postgresql.org/download/. We also use the pgAdmin 4 tool to help manage the databases: https://www.pgadmin.org/download/.
 
+Once both are installed, running pgAdmin 4 will open up a tab in your web browser. Under the browser along the left side, you will see a 'Servers' tab which you should be able to drop down which should reveal the PostgreSQL 13 tab. Access to the PostgreSQL tab will require that you create an USER, leave the username as 'postgres' and set the password to be 'bizwiz123'. Dropping down the PostgreSQL 13 tab should reveal the 'Databases' tab. Right click on 'Databases' and navigate to 'Create' -> 'Databse...', name it bizwiz and make sure the owner is set to 'postgres', click save.
 
 
 # Back end
