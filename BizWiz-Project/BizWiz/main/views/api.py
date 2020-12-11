@@ -166,7 +166,7 @@ class PostingList(APIView):
             post = {}
             post['address'] = str(candidate.location)
 
-            coordinates = requests.get("https://maps.googleapis.com/maps/api/geocode/json?address=" + str(candidate.location) + "+CA&key=AIzaSyBTqSHfkmVBJ2A5TwE7szjjd4pTd9CCfVo").json()
+            coordinates = requests.get("https://maps.googleapis.com/maps/api/geocode/json?address=" + str(candidate.location) + "+CA&key=YOUR_API_KEY_HERE").json()
             post['companyName'] = candidate.business.business_name
             post['description'] = candidate.small_description
 
