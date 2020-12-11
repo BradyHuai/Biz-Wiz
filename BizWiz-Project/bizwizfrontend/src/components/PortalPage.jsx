@@ -13,26 +13,27 @@ const myStyles = makeStyles((theme) => ({
 
   paperbutton: {
     width: 300,
-    height: 640,
+    height: 500,
     position: "absolute",
     padding: "8px",
     top: "20%",
     left: "50%",
     marginLeft: -150,
     margin: "20px",
-    background: "linear-gradient(45deg, #2979ff 30%, #2196f3 90%)",
+    background: "#f1c418",
   },
   buttons: {
-    background: "rgba(67, 129, 168,0.5)",
+    background: "white",
     border: 0,
     borderRadius: 10,
-    color: "white",
+    color: "#f1c418",
+    fontFamily: "Acumin Variable Concept",
     height: 80,
     width: 200,
     margin: 36,
   },
   text: {
-    color: "white",
+    color: "#f1c418",
     margin: 20,
   },
   image: {
@@ -50,12 +51,13 @@ const myStyles = makeStyles((theme) => ({
 function PortalPage() {
   const classes = myStyles();
   const history = useHistory();
-  const handleClickVisit = () => {
-    history.push("/login");
+  const handleClickBusiness = () => {
+    history.push("/sign-up-business");
   };
-  const handleClickGuest = () => {
-    history.push("/pages/profilepage");
+  const handleClickIndividual = () => {
+    history.push("/sign-up-individual");
   };
+
   return (
     <div>
       <Grid container className={classes.root} direction="column">
@@ -67,14 +69,11 @@ function PortalPage() {
         <Typography variant="h6" className={classes.text}>
           ● I am A
         </Typography>
-        <Button className={classes.buttons} onClick={handleClickVisit}>
+        <Button className={classes.buttons} onClick={handleClickBusiness}>
           Business owner
         </Button>
-        <Button className={classes.buttons} onClick={handleClickVisit}>
+        <Button className={classes.buttons} onClick={handleClickIndividual}>
           Individual searching for work
-        </Button>
-        <Button className={classes.buttons} onClick={handleClickGuest}>
-          Guest user
         </Button>
       </Paper>
     </div>

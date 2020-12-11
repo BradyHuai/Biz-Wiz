@@ -7,12 +7,11 @@
 
 {% if application %}
 <ul>
-    <li>Business Title: {{ application.business_name|title }}</li>
+    <li>Application id: {{ application.id }}</li>
     <li>Number of questions: {{ application.num_questions }}</li>
     <li>Q1: {{ application.q1 }}</li>
     <li>Q2: {{ application.q2 }}</li>
     <li>Q3: {{ application.q3 }}</li>
-    <li>Email: {{ application.eamil }}</li>
 </ul>
 {% endif %}
 

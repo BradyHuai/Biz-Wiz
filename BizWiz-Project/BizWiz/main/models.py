@@ -27,6 +27,7 @@ class Business(models.Model):
     user_profile = models.OneToOneField(UserProfile, on_delete=models.CASCADE, primary_key=True)
     business_name = models.CharField(max_length=80)
     website = models.URLField(max_length=200, null=True)
+    social = models.URLField(max_length=200, null=True)
     short_paragraph = models.TextField()
     image = models.ImageField(upload_to="businessImages", blank=True, null=True) 
 
@@ -43,12 +44,14 @@ class Individual(models.Model):
 
 class Post(models.Model):
     business = models.ForeignKey(Business, on_delete=models.CASCADE)
+    individuals = models.ManyToManyField(Individual)
     position = models.TextField(max_length=1024)
-    post_title = models.CharField(max_length=1024)
+    post_title = models.CharField(max_length=50)
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
     salary = models.TextField(max_length=1024)
+    link = models.TextField(max_length=1024, null=True)
     deadline = models.TextField(max_length=1024)
-    small_description = models.TextField(max_length=1024)
+    small_description = models.TextField(max_length=50)
     description = models.TextField(max_length=1024, null=True)
     requirements = models.TextField(max_length=1024, null=True)
     notes = models.TextField(max_length=1024, null=True)
@@ -57,14 +60,13 @@ class Post(models.Model):
         return self.post_title
 
 class Application(models.Model):
-    business_name = models.CharField(max_length=80, default="")
-    application_name = models.CharField(max_length=80, default="")
-    num_questions = models.IntegerField()
-    # questions = models.TextField(max_length=1024, blank=True, null=True)
+    # post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    # num_questions = models.IntegerField(default=10)
     q1 = models.TextField(blank=True, null=True)
     q2 = models.TextField(blank=True, null=True)
     q3 = models.TextField(blank=True, null=True)
-    email = models.EmailField(null=True)
+    q4 = models.TextField(blank=True, null=True)
+    q5 = models.TextField(blank=True, null=True)
 
-    def __str__(self):
-        return self.application_name
+    # def __str__(self):
+    #     return self.id

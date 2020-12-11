@@ -13,18 +13,16 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router";
 import { useState } from "react";
-
+import axios from "axios";
+import { updateInfo, updateType } from "../redux/ducks/userinfo";
+import { useDispatch } from "react-redux";
+import image from "../Images/main-page-background.jpg";
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "100vh",
   },
   image: {
-    backgroundImage: "url(https://source.unsplash.com/random)",
-    backgroundRepeat: "no-repeat",
-    backgroundColor:
-      theme.palette.type === "light"
-        ? theme.palette.grey[50]
-        : theme.palette.grey[900],
+    backgroundImage: `url(${image})`,
     backgroundSize: "cover",
     backgroundPosition: "center",
   },
@@ -50,23 +48,56 @@ const useStyles = makeStyles((theme) => ({
 export default function LoginPage() {
   const classes = useStyles();
   const history = useHistory();
-
-  const handleSignIn = () => {
-    if (values.username === "bizwiz" && values.password === "bizwiz") {
-      history.push("/pages/profilepage");
-    }
-  };
-  const handleSignUp = () => {
-    history.push("/sign-up");
-  };
+  const dispatch = useDispatch();
 
   const [values, setValues] = useState({
     username: "",
     password: "",
   });
 
+  const handleSignIn = () => {
+    (async () => {
+      const url = "http://localhost:8000/accounts/login/";
+
+      console.log(values);
+
+      const login_request = await axios({
+        method: "post",
+        url: url,
+        data: { email: values.username, password: values.password },
+      });
+
+      console.log(login_request.status);
+
+      if ("token" in login_request.data) {
+        dispatch(updateInfo(values.username));
+        dispatch(updateType(login_request.data.user["user-type"]));
+        console.log(login_request);
+        handleSignInSuccess();
+      } else {
+        alert("Invalid username or password.");
+        console.log(login_request.status);
+      }
+    })().catch((e) => {
+      alert("Invalid input, please check your inputs.");
+      console.log(e);
+    });
+  };
+
+  const handleSignUp = () => {
+    history.push("/portal");
+  };
+
+  const handleSignInSuccess = () => {
+    history.push("/pages/profilepage");
+  };
+
   const handleChangeForm = (name) => (event) => {
     setValues({ ...values, [name]: event.target.value });
+  };
+
+  const handleClickGuest = () => {
+    history.push("/pages/profilepage");
   };
 
   return (
@@ -111,7 +142,6 @@ export default function LoginPage() {
               label="Remember me"
             />
             <Button
-              type="submit"
               fullWidth
               variant="contained"
               color="primary"
@@ -121,14 +151,27 @@ export default function LoginPage() {
                 background: "linear-gradient(45deg, #2979ff 30%, #2196f3 90%)",
               }}
             >
-              Sign In
+              {values.authenticated ? "Continue" : "Sign In"}
             </Button>
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              onClick={handleClickGuest}
+              className={classes.submit}
+              style={{
+                background: "linear-gradient(45deg, #2979ff 30%, #2196f3 90%)",
+              }}
+            >
+              Sign in as guest
+            </Button>
+
             <Grid container>
-              <Grid item xs>
+              {/* <Grid item xs>
                 <Link href="#" variant="body2">
                   Forgot password?
                 </Link>
-              </Grid>
+              </Grid> */}
               <Grid item>
                 <Link href="#" variant="body2" onClick={handleSignUp}>
                   {"Don't have an account? Sign Up"}
