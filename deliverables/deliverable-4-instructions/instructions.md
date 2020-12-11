@@ -8,24 +8,43 @@ This application will require installing different packages, dependencies, and o
 To get the back end server running locally on your machine, you have to have the latest version of python, which can be downlaoded from https://www.python.org/downloads/.
 
 After downloading the latest version of python, navigate to the 'BizWiz' folder from the path /BizWiz-Project/BizWiz. Once inside the folder, you need to create a virtual environment using the command `python3 -m venv env` in the terminal. Once this has finished, navigate into the 'env' folder you have just created and run the command `source bin/activate` inside the 'env' folder. After that has finished you need to install a few dependencies into the virtual environment. The commands needed required to be run are:
+
 `pip3 install asgiref`
+
 `pip3 install cffi`
+
 `pip3 install cryptography`
+
 `pip3 install django`
+
 `pip3 install django-address`
+
 `pip3 install django-cors-headers`
+
 `pip3 install django-crispy-forms`
+
 `pip3 install django-rest-knox`
+
 `pip3 install djangorestframework`
+
 `pip3 install numpy`
+
 `pip3 install pillow`
+
 `pip3 install protobuf`
+
 `pip3 install psycopg2`
+
 `pip3 install pycparser`
+
 `pip3 install python-dateutil`
+
 `pip3 install pytz`
+
 `pip3 install six`
+
 `pip3 install sqlparse`
+
 `pip3 install requests`
 
 There may be other modules missing from this list, but if anything is missed, running the server will notify you of what is missing so you can follow the same procedure for that missing module. Additionally, make sure all the installations are up to date.
