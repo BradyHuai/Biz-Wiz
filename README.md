@@ -18,6 +18,10 @@ To get the back end server running locally on your machine, you have to have the
 
 After downloading the latest version of python, navigate to the 'BizWiz' folder from the path /BizWiz-Project/BizWiz. Once inside the folder, you need to create a virtual environment using the command `python3 -m venv env` in the terminal. Once this has finished, navigate into the 'env' folder you have just created and run the command `source bin/activate` inside the 'env' folder. After that has finished you need to install a few dependencies into the virtual environment. The commands needed required to be run are:
 
+`sudo apt install libpq-dev python3-dev`
+
+`pip3 install wheel`
+
 `pip3 install asgiref`
 
 `pip3 install cffi`
@@ -63,7 +67,7 @@ After installing the modules, move out of the 'env' folder you created into the 
 After running these two commands, the final step is to run `python3 manage.py runserver` which should activate the server locally. Anytime you want to start up the server again you can go into the 'env' folder and run the command `source bin/activate` and then move to the parent folder and run `python3 manage.py runserver`. You can then follow the link given in the terminal to access the backend of the server.
 
 # Front end
-In order to get the front end website working, you must have install the latest version of node.js from https://nodejs.org/en/.
+In order to get the front end website working, you must have install the 14.15.1 or later version of node.js from https://nodejs.org/en/.
 
 After you have installed nodejs, navigate to the 'bizwizfrontend' folder from the path /BizWiz-Project/bizwizfrontend. Once you are in the folder, you must run the command `npm install` from your terminal. After that has finished, you can start the website by running `npm start`. A browser window should pop up automatically when running `npm start` and if not, simply follow the link given in the terminal.
 
